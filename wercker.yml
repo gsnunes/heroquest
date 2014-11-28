@@ -15,3 +15,8 @@ build:
         code: |
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
+deploy:
+  steps:
+    - script:
+        name: Stop Container
+        code: echo "node version $(node -v) running"
