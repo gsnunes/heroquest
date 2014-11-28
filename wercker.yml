@@ -18,7 +18,7 @@ build:
 deploy:
   steps:
     - add-to-known_hosts:
-        hostname: heroquest.hangoutsplay.com
+        hostname: 104.236.20.173
     - mktemp:
         envvar: PRIVATEKEY_PATH
     - create-file:
