@@ -1,0 +1,19 @@
+<form class="form-inline" role="form" name="form-dice">
+	<div class="dice-options-wrapper">
+		<label class="radio-inline">
+			<input type="radio" name="dice-options" id="dice-options-movement" value="movement" checked>
+			Moviment dice
+		</label>
+		<label class="radio-inline">
+			<input type="radio" name="dice-options" id="dice-options-combat" value="combat">
+			Combat dice
+		</label>
+	</div>
+	<div class="form-group">
+		<label for="count-dice">Roll</label>
+		<input type="number" class="form-control" id="count-dice" value="2">
+		<label for="count-dice">dice(s)</label>
+	</div>
+	<button type="submit" class="btn btn-default">&nbsp;<span class="glyphicon glyphicon-expand"></span>&nbsp;</button>
+</form>
+<p class="dice-result"><strong>Result: </strong><span></span></p>

@@ -1,0 +1,140 @@
+<ul id="myTab" class="nav nav-tabs">
+	<li class="active"><a href="#home" data-toggle="tab">Monsters</a></li>
+	<li><a href="#furnitures-tab" data-toggle="tab">Furnitures</a></li>
+	<li><a href="#tiles-tab" data-toggle="tab">Tiles</a></li>
+	<li><a href="#cards-tab" data-toggle="tab">Cards</a></li>
+	<li><a href="#settings-tab" data-toggle="tab">Settings</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+	<div class="tab-pane fade in active" id="home">
+		<ul class="pieces-toolbar"><li><i class="sprite-monsters icon-gargoyle"></i></li><li><i class="sprite-monsters icon-fimir"></i></li><li><i class="sprite-monsters icon-chaos-warrior"></i></li><li><i class="sprite-monsters icon-goblin"></i></li><li><i class="sprite-monsters icon-mummy"></i></li><li><i class="sprite-monsters icon-skeleton"></i></li><li><i class="sprite-monsters icon-zombie"></i></li><li><i class="sprite-monsters icon-orc"></i></li></ul>
+	</div>
+	<div class="tab-pane fade" id="furnitures-tab">
+		<ul class="pieces-toolbar">
+			<li><i class="sprite-furnitures icon-alchemist-bench"></i></li>
+			<li><i class="sprite-furnitures icon-bookcase"></i></li>
+			<li><i class="sprite-furnitures icon-cupboard"></i></li>
+			<li><i class="sprite-furnitures icon-door"></i></li>
+
+			<li><i class="sprite-furnitures icon-door-opened"></i></li>
+			<li><i class="sprite-furnitures icon-fireplace"></i></li>
+			<li><i class="sprite-furnitures icon-rack"></i></li>
+			<li><i class="sprite-furnitures icon-sorcerer-table"></i></li>
+
+			<li><i class="sprite-furnitures icon-table"></i></li>
+			<li><i class="sprite-furnitures icon-throne"></i></li>
+			<li><i class="sprite-furnitures icon-tomb"></i></li>
+			<li><i class="sprite-furnitures icon-tresure-chest"></i></li>
+
+			<li><i class="sprite-furnitures icon-weapons-rack"></i></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="tiles-tab">
+		<ul class="pieces-toolbar"><li><i class="sprite-tiles icon-tile1"></i></li><li><i class="sprite-tiles icon-tile2"></i></li><li><i class="sprite-tiles icon-tile3"></i></li><li><i class="sprite-tiles icon-tile4"></i></li><li><i class="sprite-tiles icon-tile5"></i></li><li><i class="sprite-tiles icon-tile6"></i></li><li><i class="sprite-tiles icon-tile7"></i></li></ul>
+	</div>
+
+	<div class="tab-pane fade" id="cards-tab">
+		<div class="btn-group btn-group-justified btn-cards" data-toggle="buttons">
+			<label class="btn btn-primary active">
+				<input type="radio" name="options" id="option1" checked> Treasures
+			</label>
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="option2"> Artifacts
+			</label>
+			<label class="btn btn-primary">
+				<input type="radio" name="options" id="option3"> Chaos
+			</label>
+		</div>
+
+		<div class="options-content">
+			<div id="option1-content" class="option">
+				<form class="form-inline" role="form" name="form-treasure">
+					<div class="form-group">
+						<label for="count-dice">User</label>
+						<!--<input type="text" class="form-control" id="treasure-user" readonly>-->
+						<select id="treasure-participants" class="form-control"><option>test 1</option><option>test 1</option><option>test 1</option></select>
+					</div>
+					<button type="submit" class="btn btn-default send-treasure">Send</button>
+				</form>
+			</div>
+			<div id="option2-content" class="option hide">
+				<div class="bs-example">
+					<div class="list-group">
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group ARTFAC 1</h4>
+							<p class="list-group-item-text"> Donec 1 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found!</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group ARTFAC 2</h4>
+							<p class="list-group-item-text">Donec 2 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found!</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group ARTFAC 3</h4>
+							<p class="list-group-item-text">Donec 3 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found!</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group ARTFAC 4</h4>
+							<p class="list-group-item-text">Donec 4 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found!</button></div>
+							<div class="clearfix"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div id="option3-content" class="option hide">
+				<div class="bs-example">
+					<div class="list-group">
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group CHAOS 1</h4>
+							<p class="list-group-item-text"> Donec 1 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs use-chaos">Use</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group CHAOS 2</h4>
+							<p class="list-group-item-text">Donec 2 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs use-chaos">Use</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group CHAOS 3</h4>
+							<p class="list-group-item-text">Donec 3 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs use-chaos">Use</button></div>
+							<div class="clearfix"></div>
+						</a>
+						<a href="#" class="list-group-item">
+							<h4 class="list-group-item-heading">List group CHAOS 4</h4>
+							<p class="list-group-item-text">Donec 4 id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+
+							<div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs use-chaos">Use</button></div>
+							<div class="clearfix"></div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-pane fade" id="settings-tab">
+		<form class="form-inline" role="form" name="form-settings">
+			<div class="form-group">
+				<label for="count-dice">Campaing</label>
+				<input type="text" class="form-control" id="campaing-name" readonly>
+			</div>
+			<button type="submit" class="btn btn-default open-campaing-list">&nbsp;<span class="glyphicon glyphicon-expand"></span>&nbsp;</button>
+		</form>
+	</div>
+</div>

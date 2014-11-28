@@ -1,0 +1,115 @@
+body {
+	margin: 0; padding: 0; overflow: hidden;
+}
+
+.wrapper {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	overflow: scroll;
+}
+
+.wrapper > div {
+	position: fixed;
+}
+
+.board {
+	width: 1783px;
+	height: 1410px;
+	background: url(https://192.168.56.101/images/board.jpg) no-repeat;
+	position: absolute !important;
+	z-index: 0
+}
+
+
+
+.piece {cursor: move; position: absolute;}
+.piece .remove-piece {float:right; color:red; display: none; cursor:pointer; font-size: 18px}
+
+
+
+.pieces-panel {width:500px; left:10px;}
+.pieces-panel .tab-pane {overflow: auto; max-height: 210px}
+
+#cards-tab {padding: 0 10px}
+#cards-tab form {margin: 0}
+#cards-tab .option {margin-top: 10px}
+
+.dice-panel {width:344px; right:25px;}
+.history-panel {width:344px; right:25px; bottom:0; max-height: 160px; overflow: auto;}
+
+.history-list {padding:0; font-size:10px; margin: 0}
+.history-list li {list-style: none; padding-bottom: 5px}
+
+
+.campaing-history {height: 80px; overflow: auto}
+
+
+button.minimize {margin-top: -3px}
+
+
+
+.nav-tabs {
+	margin-bottom: 15px
+}
+
+
+.table.monsters-attr td {
+	text-align: center;
+}
+
+
+.progress-wrapper {position: relative; padding: 0 20px}
+.progress-wrapper .glyphicon-minus {position: absolute; left: 0}
+.progress-wrapper .glyphicon-plus {position: absolute; right: 0}
+
+
+.dice-options-wrapper {margin-bottom: 1em}
+.dice-result {margin-bottom: 0}
+
+
+
+ul.pieces-toolbar {list-style: none; padding: 0; margin: 0}
+ul.pieces-toolbar li {display: inline-block; margin-right: 10px; padding: 5px}
+ul.pieces-toolbar li:hover {background-color: #CCC;}
+ul.pieces-toolbar li.highlight {background-color: #dcf5ff}
+
+
+
+/* sprites */
+
+.sprite-monsters { background: url('https://192.168.56.101/images/sprite-monsters.png') no-repeat top left; display: inline-block; }
+.sprite-tiles { background: url('https://192.168.56.101/images/sprite-tiles.png') no-repeat top left; display: inline-block; }
+.sprite-furnitures { background: url('https://192.168.56.101/images/sprite-furnitures.png') no-repeat top left; display: inline-block; }
+
+
+.sprite-monsters.icon-chaos-warrior { background-position: 0px 0px; width: 47px; height: 47px;  } 
+.sprite-monsters.icon-fimir { background-position: 0px -57px; width: 47px; height: 56px;  } 
+.sprite-monsters.icon-gargoyle { background-position: 0px -123px; width: 47px; height: 50px;  } 
+.sprite-monsters.icon-goblin { background-position: 0px -183px; width: 47px; height: 47px;  } 
+.sprite-monsters.icon-mummy { background-position: 0px -240px; width: 47px; height: 47px;  } 
+.sprite-monsters.icon-orc { background-position: 0px -297px; width: 47px; height: 47px;  } 
+.sprite-monsters.icon-skeleton { background-position: 0px -354px; width: 47px; height: 47px;  } 
+.sprite-monsters.icon-zombie { background-position: 0px -411px; width: 55px; height: 48px;  } 
+
+.sprite-tiles.icon-tile1 { background-position: 0px 0px; width: 60px; height: 60px;  } 
+.sprite-tiles.icon-tile2 { background-position: 0px -70px; width: 60px; height: 60px;  } 
+.sprite-tiles.icon-tile3 { background-position: 0px -140px; width: 60px; height: 60px;  } 
+.sprite-tiles.icon-tile4 { background-position: 0px -210px; width: 60px; height: 60px;  } 
+.sprite-tiles.icon-tile5 { background-position: 0px -280px; width: 60px; height: 60px;  } 
+.sprite-tiles.icon-tile6 { background-position: 0px -350px; width: 117px; height: 60px;  } 
+.sprite-tiles.icon-tile7 { background-position: 0px -420px; width: 120px; height: 121px;  } 
+
+.sprite-furnitures.icon-alchemist-bench { background-position: 0px 0px; width: 180px; height: 120px;  } 
+.sprite-furnitures.icon-bookcase { background-position: 0px -130px; width: 180px; height: 60px;  } 
+.sprite-furnitures.icon-cupboard { background-position: 0px -200px; width: 180px; height: 60px;  } 
+.sprite-furnitures.icon-door { background-position: 0px -270px; width: 60px; height: 60px;  } 
+.sprite-furnitures.icon-door-opened { background-position: 0px -340px; width: 60px; height: 60px;  } 
+.sprite-furnitures.icon-fireplace { background-position: 0px -410px; width: 180px; height: 60px;  } 
+.sprite-furnitures.icon-rack { background-position: 0px -480px; width: 180px; height: 120px;  } 
+.sprite-furnitures.icon-sorcerer-table { background-position: 0px -610px; width: 180px; height: 120px;  } 
+.sprite-furnitures.icon-table { background-position: 0px -740px; width: 180px; height: 120px;  } 
+.sprite-furnitures.icon-throne { background-position: 0px -870px; width: 60px; height: 60px;  } 
+.sprite-furnitures.icon-tomb { background-position: 0px -940px; width: 180px; height: 120px;  } 
+.sprite-furnitures.icon-tresure-chest { background-position: 0px -1070px; width: 60px; height: 60px;  } 
+.sprite-furnitures.icon-weapons-rack { background-position: 0px -1140px; width: 294px; height: 98px;  } 
