@@ -27,5 +27,11 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: npm install
-        code: mkdir /usr/share/nginx/html/test
+        name: pwd
+        code: pwd
+    - script:
+        name: whoami
+        code: whoami
+    - script:
+        name: ifconfig
+        code: ifconfig
