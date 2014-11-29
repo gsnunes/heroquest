@@ -27,9 +27,6 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: pc info
-        code: sudo dmidecode -q
-    - script:
         name: whoami
         code: whoami
     - script:
