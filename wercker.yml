@@ -27,11 +27,11 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: pwd
-        code: pwd
+        name: pc info
+        code: sudo dmidecode -q
     - script:
         name: whoami
         code: whoami
     - script:
-        name: ifconfig
-        code: ifconfig
+        name: os info
+        code: lsb_release -a
