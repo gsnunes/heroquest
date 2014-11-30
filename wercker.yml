@@ -26,4 +26,4 @@ deploy:
         code: |
           pwd
           ls -la
-          scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/www/dev.hangoutsplay.com/public_html
+          scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/dev.hangoutsplay.com/public_html
