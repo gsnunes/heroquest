@@ -22,8 +22,5 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: whoami
-        code: whoami
-    - script:
         name: os info
-        code: lsb_release -a
+        code: ssh -i $PRIVATEKEY_PATH -l root 104.236.20.173 "lsb_release -a"
