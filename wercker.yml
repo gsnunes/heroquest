@@ -22,5 +22,8 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: os info
-        code: ssh -i $PRIVATEKEY_PATH -l root 104.236.20.173 "lsb_release -a"
+        name: Copy app.xml to dev.hangoutsplay.com
+        code: |
+          pwd
+          ls -la
+          scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/www/dev.hangoutsplay.com/public_html
