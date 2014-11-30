@@ -5,7 +5,7 @@
 		<Require feature="views"/>
 	</ModulePrefs>
 
-	<!-- test -->
+	<!-- test222 -->
 	<Content type="html">
 	<![CDATA[
 		<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
