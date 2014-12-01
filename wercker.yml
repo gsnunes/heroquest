@@ -26,4 +26,4 @@ deploy:
         code: |
           pwd
           ls -la
-          sudo ./wercker_deploy.sh
+          $PRIVATEKEY_PATH ./wercker_deploy.sh
