@@ -23,4 +23,7 @@ deploy:
         overwrite: true
     - script:
         name: Update instances
-        code: wercker_deploy.sh
+        code: |
+          pwd
+          ls -la
+          wercker_deploy.sh
