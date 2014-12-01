@@ -24,6 +24,7 @@ deploy:
     - script:
         name: Update instances
         code: |
+          chmod 777 ./wercker_deploy.sh
           pwd
           ls -la
-          $PRIVATEKEY_PATH ./wercker_deploy.sh
+          sudo ./wercker_deploy.sh
