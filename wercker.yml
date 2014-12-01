@@ -21,9 +21,12 @@ deploy:
         filename: $PRIVATEKEY_PATH
         content: $WERCKER_PRIVATE
         overwrite: true
-    - script:
-        name: Copy app.xml to dev.hangoutsplay.com
-        code: |
-          pwd
-          ls -la
-          scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/dev.hangoutsplay.com/public_html
+    - dev
+      name: DEV Test
+        code: echo "DEV test"
+    - prod
+      name: PROD Test
+        code: echo "PROD test"
+    - test
+      name: TEST Test
+        code: echo "TEST test"
