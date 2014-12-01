@@ -24,6 +24,6 @@ deploy:
     - script:
         name: Copy app.xml to dev.hangoutsplay.com
         code: |
-          if [ "$WERCKER_DEPLOYTARGET_NAME" = "prod" ]; then echo "my prod" fi
-          if [ "$WERCKER_DEPLOYTARGET_NAME" = "test" ]; then echo "my test" fi
-          if [ "$WERCKER_DEPLOYTARGET_NAME" = "dev" ]; then echo "my dev" fi
+          if [ "$WERCKER_DEPLOYTARGET_NAME" = "prod" ]; then echo "my prod" return 0 fi
+          if [ "$WERCKER_DEPLOYTARGET_NAME" = "test" ]; then echo "my test" return 0 fi
+          if [ "$WERCKER_DEPLOYTARGET_NAME" = "dev" ]; then echo "my dev" return 0 fi
