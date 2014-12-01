@@ -21,12 +21,6 @@ deploy:
         filename: $PRIVATEKEY_PATH
         content: $WERCKER_PRIVATE
         overwrite: true
-    - dev
-      name: DEV Test
-        code: echo "DEV test"
-    - prod
-      name: PROD Test
-        code: echo "PROD test"
-    - test
-      name: TEST Test
-        code: echo "TEST test"
+    - script:
+        name: DEV Test
+        code: echo WERCKER_DEPLOYTARGET_NAME
