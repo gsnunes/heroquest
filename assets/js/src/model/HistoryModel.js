@@ -4,7 +4,7 @@ define(function () {
 
 	return Backbone.Model.extend({
 
-		url: 'https://192.168.56.101/history',
+		url: 'https://' + HEROQUEST.host + '/history',
 
 		idAttribute: '_id',
 

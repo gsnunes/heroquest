@@ -13,7 +13,7 @@ define([
 		},
 
 		url: function () {
-			return this.campaing_id ? 'https://192.168.56.101/history/' + this.campaing_id : 'https://192.168.56.101/history';
+			return this.campaing_id ? 'https://' + HEROQUEST.host + '/history/' + this.campaing_id : 'https://' + HEROQUEST.host + '/history';
 		},
 
 		model: HistoryModel

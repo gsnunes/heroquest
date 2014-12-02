@@ -8,7 +8,7 @@ define([
 
 	return Backbone.Collection.extend({
 
-		url: 'https://192.168.56.101/hero',
+		url: 'https://' + HEROQUEST.host + '/hero',
 		model: HeroModel
 
 	});
