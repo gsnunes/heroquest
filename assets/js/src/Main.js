@@ -32,7 +32,7 @@ window.HEROQUEST = (function () {
 			if (event.isApiReady) {
 
 				gapi.auth.init(function () {
-					gapi.auth.authorize({client_id: '1078284663077-gjmpbfiqcfbub0833citkunhjngdodbj.apps.googleusercontent.com', immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
+					gapi.auth.authorize({client_id: '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com', immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
 						var appView = new AppView();
 						appView.render();
 					});
