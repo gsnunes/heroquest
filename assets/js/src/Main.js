@@ -2,7 +2,6 @@ window.HEROQUEST = (function () {
 
 	'use strict';
 
-
 	Backbone.EventBus = _.extend({}, Backbone.Events);
 
 
@@ -10,10 +9,7 @@ window.HEROQUEST = (function () {
 		urlArgs: 'bust=' + (new Date()).getTime(),
 		paths: {
 			text: '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.10/text.min',
-			template: '//192.168.56.101/templates',
-			view: '//192.168.56.101/js/src/view',
-			model: '//192.168.56.101/js/src/model',
-			collection: '//192.168.56.101/js/src/collection'
+			template: '../../templates'
 		},
 		config: {
 			text: {
@@ -48,6 +44,10 @@ window.HEROQUEST = (function () {
 	});
 
 
-	return {};
+	return {
+
+		host: $('#main').attr('data-main').split('/')[2]
+
+	};
 
 }());

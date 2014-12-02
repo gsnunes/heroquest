@@ -16,7 +16,7 @@ body {
 .board {
 	width: 1783px;
 	height: 1410px;
-	background: url(https://192.168.56.101/images/board.jpg) no-repeat;
+	background: url(../images/board.jpg) no-repeat;
 	position: absolute !important;
 	z-index: 0
 }
@@ -78,9 +78,9 @@ ul.pieces-toolbar li.highlight {background-color: #dcf5ff}
 
 /* sprites */
 
-.sprite-monsters { background: url('https://192.168.56.101/images/sprite-monsters.png') no-repeat top left; display: inline-block; }
-.sprite-tiles { background: url('https://192.168.56.101/images/sprite-tiles.png') no-repeat top left; display: inline-block; }
-.sprite-furnitures { background: url('https://192.168.56.101/images/sprite-furnitures.png') no-repeat top left; display: inline-block; }
+.sprite-monsters { background: url(../images/sprite-monsters.png) no-repeat top left; display: inline-block; }
+.sprite-tiles { background: url(../images/sprite-tiles.png) no-repeat top left; display: inline-block; }
+.sprite-furnitures { background: url(../images/sprite-furnitures.png) no-repeat top left; display: inline-block; }
 
 
 .sprite-monsters.icon-chaos-warrior { background-position: 0px 0px; width: 47px; height: 47px;  } 
