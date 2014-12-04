@@ -28,25 +28,7 @@
 
 			<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
 
-			<script>
-				var require = {
-					urlArgs: 'bust=' + (new Date()).getTime(),
-					paths: {
-						text: '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.10/text.min',
-						template: '../../templates'
-					},
-					config: {
-						text: {
-							//http://rockycode.com/blog/cross-domain-requirejs-text/
-							useXhr: function () {
-								return true;
-							}
-						}
-					},
-					deps: ['//192.168.56.101/js/src/Main.js']
-				};
-			</script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js" data-main="//192.168.56.101/js/src/Main.js" id="main"></script>
 
 		</body>
 	]]>
