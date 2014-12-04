@@ -24,7 +24,7 @@ window.HEROQUEST = (function () {
 		return _sync.call( this, method, model, options );
 	};
 
-
+	
 	require.config({
 		urlArgs: 'bust=' + (new Date()).getTime(),
 		paths: {
