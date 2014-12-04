@@ -4,14 +4,11 @@ define(function () {
 
 	return Backbone.Model.extend({
 
-		idAttribute: '_id',
-
 		defaults: {
 			name: '',
 			description: '',
 			character: '',
-			quests: 0,
-			access_token: ''
+			quests: 0
 		}
 
 	});

@@ -4,12 +4,9 @@ define(function () {
 
 	return Backbone.Model.extend({
 
-		idAttribute: '_id',
-
 		defaults: {
 			name: '',
-			description: '',
-			access_token: ''
+			description: ''
 		}
 
 	});

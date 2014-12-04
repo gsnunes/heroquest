@@ -61,7 +61,6 @@ define([
 			this.$el.find('.campaing-history').html('');
 
 			this.historyCollection.forEach(function (model) {
-				console.log('uuu');
 				var name = 'Zargon (' + model.attributes.person.name + ')',
 					date = moment(model.attributes.date).format('MM-DD-YYYY, h:mm:ss a'),
 					message = date + ' ' + name + ' - ' + model.attributes.message;
@@ -80,8 +79,7 @@ define([
 		getDataFromForm: function () {
 			var data = {
 				name: this.$el.find('input#name').val(),
-				description: this.$el.find('textarea#description').val(),
-				access_token: this.token.access_token
+				description: this.$el.find('textarea#description').val()
 			};
 
 			return data;
@@ -93,8 +91,6 @@ define([
 				this.campaingModel.save(this.getDataFromForm());
 			}
 			else {
-				console.log(this.getDataFromForm());
-
 				var campaingModel = new CampaingModel(this.getDataFromForm());
 				this.campaingCollection.create(campaingModel);
 			}

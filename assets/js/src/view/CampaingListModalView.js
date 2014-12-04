@@ -44,12 +44,14 @@ define([
 		getData: function () {
 			var self = this;
 
-			this.campaingCollection.fetch({ data: $.param({ access_token: this.token.access_token}), success: function () {
-				self.populateListGroup();
-				self.campaingCollection.on('add', self.populateListGroup, self);
-				self.campaingCollection.on("change", self.populateListGroup, self);
-				self.campaingCollection.on("remove", self.populateListGroup, self);
-			} });
+			this.campaingCollection.fetch({ 
+				success: function () {
+					self.populateListGroup();
+					self.campaingCollection.on('add', self.populateListGroup, self);
+					self.campaingCollection.on("change", self.populateListGroup, self);
+					self.campaingCollection.on("remove", self.populateListGroup, self);
+				}
+			});
 		},
 
 
