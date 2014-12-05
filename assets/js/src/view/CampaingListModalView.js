@@ -62,15 +62,20 @@ define([
 
 			this.campaingCollection.forEach(function (model) {
 				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
+					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Start', icon: 'glyphicon glyphicon-ok'}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 					buttonToolbarView = new ButtonToolbarView();
 
-				buttonToolbarView.addButtons([btnEdit, btnRemove]);
+				buttonToolbarView.addButtons([btnStart, btnEdit, btnRemove]);
 				buttonToolbarView.addClass('pull-right');
 
 				listGroupItem.append(buttonToolbarView.template());
 				listGroupItem.append('<div class="clearfix"></div>');
+
+				$(listGroupItem).find('.btn-success').on('click', function () {
+					self.start(model);
+				});
 
 				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
 					self.addCampaing(ev, model);
@@ -79,18 +84,20 @@ define([
 				$(listGroupItem).find('.btn-danger').on('click', function () {
 					model.destroy();
 				});
-
-				$(listGroupItem).on('click', function (ev) {
-					if (!$(ev.target).hasClass('btn-warning') && !$(ev.target).hasClass('btn-danger')) {
-						HEROQUEST.campaingModel = model;
-
-						Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setCampaing');
-						Backbone.EventBus.trigger('HistoryPanel.setTitle', model.attributes.name);
-						
-						self.hide();
-					}
-				});
 			});
+		},
+
+
+		/**
+		 * start
+		 */
+		start: function (model) {
+			HEROQUEST.campaingModel = model;
+
+			Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setCampaing');
+			Backbone.EventBus.trigger('HistoryPanel.setTitle', model.attributes.name);
+			
+			this.hide();
 		},
 
 

@@ -128,7 +128,6 @@ define([
 		
 
 		unselect: function (ev) {
-			console.log(ev);
 			if (ev.keyCode === 27) {
 				$('ul.pieces-toolbar li').removeClass('highlight');
 			}

@@ -40,8 +40,8 @@ define([
 		},
 
 
-		onTabChange: function (ev) {
-			console.log('to be implemented');
+		onTabChange: function () {
+			//to be implemented
 		},
 		
 

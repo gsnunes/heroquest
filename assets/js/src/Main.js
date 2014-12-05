@@ -2,6 +2,9 @@ window.HEROQUEST = (function () {
 
 	'use strict';
 
+	document.oncontextmenu = function() {return false;};
+	
+
 	Backbone.EventBus = _.extend({}, Backbone.Events);
 
 

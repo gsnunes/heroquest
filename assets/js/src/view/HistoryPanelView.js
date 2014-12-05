@@ -43,7 +43,17 @@ define([
 				var value = ev.addedKeys[0].value;
 
 				$('.history-panel .history-list').append('<li>' + value + '</li>');
+
+				this.updateScroll();
 			}
+		},
+
+
+		/**
+		 * updateScroll
+		 */
+		updateScroll: function () {
+			$('.history-panel').animate({ scrollTop: $('.history-panel').get(0).scrollHeight }, "slow");
 		},
 
 
@@ -58,7 +68,7 @@ define([
 
 				success : function (ev) {
 					var name = 'Zargon (' + participant.person.displayName + ')',
-						date = moment(ev.attributes.date).format('MM-DD-YYYY, h:mm:ss a'),
+						date = moment(new Date(ev.attributes.date)).format('MM-DD-YYYY, h:mm:ss a'),
 						message = date + ' ' + name + ' - ';
 
 					message += ev.attributes.message;

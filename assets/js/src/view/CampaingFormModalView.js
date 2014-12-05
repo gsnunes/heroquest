@@ -62,7 +62,7 @@ define([
 
 			this.historyCollection.forEach(function (model) {
 				var name = 'Zargon (' + model.attributes.person.name + ')',
-					date = moment(model.attributes.date).format('MM-DD-YYYY, h:mm:ss a'),
+					date = moment(new Date(model.attributes.date)).format('MM-DD-YYYY, h:mm:ss a'),
 					message = date + ' ' + name + ' - ' + model.attributes.message;
 
 				/*

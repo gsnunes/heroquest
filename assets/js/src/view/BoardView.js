@@ -56,7 +56,9 @@ define([
 					wrapper = $('<div id="wrapper-' + key + '"></div>'),
 					monster,
 					monsterPopoverView,
-					self = this;
+					self = this,
+					rotation = 0,
+					recoupLeft, recoupTop;
 
 				if (!$('.board #' + key).length) {
 					wrapper.append(value);
@@ -71,7 +73,21 @@ define([
 					$('.board #' + key).attr('style', value.attr('style'));
 				}
 
+				//Drag fix when transforms in use
+				//http://bugs.jquery.com/ticket/8362
 				value.draggable({
+					start: function (event, ui) {
+						var left = parseInt($(this).css('left'),10);
+						left = isNaN(left) ? 0 : left;
+						var top = parseInt($(this).css('top'),10);
+						top = isNaN(top) ? 0 : top;
+						recoupLeft = left - ui.position.left;
+						recoupTop = top - ui.position.top;
+					},
+					drag: function (event, ui) {
+						ui.position.left += recoupLeft;
+						ui.position.top += recoupTop;
+					},
 					containment: '.board',
 					stop: this.stopDraggablePiece
 				});
@@ -85,12 +101,26 @@ define([
 
 				value.on({
 					mouseenter: function () {
-						console.log(gapi.hangout.data.getKeys());
 						value.find('.remove-piece').show();
 					},
 					mouseleave: function () {
 						value.find('.remove-piece').hide();
 					}
+				});
+
+				value.on('mousedown', function (ev) {
+					if (ev.button === 2) {
+						rotation = rotation === 360 ? 90 : (rotation + 90);
+
+						$(this).css({'-webkit-transform' : 'rotate('+ rotation +'deg)',
+						'-moz-transform' : 'rotate('+ rotation +'deg)',
+						'-ms-transform' : 'rotate('+ rotation +'deg)',
+						'transform' : 'rotate('+ rotation +'deg)'});
+
+						return false;
+					}
+
+					return true;
 				});
 
 				value.find('.remove-piece').on('click', function () {
@@ -140,7 +170,12 @@ define([
 
 					gapi.hangout.data.setValue(pieceId, piece);
 
-					HEROQUEST.historyPanelView.addHistoryItem('put a ' + this.monsters[pieceIcon.split(' ').pop()].title + ' on the board.');
+					if (this.monsters[pieceIcon.split(' ').pop()]) {
+						HEROQUEST.historyPanelView.addHistoryItem('put a ' + this.monsters[pieceIcon.split(' ').pop()].title + ' on the board.');
+					}
+					else {
+						HEROQUEST.historyPanelView.addHistoryItem('put a piece on the board.');
+					}					
 				}
 			}
 		}
