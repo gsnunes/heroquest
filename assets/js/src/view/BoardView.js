@@ -64,9 +64,12 @@ define([
 					wrapper.append(value);
 					$('.board').append(wrapper);
 
+					console.log($('.wrapper').scrollTop);
+					console.log($('.wrapper').get(0).scrollTop);
+
 					value.css({
-						left: value.offset().left - (value.width() / 2),
-						top: value.offset().top - (value.height() / 2)
+						left: value.offset().left - (value.width() / 2) + $('.wrapper').get(0).scrollLeft,
+						top: value.offset().top - (value.height() / 2) + $('.wrapper').get(0).scrollTop
 					});
 				}
 				else {
