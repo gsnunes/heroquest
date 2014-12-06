@@ -3,12 +3,13 @@ define([
 	'text!template/HeroListModalView.html',
 	'view/component/ModalView',
 	'view/HeroFormModalView',
-	'collection/HeroCollection',
+	'collection/CharCollection',
+	'collection/CampaingCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView'
 
-], function (Template, ModalView, HeroFormModalView, HeroCollection, ListGroupView, ButtonView, ButtonToolbarView) {
+], function (Template, ModalView, HeroFormModalView, CharCollection, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView) {
 
 	'use strict';
 
@@ -22,11 +23,14 @@ define([
 		},
 
 
-		heroCollection: new HeroCollection(),
+		charCollection: new CharCollection(),
+		campaingCollection: new CampaingCollection(),
 
 
 		initialize: function () {
 			ModalView.prototype.initialize.apply(this, arguments);
+
+			gapi.hangout.data.setValue('campaingId', '1');
 
 			this.createListGroup();
 			this.getData();
@@ -42,12 +46,12 @@ define([
 		getData: function () {
 			var self = this;
 
-			this.heroCollection.fetch({
+			this.charCollection.fetch({
 				success: function () {
 					self.populateListGroup();
-					self.heroCollection.on('add', self.populateListGroup, self);
-					self.heroCollection.on("change", self.populateListGroup, self);
-					self.heroCollection.on("remove", self.populateListGroup, self);
+					self.charCollection.on('add', self.populateListGroup, self);
+					self.charCollection.on("change", self.populateListGroup, self);
+					self.charCollection.on("remove", self.populateListGroup, self);
 				}
 			});
 		},
@@ -58,17 +62,22 @@ define([
 
 			this.listGroupView.reset();
 
-			this.heroCollection.forEach(function (model) {
+			this.charCollection.forEach(function (model) {
 				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
+					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Start', icon: 'glyphicon glyphicon-ok'}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 					buttonToolbarView = new ButtonToolbarView();
 
-				buttonToolbarView.addButtons([btnEdit, btnRemove]);
+				buttonToolbarView.addButtons([btnStart, btnEdit, btnRemove]);
 				buttonToolbarView.addClass('pull-right');
 
 				listGroupItem.append(buttonToolbarView.template());
 				listGroupItem.append('<div class="clearfix"></div>');
+
+				$(listGroupItem).find('.btn-success').on('click', function () {
+					self.start(model);
+				});
 
 				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
 					self.addHero(ev, model);
@@ -77,19 +86,39 @@ define([
 				$(listGroupItem).find('.btn-danger').on('click', function () {
 					model.destroy();
 				});
-
-				$(listGroupItem).on('click', function (ev) {
-					if (!$(ev.target).hasClass('btn-warning') && !$(ev.target).hasClass('btn-danger')) {
-						Backbone.EventBus.trigger('BoardView.AddHeroPiece');
-						self.hide();
-					}
-				});
 			});
 		},
 
 
+		/**
+		 * start
+		 */
+		start: function (model) {
+			var campaingId = gapi.hangout.data.getValue('campaingId'),
+				campaingModel,
+				self = this;
+
+			if (campaingId) {
+				this.campaingCollection.fetch({
+					success: function () {
+						campaingModel = self.campaingCollection.get(campaingId);
+						HEROQUEST.campaingModel = campaingModel;
+
+						Backbone.EventBus.trigger('HistoryPanel.setTitle', campaingModel.attributes.name);
+
+						Backbone.EventBus.trigger('BoardView.AddHeroPiece', model);
+						self.hide();
+					}
+				});
+			}
+			else {
+				alert('O mestre ainda nao escolheu a campanha');
+			}
+		},
+
+
 		addHero: function (ev, model) {
-			var heroFormModalView = new HeroFormModalView({heroModel: model, heroCollection: this.heroCollection});
+			var heroFormModalView = new HeroFormModalView({charModel: model, charCollection: this.charCollection});
 			heroFormModalView.show();
 		}
 

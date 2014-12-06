@@ -29,6 +29,14 @@ define([
 		},
 
 
+		heroes: {
+			'icon-barbarian': {title: 'Barbarian', attr: {mo: 7, a: 4, d: 4, b: 3, m: 3}},
+			'icon-elf': {title: 'Elf', attr: {mo: 6, a: 3, d: 3, b: 2, m: 3}},
+			'icon-dwarf': {title: 'Dwarf', attr: {mo: 6, a: 4, d: 5, b: 3, m: 4}},
+			'icon-wizard': {title: 'Wizard', attr: {mo: 10, a: 2, d: 1, b: 1, m: 1}}
+		},
+
+
 		initialize: function () {
 			var self = this;
 
@@ -40,12 +48,15 @@ define([
 		},
 
 
-		addHeroPiece: function () {
+		addHeroPiece: function (charModel) {
 			var pieceId = 'piece-' + (new Date()).getTime(),
+				pieceIcon = 'sprite-heroes icon-' + charModel.attributes.character.toLowerCase(),
 				piece;
 
-			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><i class="hero" style="display:inline-block; width:50px; height:50px; background:red"></i></div>';
+			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
 			gapi.hangout.data.setValue(pieceId, piece);
+
+			HEROQUEST.historyPanelView.addHistoryItem('selected the ' + charModel.attributes.name  +  ' like your character');
 		},
 
 
@@ -55,17 +66,19 @@ define([
 					key = ev.addedKeys[0].key,
 					wrapper = $('<div id="wrapper-' + key + '"></div>'),
 					monster,
+					hero,
 					monsterPopoverView,
 					self = this,
 					rotation = 0,
 					recoupLeft, recoupTop;
 
+				if (key === 'campaingId') {
+					return false;
+				}
+
 				if (!$('.board #' + key).length) {
 					wrapper.append(value);
 					$('.board').append(wrapper);
-
-					console.log($('.wrapper').scrollTop);
-					console.log($('.wrapper').get(0).scrollTop);
 
 					value.css({
 						left: value.offset().left - (value.width() / 2) + $('.wrapper').get(0).scrollLeft,
@@ -96,9 +109,13 @@ define([
 				});
 
 				monster = this.monsters[value.find('i').attr('class').split(' ').pop()];
+				hero = this.heroes[value.find('i').attr('class').split(' ').pop()];
 
 				if (monster) {
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
+					monsterPopoverView.render();
+				} else if (hero) {
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: hero, key: key});
 					monsterPopoverView.render();
 				}
 

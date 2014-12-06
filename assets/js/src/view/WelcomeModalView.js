@@ -29,7 +29,7 @@ define([
 		onHidden: function () {
 			var participant = gapi.hangout.getLocalParticipant();
 
-			if (participant.displayIndex === 0) {
+			if (participant.displayIndex === 1) {
 				this.showCampaingListModal();
 			}
 			else {

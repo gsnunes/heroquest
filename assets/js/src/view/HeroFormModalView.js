@@ -2,9 +2,9 @@ define([
 
 	'text!template/HeroFormModalView.html',
 	'view/component/ModalView',
-	'model/HeroModel'
+	'model/CharModel'
 
-], function (Template, ModalView, HeroModel) {
+], function (Template, ModalView, CharModel) {
 
 	'use strict';
 
@@ -23,19 +23,19 @@ define([
 
 			this.token = gapi.auth.getToken('token', true);
 
-			this.heroModel = this.options.heroModel;
-			this.heroCollection = this.options.heroCollection;
+			this.charModel = this.options.charModel;
+			this.charCollection = this.options.charCollection;
 
 			this.populate();
 		},
 
 
 		populate: function () {
-			if (this.heroModel) {
-				this.$el.find('input#name').val(this.heroModel.attributes.name);
-				this.$el.find('textarea#description').val(this.heroModel.attributes.description);
-				this.$el.find('select#character').val(this.heroModel.attributes.character);
-				this.$el.find('input#quests').val(this.heroModel.attributes.quests);
+			if (this.charModel) {
+				this.$el.find('input#name').val(this.charModel.attributes.name);
+				this.$el.find('textarea#description').val(this.charModel.attributes.description);
+				this.$el.find('select#character').val(this.charModel.attributes.character);
+				this.$el.find('input#quests').val(this.charModel.attributes.quests);
 			}
 		},
 
@@ -54,12 +54,12 @@ define([
 
 
 		submit: function () {
-			if (this.heroModel) {
-				this.heroModel.save(this.getDataFromForm());
+			if (this.charModel) {
+				this.charModel.save(this.getDataFromForm());
 			}
 			else {
-				var heroModel = new HeroModel(this.getDataFromForm());
-				this.heroCollection.create(heroModel);
+				var charModel = new CharModel(this.getDataFromForm());
+				this.charCollection.create(charModel);
 			}
 
 			this.hide();
