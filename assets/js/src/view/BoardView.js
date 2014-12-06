@@ -29,7 +29,7 @@ define([
 		},
 
 
-		heroes: {
+		characters: {
 			'icon-barbarian': {title: 'Barbarian', attr: {mo: 7, a: 4, d: 4, b: 3, m: 3}},
 			'icon-elf': {title: 'Elf', attr: {mo: 6, a: 3, d: 3, b: 2, m: 3}},
 			'icon-dwarf': {title: 'Dwarf', attr: {mo: 6, a: 4, d: 5, b: 3, m: 4}},
@@ -44,13 +44,13 @@ define([
 				self.changePieces(ev);
 			});
 
-			Backbone.EventBus.on('BoardView.AddHeroPiece', this.addHeroPiece, this);
+			Backbone.EventBus.on('BoardView.AddCharPiece', this.addCharPiece, this);
 		},
 
 
-		addHeroPiece: function (charModel) {
+		addCharPiece: function (charModel) {
 			var pieceId = 'piece-' + (new Date()).getTime(),
-				pieceIcon = 'sprite-heroes icon-' + charModel.attributes.character.toLowerCase(),
+				pieceIcon = 'sprite-characters icon-' + charModel.attributes.character.toLowerCase(),
 				piece;
 
 			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
@@ -66,7 +66,7 @@ define([
 					key = ev.addedKeys[0].key,
 					wrapper = $('<div id="wrapper-' + key + '"></div>'),
 					monster,
-					hero,
+					character,
 					monsterPopoverView,
 					self = this,
 					rotation = 0,
@@ -109,13 +109,13 @@ define([
 				});
 
 				monster = this.monsters[value.find('i').attr('class').split(' ').pop()];
-				hero = this.heroes[value.find('i').attr('class').split(' ').pop()];
+				character = this.characters[value.find('i').attr('class').split(' ').pop()];
 
 				if (monster) {
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
-				} else if (hero) {
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: hero, key: key});
+				} else if (character) {
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: character, key: key});
 					monsterPopoverView.render();
 				}
 

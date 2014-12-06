@@ -3,9 +3,9 @@ define([
 	'text!template/WelcomeModalView.html',
 	'view/component/ModalView',
 	'view/CampaingListModalView',
-	'view/HeroListModalView'
+	'view/CharListModalView'
 
-], function (Template, ModalView, CampaingListModalView, HeroListModalView) {
+], function (Template, ModalView, CampaingListModalView, CharListModalView) {
 
 	'use strict';
 
@@ -20,20 +20,18 @@ define([
 		},
 		
 
-		showHeroListModal: function () {
-			var heroListModalView = new HeroListModalView({backdrop: 'static'});
-			heroListModalView.show();
+		showCharListModal: function () {
+			var charListModalView = new CharListModalView({backdrop: 'static'});
+			charListModalView.show();
 		},
 
 
 		onHidden: function () {
-			var participant = gapi.hangout.getLocalParticipant();
-
-			if (participant.displayIndex === 1) {
+			if (HEROQUEST.displayIndex === 0) {
 				this.showCampaingListModal();
 			}
 			else {
-				this.showHeroListModal();
+				this.showCharListModal();
 			}
 		}
 

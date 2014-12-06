@@ -94,9 +94,9 @@ define([
 		start: function (model) {
 			HEROQUEST.campaingModel = model;
 
-			gapi.hangout.data.setValue('campaingId', model.attributes._id);
+			gapi.hangout.data.setValue('campaingId', model.attributes.id.toString());
 
-			Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setCampaing');
+			Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
 			Backbone.EventBus.trigger('HistoryPanel.setTitle', model.attributes.name);
 			
 			this.hide();

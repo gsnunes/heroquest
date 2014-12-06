@@ -1,15 +1,15 @@
 define([
 
-	'text!template/HeroListModalView.html',
+	'text!template/CharListModalView.html',
 	'view/component/ModalView',
-	'view/HeroFormModalView',
+	'view/CharFormModalView',
 	'collection/CharCollection',
 	'collection/CampaingCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView'
 
-], function (Template, ModalView, HeroFormModalView, CharCollection, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView) {
+], function (Template, ModalView, CharFormModalView, CharCollection, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView) {
 
 	'use strict';
 
@@ -19,7 +19,7 @@ define([
 
 
 		events: {
-			'click .add-hero': 'addHero'
+			'click .add-char': 'addChar'
 		},
 
 
@@ -38,7 +38,7 @@ define([
 
 
 		createListGroup: function () {
-			this.listGroupView = new ListGroupView({el: this.$el.find('.hero-list-group')});
+			this.listGroupView = new ListGroupView({el: this.$el.find('.char-list-group')});
 			this.listGroupView.render();
 		},
 
@@ -80,7 +80,7 @@ define([
 				});
 
 				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
-					self.addHero(ev, model);
+					self.addChar(ev, model);
 				});
 
 				$(listGroupItem).find('.btn-danger').on('click', function () {
@@ -104,9 +104,10 @@ define([
 						campaingModel = self.campaingCollection.get(campaingId);
 						HEROQUEST.campaingModel = campaingModel;
 
+						Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
 						Backbone.EventBus.trigger('HistoryPanel.setTitle', campaingModel.attributes.name);
 
-						Backbone.EventBus.trigger('BoardView.AddHeroPiece', model);
+						Backbone.EventBus.trigger('BoardView.AddCharPiece', model);
 						self.hide();
 					}
 				});
@@ -117,9 +118,9 @@ define([
 		},
 
 
-		addHero: function (ev, model) {
-			var heroFormModalView = new HeroFormModalView({charModel: model, charCollection: this.charCollection});
-			heroFormModalView.show();
+		addChar: function (ev, model) {
+			var charFormModalView = new CharFormModalView({charModel: model, charCollection: this.charCollection});
+			charFormModalView.show();
 		}
 
 	});

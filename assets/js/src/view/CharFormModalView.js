@@ -1,6 +1,6 @@
 define([
 
-	'text!template/HeroFormModalView.html',
+	'text!template/CharFormModalView.html',
 	'view/component/ModalView',
 	'model/CharModel'
 

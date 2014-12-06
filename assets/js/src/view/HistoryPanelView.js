@@ -59,7 +59,7 @@ define([
 
 		addHistoryItem: function (msg, data) {
 			var participant = gapi.hangout.getLocalParticipant(),
-				model = {message: msg, campaing_id: HEROQUEST.campaingModel.attributes._id, date: (new Date()).toString(), access_token: this.token.access_token, displayIndex: participant.displayIndex},
+				model = {message: msg, campaing_id: HEROQUEST.campaingModel.attributes.id, date: (new Date()).toString(), access_token: this.token.access_token, displayIndex: HEROQUEST.displayIndex},
 				historyModel = new HistoryModel(model),
 				self = this;
 
@@ -93,7 +93,7 @@ define([
 					}
 
 					/*
-					if (participant.displayIndex > 0) {
+					if (HEROQUEST.displayIndex > 0) {
 
 					}
 					*/

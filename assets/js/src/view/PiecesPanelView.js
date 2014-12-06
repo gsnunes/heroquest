@@ -2,9 +2,10 @@ define([
 
 	'text!template/PiecesPanelView.html',
 	'view/component/PanelView',
-	'view/CampaingListModalView'
+	'view/CampaingListModalView',
+	'view/CharListModalView'
 
-], function (Template, PanelView, CampaingListModalView) {
+], function (Template, PanelView, CampaingListModalView, CharListModalView) {
 
 	'use strict';
 
@@ -20,7 +21,7 @@ define([
 			return _.extend({}, PanelView.prototype.events, {
 				'click ul.pieces-toolbar li': 'highlight',
 				'keyup body': 'unselect',
-				'click .open-campaing-list': 'openCampaingList',
+				'click #settings-tab .btn-default': 'openList',
 				'click #cards-tab .btn-cards .btn': 'toggleCards',
 				'click .send-treasure': 'sendTreasure',
 				'click .use-chaos': 'useChaos',
@@ -71,11 +72,17 @@ define([
 		},
 
 
-		openCampaingList: function (ev) {
+		openList: function (ev) {
 			ev.preventDefault();
 			
-			var campaingListModalView = new CampaingListModalView();
-			campaingListModalView.show();
+			if (HEROQUEST.displayIndex === 0) {
+				var campaingListModalView = new CampaingListModalView();
+				campaingListModalView.show();
+			}
+			else {
+				var charListModalView = new CharListModalView();
+				charListModalView.show();
+			}
 		},
 
 
@@ -85,7 +92,7 @@ define([
 			this.setContent();
 			this.setTitle();
 
-			Backbone.EventBus.on('PiecesPanel.SettingsTab.setCampaing', this.populateSettings, this);
+			Backbone.EventBus.on('PiecesPanel.SettingsTab.setName', this.populateSettings, this);
 		},
 
 
@@ -107,8 +114,8 @@ define([
 		},
 
 
-		populateSettings: function () {
-			$('#settings-tab #campaing-name').val(HEROQUEST.campaingModel.attributes.name);
+		populateSettings: function (name) {
+			$('#settings-tab #settings-name').val(name);
 		},
 
 

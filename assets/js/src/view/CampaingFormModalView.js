@@ -30,7 +30,7 @@ define([
 			this.populate();
 
 			if (this.campaingModel) {
-				this.historyCollection = new HistoryCollection([], {campaing_id: this.campaingModel.attributes._id});
+				this.historyCollection = new HistoryCollection([], {campaing_id: this.campaingModel.attributes.id});
 				this.getHistoryData();
 			}
 		},

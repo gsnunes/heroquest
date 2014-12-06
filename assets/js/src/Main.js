@@ -53,6 +53,11 @@ window.HEROQUEST = (function () {
 
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
+				var participant = gapi.hangout.getLocalParticipant();
+
+				HEROQUEST.participant = participant;
+				//HEROQUEST.displayIndex = participant.displayIndex;
+				HEROQUEST.displayIndex = 1;
 
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com', immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
