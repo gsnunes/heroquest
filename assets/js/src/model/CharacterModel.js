@@ -7,8 +7,6 @@ define(function () {
 		defaults: {
 			name: '',
 			description: '',
-			character: '',
-			quests: 0,
 			attr: {}
 		}
 

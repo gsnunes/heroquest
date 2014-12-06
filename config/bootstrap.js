@@ -10,8 +10,35 @@
  */
 
 module.exports.bootstrap = function(cb) {
+	
+	'use strict';
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+	Character.find().exec(function(err, result) {
+		var characters = [
+			{name: 'Barbarian', description: 'Adaga', attr: {mo: 2, a: 3, d: 2, b: 8, m: 2}},
+			{name: 'Elf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 6, m: 4}},
+			{name: 'Dwarf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 7, m: 3}},
+			{name: 'Wizard', description: 'Adaga', attr: {mo: 2, a: 1, d: 2, b: 4, m: 6}}
+		];
+
+		if (result.length && result.length === characters.length) { return false; }
+
+		Character.destroy(function (err) {
+			if (err) {
+				cb(err);
+			}
+
+			Character.create(characters, function (err) {
+				if (err) {
+					cb(err);
+				}
+
+				console.log('bootstrap created characters');
+			});
+		});
+	});
+
+
+	cb();
+
 };
