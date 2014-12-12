@@ -50,13 +50,18 @@ define([
 
 
 		populate: function () {
-			this.populateCharacter();
+			this.populateCharacterSelect();
 
 			if (this.charModel) {
 				this.$el.find('input#name').val(this.charModel.attributes.name);
 				this.$el.find('textarea#description').val(this.charModel.attributes.description);
+				
 				this.$el.find('select#character').val(this.charModel.attributes.character);
+				this.$el.find('select#character').prop('disabled', true);
+
 				this.$el.find('input#quests').val(this.charModel.attributes.quests);
+
+				this.populateAttr(this.charModel.attributes.attr);
 			}
 		},
 
@@ -65,20 +70,32 @@ define([
 		 * populateAttr
 		 */
 		populateAttr: function (attr) {
-			console.log(attr);
-
-			this.$el.find('input#mo').val();
-			this.$el.find('input#a').val();
-			this.$el.find('input#d').val();
-			this.$el.find('input#b').val();
-			this.$el.find('input#m').val();
+			this.$el.find('input#mo').val(attr.mo);
+			this.$el.find('input#a').val(attr.a);
+			this.$el.find('input#d').val(attr.d);
+			this.$el.find('input#b').val(attr.b);
+			this.$el.find('input#m').val(attr.m);
 		},
 
 
 		/**
-		 * populateCharacter
+		 * getAttr
 		 */
-		populateCharacter: function () {
+		getAttr: function () {
+			return {
+				mo: this.$el.find('input#mo').val(),
+				a: this.$el.find('input#a').val(),
+				d: this.$el.find('input#d').val(),
+				b: this.$el.find('input#b').val(),
+				m: this.$el.find('input#m').val()
+			};
+		},
+
+
+		/**
+		 * populateCharacterSelect
+		 */
+		populateCharacterSelect: function () {
 			var characters = [];
 
 			this.$el.find('select#character').html();
@@ -88,16 +105,15 @@ define([
 			});
 
 			this.$el.find('select#character').html(characters.join());
-
-			//this.populateAttr(this.characterCollection.get(1).attributes.attr);
+			this.populateAttr(this.characterCollection.at(0).attributes.attr);
 		},
 
 
 		/**
 		 * characterChange
 		 */
-		characterChange: function (ev) {
-			console.log(ev);
+		characterChange: function () {
+			this.populateAttr(this.characterCollection.findWhere({name: $('select#character').val()}).attributes.attr);
 		},
 
 
@@ -107,7 +123,8 @@ define([
 				description: this.$el.find('textarea#description').val(),
 				character: this.$el.find('select#character').val(),
 				quests: this.$el.find('input#quests').val(),
-				access_token: this.token.access_token
+				access_token: this.token.access_token,
+				attr: this.getAttr()
 			};
 
 			return data;
