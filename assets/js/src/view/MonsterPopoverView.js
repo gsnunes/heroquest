@@ -52,7 +52,7 @@ define([
 
 
 		setTitle: function () {
-			this.options.title = this.options.monster.title;
+			this.options.title = this.options.monster.title || (this.options.monster.name + ' - ' + this.options.monster.character);
 		},
 		
 
@@ -62,7 +62,7 @@ define([
 				valueMin = parseInt(progressBar.attr('aria-valuemin'), 10),
 				valueMax = parseInt(progressBar.attr('aria-valuemax'), 10),
 				newValue = $(ev.target).attr('class') === 'glyphicon glyphicon-minus' ? (valueNow - 1) : (valueNow + 1),
-				newWidth = (newValue * 100) / this.options.monster.attr.b;
+				newWidth = (newValue * 100) / (progressBar.hasClass('progress-bar-info') ? this.options.monster.attr.m : this.options.monster.attr.b);
 
 			if (newValue >= valueMin && newValue <= valueMax) {
 				progressBar.html(newValue);

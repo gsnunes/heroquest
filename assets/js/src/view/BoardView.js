@@ -115,7 +115,7 @@ define([
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: character, key: key});
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: HEROQUEST.charModel.attributes, key: key});
 					monsterPopoverView.render();
 				}
 

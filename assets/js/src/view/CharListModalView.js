@@ -107,6 +107,7 @@ define([
 						Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
 						Backbone.EventBus.trigger('HistoryPanel.setTitle', campaingModel.attributes.name);
 
+						HEROQUEST.charModel = model;
 						Backbone.EventBus.trigger('BoardView.AddCharPiece', model);
 						self.hide();
 					}
