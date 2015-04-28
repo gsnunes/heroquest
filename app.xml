@@ -17,7 +17,7 @@
 
 		<body>
 
-			<div class="wrapper"></div>
+			
 
 			<!--<script data-main="//192.168.56.101/js/src/config" src="//192.168.56.101/bower_components/requirejs/require.js" id="main"></script>-->
 			<script src="//192.168.56.101/js/src/main-built.js" id="main"></script>
