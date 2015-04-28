@@ -32,7 +32,8 @@
 			<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js" data-main="//192.168.56.101/js/src/Main.js" id="main"></script>
 			-->
 
-			<script data-main="//192.168.56.101/js/src/config" src="//192.168.56.101/bower_components/requirejs/require.js" id="main"></script>
+			<!--<script data-main="//192.168.56.101/js/src/config" src="//192.168.56.101/bower_components/requirejs/require.js" id="main"></script>-->
+			<script src="//192.168.56.101/js/src/main-built.js"></script>
 
 		</body>
 	]]>
