@@ -10,14 +10,14 @@
 		<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 		<script src="//apis.google.com/js/client:plus.js"></script>
 
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<link rel="stylesheet" href="//192.168.56.101/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//192.168.56.101/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="//192.168.56.101/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css" />
 		<link rel="stylesheet" href="//192.168.56.101/styles/main.css" />
 
 		<body>
 
-			<div class="wrapper"></div>
+			
 			
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
