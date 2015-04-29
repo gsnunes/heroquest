@@ -56,7 +56,7 @@ define([
 			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
 			gapi.hangout.data.setValue(pieceId, piece);
 
-			HEROQUEST.historyPanelView.addHistoryItem('selected the ' + charModel.attributes.name  +  ' like your character');
+			GLOBAL.historyPanelView.addHistoryItem('selected the ' + charModel.attributes.name  +  ' like your character');
 		},
 
 
@@ -115,7 +115,7 @@ define([
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: HEROQUEST.charModel.attributes, key: key});
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: GLOBAL.charModel.attributes, key: key});
 					monsterPopoverView.render();
 				}
 
@@ -191,10 +191,10 @@ define([
 					gapi.hangout.data.setValue(pieceId, piece);
 
 					if (this.monsters[pieceIcon.split(' ').pop()]) {
-						HEROQUEST.historyPanelView.addHistoryItem('put a ' + this.monsters[pieceIcon.split(' ').pop()].title + ' on the board.');
+						GLOBAL.historyPanelView.addHistoryItem('put a ' + this.monsters[pieceIcon.split(' ').pop()].title + ' on the board.');
 					}
 					else {
-						HEROQUEST.historyPanelView.addHistoryItem('put a piece on the board.');
+						GLOBAL.historyPanelView.addHistoryItem('put a piece on the board.');
 					}					
 				}
 			}

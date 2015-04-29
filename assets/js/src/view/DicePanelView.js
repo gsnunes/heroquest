@@ -81,7 +81,7 @@ define([
 				}
 			}
 
-			HEROQUEST.historyPanelView.addHistoryItem('dice roll: ' + result);
+			GLOBAL.historyPanelView.addHistoryItem('dice roll: ' + result);
 			$('.dice-result span').html(result);
 			ev.preventDefault();
 		},

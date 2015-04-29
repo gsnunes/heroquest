@@ -8,7 +8,7 @@ define(function (require) {
 		WelcomeModalView = require('view/WelcomeModalView'),
 		HistoryPanelView = require('view/HistoryPanelView');
 
-	return Backbone.View.extend({
+	return Giraffe.App.extend({
 
 		initialize: function () {
 			this.buildDom();

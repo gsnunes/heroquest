@@ -1,0 +1,21 @@
+{
+  "name": "require",
+  "version": "0.0.0",
+  "authors": [
+    "Guilherme Nunes <guinunesilva@gmail.com>"
+  ],
+  "description": "AMD app framework",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.1.1",
+    "moment": "latest",
+    "jquery": "latest",
+    "backbone.giraffe": "0.2.6",
+    "backbone": "1.1.0",
+    "lodash": "~3.6.0",
+    "requirejs": "latest",
+    "requirejs-text": "latest",
+    "jquery-ui": "latest"
+  }
+}

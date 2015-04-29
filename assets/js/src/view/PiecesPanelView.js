@@ -37,7 +37,7 @@ define([
 			var cardName = $(ev.target).parents('a').find('.list-group-item-heading').text(),
 				cardText = $(ev.target).parents('a').find('.list-group-item-text').text();
 
-			HEROQUEST.historyPanelView.addHistoryItem('A hero found the artifact:' + cardName + ' - ' + cardText);
+			GLOBAL.historyPanelView.addHistoryItem('A hero found the artifact:' + cardName + ' - ' + cardText);
 		},
 
 
@@ -48,7 +48,7 @@ define([
 			var cardName = $(ev.target).parents('a').find('.list-group-item-heading').text(),
 				cardText = $(ev.target).parents('a').find('.list-group-item-text').text();
 
-			HEROQUEST.historyPanelView.addHistoryItem('used the chaos spell:' + cardName + ' - ' + cardText);
+			GLOBAL.historyPanelView.addHistoryItem('used the chaos spell:' + cardName + ' - ' + cardText);
 		},
 
 
@@ -60,7 +60,7 @@ define([
 
 			var select = $('#cards-tab .options-content #treasure-participants');
 
-			HEROQUEST.historyPanelView.addHistoryItem(select[0].textContent + ' está procurando por um tesouro!', {personId: select.val(), type: 'TREASURE'});
+			GLOBAL.historyPanelView.addHistoryItem(select[0].textContent + ' está procurando por um tesouro!', {personId: select.val(), type: 'TREASURE'});
 		},
 
 
@@ -75,7 +75,7 @@ define([
 		openList: function (ev) {
 			ev.preventDefault();
 			
-			if (HEROQUEST.displayIndex === 0) {
+			if (GLOBAL.displayIndex === 0) {
 				var campaingListModalView = new CampaingListModalView();
 				campaingListModalView.show();
 			}

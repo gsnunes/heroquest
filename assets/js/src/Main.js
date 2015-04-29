@@ -1,11 +1,13 @@
-window.HEROQUEST = (function () {
+window.GLOBAL = (function () {
 
 	'use strict';
 
 	document.oncontextmenu = function() {return false;};
 	
 
+
 	Backbone.EventBus = _.extend({}, Backbone.Events);
+
 
 
 	var _sync = Backbone.sync;
@@ -27,42 +29,22 @@ window.HEROQUEST = (function () {
 		return _sync.call( this, method, model, options );
 	};
 
-	
-	require.config({
-		urlArgs: 'bust=' + (new Date()).getTime(),
-		paths: {
-			text: '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.10/text.min',
-			template: '../../templates'
-		},
-		config: {
-			text: {
-				//http://rockycode.com/blog/cross-domain-requirejs-text/
-				useXhr: function () {
-					return true;
-				}
-			}
-		}
-	});
 
 
-	require([
-		
-		'view/AppView'
-
-	], function (AppView) {
+	require(['App'], function (App) {
 
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
 				var participant = gapi.hangout.getLocalParticipant();
 
-				HEROQUEST.participant = participant;
-				//HEROQUEST.displayIndex = participant.displayIndex;
-				HEROQUEST.displayIndex = 1;
+				GLOBAL.participant = participant;
+				GLOBAL.displayIndex = participant.displayIndex;
+				//GLOBAL.displayIndex = 1;
 
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com', immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
-						var appView = new AppView();
-						appView.render();
+						var myApp = new App();
+						myApp.attachTo('.wrapper').start();
 					});
 				});
 
@@ -72,9 +54,11 @@ window.HEROQUEST = (function () {
 	});
 
 
+
 	return {
 
-		host: $('#main').attr('data-main').split('/')[2]
+		config: {},
+		host: $('#main').attr('src').split('/')[2]
 
 	};
 

@@ -27,7 +27,7 @@ define([
 
 
 		onHidden: function () {
-			if (HEROQUEST.displayIndex === 0) {
+			if (GLOBAL.displayIndex === 0) {
 				this.showCampaingListModal();
 			}
 			else {

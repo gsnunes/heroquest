@@ -92,7 +92,7 @@ define([
 		 * start
 		 */
 		start: function (model) {
-			HEROQUEST.campaingModel = model;
+			GLOBAL.campaingModel = model;
 
 			gapi.hangout.data.setValue('campaingId', model.attributes.id.toString());
 

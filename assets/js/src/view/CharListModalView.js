@@ -102,12 +102,12 @@ define([
 				this.campaingCollection.fetch({
 					success: function () {
 						campaingModel = self.campaingCollection.get(campaingId);
-						HEROQUEST.campaingModel = campaingModel;
+						GLOBAL.campaingModel = campaingModel;
 
 						Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
 						Backbone.EventBus.trigger('HistoryPanel.setTitle', campaingModel.attributes.name);
 
-						HEROQUEST.charModel = model;
+						GLOBAL.charModel = model;
 						Backbone.EventBus.trigger('BoardView.AddCharPiece', model);
 						self.hide();
 					}

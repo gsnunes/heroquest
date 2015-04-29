@@ -4,7 +4,7 @@ define(function () {
 
 	return Backbone.Model.extend({
 
-		url: 'https://' + HEROQUEST.host + '/history',
+		url: 'https://' + GLOBAL.host + '/history',
 
 		defaults: {
 			message: '',

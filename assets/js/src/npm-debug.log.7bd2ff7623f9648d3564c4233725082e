@@ -1,0 +1,184 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'requirejs' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 silly cache add args [ 'requirejs', null ]
+5 verbose cache add spec requirejs
+6 silly cache add parsed spec { raw: 'requirejs',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'requirejs',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed requirejs@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'requirejs', range: '*', hasData: false }
+11 silly mapToRegistry name requirejs
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry https://registry.npmjs.org/
+14 silly mapToRegistry uri https://registry.npmjs.org/requirejs
+15 verbose addNameRange registry:https://registry.npmjs.org/requirejs not in flight; fetching
+16 verbose request uri https://registry.npmjs.org/requirejs
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 2:24:06 PM
+19 verbose request id cb6b4b7090124b56
+20 http request GET https://registry.npmjs.org/requirejs
+21 http 200 https://registry.npmjs.org/requirejs
+22 silly get cb [ 200,
+22 silly get   { date: 'Tue, 28 Apr 2015 14:24:07 GMT',
+22 silly get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 silly get     etag: '"DDJCP641JL62TY16OT1N7BNFB"',
+22 silly get     'content-type': 'application/json',
+22 silly get     'cache-control': 'max-age=60',
+22 silly get     'content-length': '38184',
+22 silly get     'accept-ranges': 'bytes',
+22 silly get     via: '1.1 varnish',
+22 silly get     age: '59',
+22 silly get     'x-served-by': 'cache-jfk1023-JFK',
+22 silly get     'x-cache': 'HIT',
+22 silly get     'x-cache-hits': '2',
+22 silly get     'x-timer': 'S1430231047.437666,VS0,VE0',
+22 silly get     vary: 'Accept',
+22 silly get     'keep-alive': 'timeout=10, max=50',
+22 silly get     connection: 'Keep-Alive' } ]
+23 verbose get saving requirejs to /home/vagrant/.npm/registry.npmjs.org/requirejs/.cache.json
+24 silly addNameRange number 2 { name: 'requirejs', range: '*', hasData: true }
+25 silly addNameRange versions [ 'requirejs',
+25 silly addNameRange   [ '0.26.0',
+25 silly addNameRange     '0.27.0',
+25 silly addNameRange     '0.27.1',
+25 silly addNameRange     '1.0.0',
+25 silly addNameRange     '1.0.1',
+25 silly addNameRange     '1.0.2',
+25 silly addNameRange     '1.0.3',
+25 silly addNameRange     '1.0.4',
+25 silly addNameRange     '1.0.5',
+25 silly addNameRange     '1.0.6',
+25 silly addNameRange     '1.0.7',
+25 silly addNameRange     '1.0.8',
+25 silly addNameRange     '2.0.0',
+25 silly addNameRange     '2.0.1',
+25 silly addNameRange     '2.0.2',
+25 silly addNameRange     '2.0.3',
+25 silly addNameRange     '2.0.4',
+25 silly addNameRange     '2.0.5',
+25 silly addNameRange     '2.0.6',
+25 silly addNameRange     '2.1.0',
+25 silly addNameRange     '2.1.1',
+25 silly addNameRange     '2.1.2',
+25 silly addNameRange     '2.1.3',
+25 silly addNameRange     '2.1.4',
+25 silly addNameRange     '2.1.5',
+25 silly addNameRange     '2.1.6',
+25 silly addNameRange     '2.1.7',
+25 silly addNameRange     '2.1.8',
+25 silly addNameRange     '2.1.9',
+25 silly addNameRange     '2.1.10',
+25 silly addNameRange     '2.1.11',
+25 silly addNameRange     '2.1.12',
+25 silly addNameRange     '2.1.13',
+25 silly addNameRange     '2.1.14',
+25 silly addNameRange     '2.1.15',
+25 silly addNameRange     '2.1.16',
+25 silly addNameRange     '2.1.17' ] ]
+26 verbose addNamed requirejs@2.1.17
+27 silly addNamed semver.valid 2.1.17
+28 silly addNamed semver.validRange 2.1.17
+29 silly mapToRegistry name requirejs
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry uri https://registry.npmjs.org/requirejs
+33 verbose addRemoteTarball https://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz not in flight; adding
+34 verbose addRemoteTarball [ 'https://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz',
+34 verbose addRemoteTarball   'd812203a34f7fd571f52e459d7748fc0f8717f27' ]
+35 info retry fetch attempt 1 at 2:24:07 PM
+36 info attempt registry request try #1 at 2:24:07 PM
+37 http fetch GET https://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz
+38 http fetch 200 https://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz
+39 silly fetchAndShaCheck shasum d812203a34f7fd571f52e459d7748fc0f8717f27
+40 verbose addTmpTarball /tmp/npm-12428-a1ec5e7d/registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz not in flight; adding
+41 verbose addTmpTarball already have metadata; skipping unpack for requirejs@2.1.17
+42 silly cache afterAdd requirejs@2.1.17
+43 verbose afterAdd /home/vagrant/.npm/requirejs/2.1.17/package/package.json not in flight; writing
+44 verbose afterAdd /home/vagrant/.npm/requirejs/2.1.17/package/package.json written
+45 silly install resolved [ { name: 'requirejs',
+45 silly install resolved     description: 'Node adapter for RequireJS, for loading AMD modules. Includes RequireJS optimizer',
+45 silly install resolved     version: '2.1.17',
+45 silly install resolved     homepage: 'http://github.com/jrburke/r.js',
+45 silly install resolved     author:
+45 silly install resolved      { name: 'James Burke',
+45 silly install resolved        email: 'jrburke@gmail.com',
+45 silly install resolved        url: 'http://github.com/jrburke' },
+45 silly install resolved     licenses: [ [Object], [Object] ],
+45 silly install resolved     repository: { type: 'git', url: 'https://github.com/jrburke/r.js.git' },
+45 silly install resolved     main: './bin/r.js',
+45 silly install resolved     bin: { 'r.js': './bin/r.js' },
+45 silly install resolved     engines: { node: '>=0.4.0' },
+45 silly install resolved     bugs: { url: 'https://github.com/jrburke/r.js/issues' },
+45 silly install resolved     _id: 'requirejs@2.1.17',
+45 silly install resolved     scripts: {},
+45 silly install resolved     _shasum: 'd812203a34f7fd571f52e459d7748fc0f8717f27',
+45 silly install resolved     _from: 'requirejs@*',
+45 silly install resolved     _npmVersion: '1.4.28',
+45 silly install resolved     _npmUser: { name: 'jrburke', email: 'jrburke@gmail.com' },
+45 silly install resolved     maintainers: [ [Object] ],
+45 silly install resolved     dist:
+45 silly install resolved      { shasum: 'd812203a34f7fd571f52e459d7748fc0f8717f27',
+45 silly install resolved        tarball: 'http://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz' },
+45 silly install resolved     directories: {},
+45 silly install resolved     _resolved: 'https://registry.npmjs.org/requirejs/-/requirejs-2.1.17.tgz' } ]
+46 info install requirejs@2.1.17 into /usr/local/lib
+47 info installOne requirejs@2.1.17
+48 verbose installOne of requirejs to /usr/local/lib not in flight; installing
+49 verbose lock using /home/vagrant/.npm/_locks/requirejs-ce2a5f017f571c77.lock for /usr/local/lib/node_modules/requirejs
+50 silly install write writing requirejs 2.1.17 to /usr/local/lib/node_modules/requirejs
+51 silly cache addNamed cb requirejs@2.1.17
+52 verbose unbuild lib/node_modules/requirejs
+53 silly gentlyRm /usr/local/lib/node_modules/requirejs is being purged from base /usr/local
+54 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/requirejs
+55 verbose tar unpack /home/vagrant/.npm/requirejs/2.1.17/package.tgz
+56 verbose tar unpacking to /usr/local/lib/node_modules/requirejs
+57 silly gentlyRm /usr/local/lib/node_modules/requirejs is being purged
+58 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/requirejs
+59 silly gunzTarPerm modes [ '775', '664' ]
+60 error tar.unpack untar error /home/vagrant/.npm/requirejs/2.1.17/package.tgz
+61 verbose unlock done using /home/vagrant/.npm/_locks/requirejs-ce2a5f017f571c77.lock for /usr/local/lib/node_modules/requirejs
+62 verbose fstream_path /usr/local/lib/node_modules/requirejs
+63 verbose fstream_type Directory
+64 verbose fstream_class DirWriter
+65 verbose stack Error: EACCES, mkdir '/usr/local/lib/node_modules/requirejs'
+65 verbose stack     at Error (native)
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+66 verbose fstream_stack FSReqWrap.oncomplete (fs.js:95:15)
+67 verbose cwd /var/www/html/heroquest/assets/js/src
+68 error Linux 3.13.0-24-generic
+69 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "requirejs"
+70 error node v0.12.2
+71 error npm  v2.7.4
+72 error path /usr/local/lib/node_modules/requirejs
+73 error code EACCES
+74 error errno -13
+75 error Error: EACCES, mkdir '/usr/local/lib/node_modules/requirejs'
+75 error     at Error (native)
+75 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/requirejs']
+75 error   errno: -13,
+75 error   code: 'EACCES',
+75 error   path: '/usr/local/lib/node_modules/requirejs',
+75 error   fstream_type: 'Directory',
+75 error   fstream_path: '/usr/local/lib/node_modules/requirejs',
+75 error   fstream_class: 'DirWriter',
+75 error   fstream_stack:
+75 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+75 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+75 error      'FSReqWrap.oncomplete (fs.js:95:15)' ] }
+76 error Please try running this command again as root/Administrator.
+77 verbose exit [ -13, true ]
+78 verbose unbuild lib/node_modules/requirejs
+79 silly gentlyRm /usr/local/lib/node_modules/requirejs is being purged from base /usr/local
+80 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/requirejs
