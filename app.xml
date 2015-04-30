@@ -17,7 +17,7 @@
 
 		<body>
 
-			<div class="wrapper"></div>
+			<div id="app-wrapper"></div>
 
 			<script data-main="//localhost:1337/js/src/config" src="//localhost:1337/bower_components/requirejs/require.js" id="main"></script>
 			<!--<script src="//localhost:1337/js/src/main-built.js" id="main"></script>-->

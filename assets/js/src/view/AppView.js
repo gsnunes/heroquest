@@ -31,25 +31,25 @@ define(function (require) {
 
 
 		buildBoard: function () {
-			var boardView = new BoardView({el: $('.wrapper')});
+			var boardView = new BoardView({el: $('#app-wrapper')});
 			boardView.render();
 		},
 
 
 		buildDicePanel: function () {
-			var dicePanelView = new DicePanelView({el: $('.wrapper')});
+			var dicePanelView = new DicePanelView({el: $('#app-wrapper')});
 			dicePanelView.render();
 		},
 
 
 		buildPiecesPanel: function () {
-			var piecesPanelView = new PiecesPanelView({el: $('.wrapper')});
+			var piecesPanelView = new PiecesPanelView({el: $('#app-wrapper')});
 			piecesPanelView.render();
 		},
 		
 
 		buildHistoryPanel: function () {
-			var historyPanelView = new HistoryPanelView({el: $('.wrapper')});
+			var historyPanelView = new HistoryPanelView({el: $('#app-wrapper')});
 			historyPanelView.render();
 
 			GLOBAL.historyPanelView = historyPanelView;

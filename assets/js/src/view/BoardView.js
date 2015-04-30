@@ -81,8 +81,8 @@ define([
 					$('.board').append(wrapper);
 
 					value.css({
-						left: value.offset().left - (value.width() / 2) + $('.wrapper').get(0).scrollLeft,
-						top: value.offset().top - (value.height() / 2) + $('.wrapper').get(0).scrollTop
+						left: value.offset().left - (value.width() / 2) + $('#app-wrapper').get(0).scrollLeft,
+						top: value.offset().top - (value.height() / 2) + $('#app-wrapper').get(0).scrollTop
 					});
 				}
 				else {
