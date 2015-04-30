@@ -3,9 +3,10 @@ define([
 	'text!template/HistoryPanelView.html',
 	'view/component/PanelView',
 	'model/HistoryModel',
-	'collection/HistoryCollection'
+	'collection/HistoryCollection',
+	'moment'
 
-], function (Template, PanelView, HistoryModel, HistoryCollection) {
+], function (Template, PanelView, HistoryModel, HistoryCollection, moment) {
 
 	'use strict';
 

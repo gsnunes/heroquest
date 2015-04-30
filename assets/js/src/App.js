@@ -31,8 +31,8 @@ define(function (require) {
 
 
 		buildBoard: function () {
-			var boardView = new BoardView({el: $('#app-wrapper')});
-			boardView.render();
+			var boardView = new BoardView();
+			boardView.attachTo('#app-wrapper');
 		},
 
 

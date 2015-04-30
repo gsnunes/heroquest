@@ -3,13 +3,13 @@ define([
 	'text!template/BoardView.html',
 	'view/MonsterPopoverView'
 
-], function (Template, MonsterPopoverView) {
+], function (html, MonsterPopoverView) {
 
 	'use strict';
 
-	return Backbone.View.extend({
+	return Giraffe.View.extend({
 
-		template: _.template(Template),
+		template: html,
 
 
 		events: {
@@ -173,9 +173,11 @@ define([
 		},
 
 
+		/*
 		render: function () {
 			this.$el.append(this.template());
 		},
+		*/
 		
 
 		setPices: function (ev) {
