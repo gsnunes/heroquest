@@ -113,7 +113,20 @@ define([
 		 * characterChange
 		 */
 		characterChange: function () {
-			this.populateAttr(this.characterCollection.findWhere({name: $('select#character').val()}).attributes.attr);
+			var charCollection = this.characterCollection.findWhere({name: $('select#character').val()});
+			this.populateAttr(charCollection.attributes.attr);
+
+			if (charCollection.attributes.hasSpell) {
+				this.createSpellDropdown();
+			}
+		},
+
+
+		/**
+		 * createSpellDropdown
+		 */
+		createSpellDropdown: function () {
+			//this.$el.find('.modal-body').append('<select class="form-control" id="spellTypes"><option></option><option>test</option></select>');
 		},
 
 

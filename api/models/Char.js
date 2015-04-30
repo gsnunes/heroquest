@@ -13,7 +13,9 @@ module.exports = {
 	character: 'string',
 	quests: 'integer',
 	person: 'json',
-	attr: 'json'
+	attr: 'json',
+	hasSpell: 'boolean',
+	spellType: 'string'
   }
 
 };

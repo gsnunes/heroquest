@@ -15,10 +15,10 @@ module.exports.bootstrap = function(cb) {
 
 	Character.find().exec(function(err, result) {
 		var characters = [
-			{name: 'Barbarian', description: 'Adaga', attr: {mo: 2, a: 3, d: 2, b: 8, m: 2}},
-			{name: 'Elf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 6, m: 4}},
-			{name: 'Dwarf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 7, m: 3}},
-			{name: 'Wizard', description: 'Adaga', attr: {mo: 2, a: 1, d: 2, b: 4, m: 6}}
+			{name: 'Barbarian', description: 'Adaga', attr: {mo: 2, a: 3, d: 2, b: 8, m: 2}, hasSpell: false},
+			{name: 'Elf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 6, m: 4}, hasSpell: true},
+			{name: 'Dwarf', description: 'Adaga', attr: {mo: 2, a: 2, d: 2, b: 7, m: 3}, hasSpell: false},
+			{name: 'Wizard', description: 'Adaga', attr: {mo: 2, a: 1, d: 2, b: 4, m: 6}, hasSpell: true}
 		];
 
 		if (result.length && result.length === characters.length) { return false; }

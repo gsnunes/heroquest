@@ -9,7 +9,9 @@ define(function () {
 			description: '',
 			character: '',
 			quests: 0,
-			attr: {}
+			attr: {},
+			hasSpell: false,
+			spellType: ''
 		}
 
 	});
