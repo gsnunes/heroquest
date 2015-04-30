@@ -13,7 +13,9 @@ require.config({
 
 		'moment': '../../bower_components/moment/min/moment.min',
 
-		'template': '../../templates'
+		'template': '../../templates',
+
+		'util': 'util'
 	},
 	shim: {
 		'jquery-ui': {
@@ -31,8 +33,11 @@ require.config({
 		'giraffe': {
 			deps: ['backbone']
 		},
-		'main': {
+		'util': {
 			deps: ['giraffe']
+		},
+		'main': {
+			deps: ['util']
 		}
 	},
 	config: {

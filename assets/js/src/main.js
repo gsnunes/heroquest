@@ -60,7 +60,7 @@ window.GLOBAL = (function () {
 	return {
 
 		config: {},
-		host: $('#main').attr('src').split('/')[2]
+		host: util.getHost()
 
 	};
 
