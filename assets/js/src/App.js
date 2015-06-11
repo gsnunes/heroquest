@@ -11,6 +11,16 @@ define(function (require) {
 	return Giraffe.App.extend({
 
 		initialize: function () {
+			var my_dictionary = {
+				'some text': 'a translation',
+				'some more text': 'another translation'
+			};
+
+			$.i18n.load(my_dictionary);
+
+			console.log($.i18n._('some text'));
+			
+
 			this.buildDom();
 			this.welcome();
 		},

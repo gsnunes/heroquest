@@ -16,6 +16,7 @@
     "lodash": "~3.6.0",
     "requirejs": "latest",
     "requirejs-text": "latest",
-    "jquery-ui": "latest"
+    "jquery-ui": "latest",
+    "jquery-i18n": "~1.1.1"
   }
 }

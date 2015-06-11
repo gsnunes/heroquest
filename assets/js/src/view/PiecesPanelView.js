@@ -93,6 +93,11 @@ define([
 			this.setTitle();
 
 			Backbone.EventBus.on('PiecesPanel.SettingsTab.setName', this.populateSettings, this);
+
+			if (GLOBAL.displayIndex === 1) {
+				console.log(this.$el.find('#myTab'));
+				$('#myTab a').parents('li').removeClass('hide');
+			}
 		},
 
 
