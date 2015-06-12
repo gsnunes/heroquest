@@ -43,7 +43,7 @@ module.exports = {
     key: require('fs').readFileSync(__dirname + '/ssl/server.key'),
     cert: require('fs').readFileSync(__dirname + '/ssl/server.crt'),
     passphrase: 'phrase'
-  }
+  },
 
   /***************************************************************************
    * The `port` setting determines which TCP port your app will be           *
@@ -61,7 +61,7 @@ module.exports = {
    * to 80 (http://) or 443 (https://) if you have an SSL certificate        *
    ***************************************************************************/
 
-  // port: process.env.PORT || 1337,
+  port: process.env.PORT || 1337,
 
   /***************************************************************************
    * The runtime "environment" of your Sails app is either typically         *
