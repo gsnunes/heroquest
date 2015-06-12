@@ -15,6 +15,18 @@ util = (function () {
 			});
 
 			return host;
+		},
+
+
+		getEnv: function () {
+			var host = this.getHost().substr(0, 9),
+				env = 'dev';
+
+			if (host === 'test.hangouts.com') {
+				env = 'test';
+			}
+
+			return env;
 		}
 
 	};

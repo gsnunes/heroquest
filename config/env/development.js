@@ -21,4 +21,8 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
 
+  routes: {
+  	'GET /': 'https://plus.google.com/hangouts/_?gid=235382286790'
+  }
+
 };
