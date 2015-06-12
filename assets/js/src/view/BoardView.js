@@ -1,15 +1,15 @@
 define([
 
-	'text!template/BoardView.html',
 	'view/MonsterPopoverView'
 
-], function (html, MonsterPopoverView) {
+], function (MonsterPopoverView) {
 
 	'use strict';
 
 	return Giraffe.View.extend({
 
-		template: html,
+
+		className: 'board',
 
 
 		events: {
