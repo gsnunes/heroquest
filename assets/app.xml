@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="HeroQuest">
+		<Require feature="rpc"/>
+		<Require feature="views"/>
+	</ModulePrefs>
+
+	<Content type="html">
+	<![CDATA[
+		<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+		<script src="//apis.google.com/js/client:plus.js"></script>
+
+		<link rel="stylesheet" href="//localhost:1337/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//localhost:1337/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="//localhost:1337/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css" />
+		<link rel="stylesheet" href="//localhost:1337/styles/main.css" />
+
+		<body>
+
+			<div id="app-wrapper"></div>
+
+			<script data-main="//localhost:1337/js/src/config" src="//localhost:1337/bower_components/requirejs/require.js" id="main-script"></script>
+			<!--<script src="//localhost:1337/js/src/main-built.js" id="main-script"></script>-->
+
+		</body>
+	]]>
+	</Content>
+</Module>
