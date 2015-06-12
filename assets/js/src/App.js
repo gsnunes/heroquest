@@ -17,8 +17,6 @@ define(function (require) {
 			};
 
 			$.i18n.load(my_dictionary);
-
-			console.log($.i18n._('some text'));
 			
 
 			this.buildDom();
@@ -47,14 +45,14 @@ define(function (require) {
 
 
 		buildDicePanel: function () {
-			var dicePanelView = new DicePanelView({el: $('#app-wrapper')});
-			dicePanelView.render();
+			var dicePanelView = new DicePanelView();
+			dicePanelView.attachTo('#app-wrapper');
 		},
 
 
 		buildPiecesPanel: function () {
-			var piecesPanelView = new PiecesPanelView({el: $('#app-wrapper')});
-			piecesPanelView.render();
+			var piecesPanelView = new PiecesPanelView();
+			piecesPanelView.attachTo('#app-wrapper');
 		},
 		
 

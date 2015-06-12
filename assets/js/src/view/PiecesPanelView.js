@@ -1,24 +1,24 @@
 define([
 
 	'text!template/PiecesPanelView.html',
-	'view/component/PanelView',
+	'view/component/NewPanelView',
 	'view/CampaingListModalView',
 	'view/CharListModalView'
 
-], function (Template, PanelView, CampaingListModalView, CharListModalView) {
+], function (html, NewPanelView, CampaingListModalView, CharListModalView) {
 
 	'use strict';
 
-	return PanelView.extend({
+	return NewPanelView.extend({
 
-		pieceTemplate: _.template(Template),
+		pieceTemplate: _.template(html),
 
 
 		className: 'pieces-panel',
 
 
 		events: function () {
-			return _.extend({}, PanelView.prototype.events, {
+			return _.extend({}, NewPanelView.prototype.events, {
 				'click ul.pieces-toolbar li': 'highlight',
 				'keyup body': 'unselect',
 				'click #settings-tab .btn-default': 'openList',
@@ -87,17 +87,31 @@ define([
 
 
 		initialize: function () {
-			PanelView.prototype.initialize.apply(this, arguments);
-
-			this.setContent();
-			this.setTitle();
+			NewPanelView.prototype.initialize.apply(this, arguments);
 
 			Backbone.EventBus.on('PiecesPanel.SettingsTab.setName', this.populateSettings, this);
+		},
 
-			if (GLOBAL.displayIndex === 1) {
-				console.log(this.$el.find('#myTab'));
-				$('#myTab a').parents('li').removeClass('hide');
+
+		afterRender: function () {
+			NewPanelView.prototype.afterRender.apply(this, arguments);
+
+			this.setBody(html);
+			this.setTitle('Toolbar');
+
+			if (GLOBAL.displayIndex === 0) {
+				this.$('#myTab').find('a[href="#monsters-tab"]').parents('li').removeClass('hide');
+				this.$('#myTab').find('a[href="#furnitures-tab"]').parents('li').removeClass('hide');
+				this.$('#myTab').find('a[href="#tiles-tab"]').parents('li').removeClass('hide');
+				this.$('#myTab').find('a[href="#cards-tab"]').parents('li').removeClass('hide');
+				this.$('#myTab').find('a[href="#settings-tab"]').parents('li').removeClass('hide');
 			}
+			else {
+				this.$('#myTab').find('a[href="#hero-cards-tab"]').parents('li').removeClass('hide');
+				this.$('#myTab').find('a[href="#settings-tab"]').parents('li').removeClass('hide');
+			}
+
+			this.$('#myTab li:visible:eq(0) a').tab('show');
 		},
 
 
@@ -121,16 +135,6 @@ define([
 
 		populateSettings: function (name) {
 			$('#settings-tab #settings-name').val(name);
-		},
-
-
-		setContent: function () {
-			this.options.content = this.pieceTemplate();
-		},
-
-
-		setTitle: function () {
-			this.options.title = 'Master Toolbar';
 		},
 
 

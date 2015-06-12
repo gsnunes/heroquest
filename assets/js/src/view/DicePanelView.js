@@ -1,22 +1,19 @@
 define([
 
 	'text!template/DicePanelView.html',
-	'view/component/PanelView'
+	'view/component/NewPanelView'
 
-], function (Template, PanelView) {
+], function (html, NewPanelView) {
 
 	'use strict';
 
-	return PanelView.extend({
-
-		diceTemplate: _.template(Template),
-
+	return NewPanelView.extend({
 
 		className: 'dice-panel',
 
 
 		events: function () {
-			return _.extend({}, PanelView.prototype.events, {
+			return _.extend({}, NewPanelView.prototype.events, {
 				'submit form[name="form-dice"]': 'roll',
 				'change input[name="dice-options"]': 'setForm',
 				'keypress #count-dice': 'onEnterPress'
@@ -24,21 +21,11 @@ define([
 		},
 
 
-		initialize: function () {
-			PanelView.prototype.initialize.apply(this, arguments);
+		afterRender: function () {
+			NewPanelView.prototype.afterRender.apply(this, arguments);
 
-			this.setContent();
-			this.setTitle();
-		},
-
-
-		setContent: function () {
-			this.options.content = this.diceTemplate();
-		},
-
-
-		setTitle: function () {
-			this.options.title = 'Dice Roller';
+			this.setBody(html);
+			this.setTitle('Dice Roller');
 		},
 
 
@@ -51,8 +38,8 @@ define([
 					5: 'Escudo',
 					6: 'Besouro'
 				},
-				diceOption = $('input[name="dice-options"]:checked').val(),
-				len = $('#count-dice').val(),
+				diceOption = this.$('input[name="dice-options"]:checked').val(),
+				len = this.$('#count-dice').val(),
 				result = '',
 				total = 0,
 				random,
@@ -82,16 +69,16 @@ define([
 			}
 
 			GLOBAL.historyPanelView.addHistoryItem('dice roll: ' + result);
-			$('.dice-result span').html(result);
+			this.$('.dice-result span').html(result);
 			ev.preventDefault();
 		},
 
 
-		setForm: function () {
-			$("#count-dice").focus();
+		setForm: function (ev) {
+			this.$('#count-dice').focus();
 
-			if ($(this).filter(':checked').val() === 'movement') {
-				$("#count-dice").val(2);
+			if ($(ev.target).filter(':checked').val() === 'movement') {
+				this.$("#count-dice").val(2);
 			}
 		},
 		

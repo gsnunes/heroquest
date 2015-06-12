@@ -19,6 +19,11 @@ define(['text!template/component/NewPanelView.html'], function (html) {
 
 
 		afterRender: function () {
+			this.setDraggable();
+		},
+
+
+		setDraggable: function () {
 			this.$('.panel').draggable({
 				containment: '.board',
 				handle: '.panel-heading'
@@ -31,12 +36,12 @@ define(['text!template/component/NewPanelView.html'], function (html) {
 		},
 
 
-		setBody: function () {
+		setBody: function (data) {
 			this.$('.panel-body').html(data);
 		},
 
 
-		setFooter: function () {
+		setFooter: function (data) {
 			this.$('.panel-footer').html(data);
 		}
 

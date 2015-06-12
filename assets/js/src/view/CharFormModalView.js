@@ -106,6 +106,7 @@ define([
 
 			this.$el.find('select#character').html(characters.join());
 			this.populateAttr(this.characterCollection.at(0).attributes.attr);
+			this.$el.find('textarea#description').val(this.characterCollection.at(0).attributes.description);
 		},
 
 
@@ -114,6 +115,7 @@ define([
 		 */
 		characterChange: function () {
 			var charCollection = this.characterCollection.findWhere({name: $('select#character').val()});
+			this.$el.find('textarea#description').val(charCollection.attributes.description);
 			this.populateAttr(charCollection.attributes.attr);
 
 			if (charCollection.attributes.hasSpell) {

@@ -40,8 +40,8 @@ window.GLOBAL = (function () {
 				var participant = gapi.hangout.getLocalParticipant();
 
 				GLOBAL.participant = participant;
-				//GLOBAL.displayIndex = participant.displayIndex;
-				GLOBAL.displayIndex = 1;
+				GLOBAL.displayIndex = participant.displayIndex;
+				//GLOBAL.displayIndex = 1;
 
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com', immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
