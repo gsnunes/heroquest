@@ -6,3 +6,8 @@ if [ "$WERCKER_DEPLOYTARGET_NAME" = "dev" ]; then
 	#sed -i 's!192.168.56.101!test.hangoutsplay.com!g' app.xml
 	scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/dev.hangoutsplay.com/public_html
 fi
+
+if [ "$WERCKER_DEPLOYTARGET_NAME" = "test" ]; then
+	sed -i 's!localhost:1337!test.hangoutsplay.com!g' app.xml
+	scp -i $PRIVATEKEY_PATH app.xml root@104.236.20.173:/var/www/test.hangoutsplay.com/public_html
+fi
