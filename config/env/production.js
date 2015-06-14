@@ -27,11 +27,6 @@ module.exports = {
 
   port: 1338,
 
-
-  routes: {
-    'GET /': 'https://plus.google.com/hangouts/_?gid=463313181619'
-  }
-
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/
@@ -39,5 +34,9 @@ module.exports = {
   // log: {
   //   level: "silent"
   // }
+
+  routes: {
+    'GET /': 'https://plus.google.com/hangouts/_?gid=463313181619'
+  }
 
 };

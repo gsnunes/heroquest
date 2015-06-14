@@ -25,6 +25,12 @@ module.exports = {
 
   routes: {
   	'GET /': 'https://plus.google.com/hangouts/_?gid=235382286790'
+  },
+
+  ssl: {
+    key: require('fs').readFileSync(__dirname + '/ssl/server.key'),
+    cert: require('fs').readFileSync(__dirname + '/ssl/server.crt'),
+    passphrase: 'phrase'
   }
 
 };
