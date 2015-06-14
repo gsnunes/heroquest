@@ -36,7 +36,7 @@ module.exports = {
   // }
 
   routes: {
-    'GET /': 'https://plus.google.com/hangouts/_?gid=463313181619'
+    'GET /': 'https://plus.google.com/hangouts/_?gid=235382286790'
   }
 
 };

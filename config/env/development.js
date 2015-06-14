@@ -24,7 +24,7 @@ module.exports = {
   port: 1337,
 
   routes: {
-  	'GET /': 'https://plus.google.com/hangouts/_?gid=235382286790'
+  	'GET /': 'https://plus.google.com/hangouts/_?gid=463313181619'
   },
 
   ssl: {
