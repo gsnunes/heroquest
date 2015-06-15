@@ -112,6 +112,11 @@ define([
 			}
 
 			this.$('#myTab li:visible:eq(0) a').tab('show');
+
+			var self = this;
+			this.$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				self.onTabChange(e.target);
+			});
 		},
 
 

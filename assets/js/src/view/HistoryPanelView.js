@@ -51,7 +51,7 @@ define([
 			if (ev.addedKeys.length && this.isPiece(ev.addedKeys[0].key)) {
 				var value = ev.addedKeys[0].value;
 
-				$('.history-panel .history-list').append('<li>' + value + '</li>');
+				$('.history-list').append('<li>' + value + '</li>');
 
 				this.updateScroll();
 			}
@@ -62,7 +62,7 @@ define([
 		 * updateScroll
 		 */
 		updateScroll: function () {
-			$('.history-panel .panel-body').animate({ scrollTop: $('.history-panel .panel-body').get(0).scrollHeight }, "slow");
+			this.$('.panel-body').animate({ scrollTop: this.$('.panel-body').get(0).scrollHeight }, "slow");
 		},
 
 
@@ -124,8 +124,8 @@ define([
 
 
 		updateCampaing: function (campaingName) {
-			$('.history-panel .history-list').html('');
-			this.$el.find('.history-panel .panel-heading').html(('History - ' + campaingName) || 'History');
+			this.$('.history-list').html('');
+			this.$('.panel-title').html(('History - ' + campaingName) || 'History');
 		}
 
 	});
