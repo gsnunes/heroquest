@@ -10,15 +10,22 @@ define(function (require) {
 
 	return Giraffe.App.extend({
 
+		id: 'app-wrapper',
+		
+
 		initialize: function () {
+			/*
 			var my_dictionary = {
 				'some text': 'a translation',
 				'some more text': 'another translation'
 			};
 
 			$.i18n.load(my_dictionary);
-			
+			*/
+		},
 
+
+		afterRender: function () {
 			this.buildDom();
 			this.welcome();
 		},
@@ -40,25 +47,25 @@ define(function (require) {
 
 		buildBoard: function () {
 			var boardView = new BoardView();
-			boardView.attachTo('#app-wrapper');
+			boardView.attachTo(this);
 		},
 
 
 		buildDicePanel: function () {
 			var dicePanelView = new DicePanelView();
-			dicePanelView.attachTo('#app-wrapper');
+			dicePanelView.attachTo(this);
 		},
 
 
 		buildPiecesPanel: function () {
 			var piecesPanelView = new PiecesPanelView();
-			piecesPanelView.attachTo('#app-wrapper');
+			piecesPanelView.attachTo(this);
 		},
 		
 
 		buildHistoryPanel: function () {
-			var historyPanelView = new HistoryPanelView({el: $('#app-wrapper')});
-			historyPanelView.render();
+			var historyPanelView = new HistoryPanelView();
+			historyPanelView.attachTo(this);
 
 			GLOBAL.historyPanelView = historyPanelView;
 		}

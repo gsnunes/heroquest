@@ -13,7 +13,7 @@ define([
 
 
 		events: {
-			'click .board': 'setPices'
+			'click': 'setPices'
 		},
 
 
@@ -171,13 +171,6 @@ define([
 
 			gapi.hangout.data.submitDelta(delta);
 		},
-
-
-		/*
-		render: function () {
-			this.$el.append(this.template());
-		},
-		*/
 		
 
 		setPices: function (ev) {

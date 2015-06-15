@@ -51,7 +51,7 @@ window.GLOBAL = (function () {
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: clientId, immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
 						var myApp = new App();
-						myApp.attachTo('#app-wrapper').start();
+						myApp.attachTo('#main-script', {method: 'before'}).start();
 					});
 				});
 

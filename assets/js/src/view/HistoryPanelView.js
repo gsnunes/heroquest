@@ -1,16 +1,16 @@
 define([
 
 	'text!template/HistoryPanelView.html',
-	'view/component/PanelView',
+	'view/component/NewPanelView',
 	'model/HistoryModel',
 	'collection/HistoryCollection',
 	'moment'
 
-], function (Template, PanelView, HistoryModel, HistoryCollection, moment) {
+], function (html, NewPanelView, HistoryModel, HistoryCollection, moment) {
 
 	'use strict';
 
-	return PanelView.extend({
+	return NewPanelView.extend({
 
 
 		className: 'history-panel',
@@ -23,12 +23,9 @@ define([
 
 
 		initialize: function () {
-			PanelView.prototype.initialize.apply(this, arguments);
+			NewPanelView.prototype.initialize.apply(this, arguments);
 
 			this.token = gapi.auth.getToken('token', true);
-
-			this.setContent();
-			this.setTitle();
 
 			var self = this;
 			gapi.hangout.data.onStateChanged.add(function (ev) {
@@ -36,6 +33,15 @@ define([
 			});
 
 			Backbone.EventBus.on('HistoryPanel.setTitle', this.updateCampaing, this);
+		},
+
+
+		/**
+		 * afterRender
+		 */
+		afterRender: function () {
+			this.setBody(html);
+			this.setTitle('History');
 		},
 
 
@@ -115,19 +121,9 @@ define([
 		},
 
 
-		setContent: function () {
-			this.options.content = Template;
-		},
-
-
 		updateCampaing: function (campaingName) {
 			$('.history-panel .history-list').html('');
-			this.$el.find('.history-panel .panel-title').html(('History - ' + campaingName) || 'History');
-		},
-		
-
-		setTitle: function () {
-			this.options.title = 'History';
+			this.$el.find('.history-panel .panel-heading').html(('History - ' + campaingName) || 'History');
 		}
 
 	});
