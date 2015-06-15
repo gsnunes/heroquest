@@ -56,7 +56,7 @@ define([
 			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
 			gapi.hangout.data.setValue(pieceId, piece);
 
-			GLOBAL.historyPanelView.addHistoryItem('selected the ' + charModel.attributes.name  +  ' like your character');
+			GLOBAL.historyPanelView.addHistoryItem('selected your character');
 		},
 
 

@@ -40,6 +40,8 @@ define([
 		 * afterRender
 		 */
 		afterRender: function () {
+			NewPanelView.prototype.afterRender.apply(this, arguments);
+
 			this.setBody(html);
 			this.setTitle('History');
 		},
@@ -60,7 +62,7 @@ define([
 		 * updateScroll
 		 */
 		updateScroll: function () {
-			$('.history-panel').animate({ scrollTop: $('.history-panel').get(0).scrollHeight }, "slow");
+			$('.history-panel .panel-body').animate({ scrollTop: $('.history-panel .panel-body').get(0).scrollHeight }, "slow");
 		},
 
 
@@ -74,9 +76,9 @@ define([
 				wait: true,
 
 				success : function (ev) {
-					var name = 'Zargon (' + participant.person.displayName + ')',
-						date = moment(new Date(ev.attributes.date)).format('MM-DD-YYYY, h:mm:ss a'),
-						message = date + ' ' + name + ' - ';
+					var name = GLOBAL.charModel ? ('<b>' + GLOBAL.charModel.attributes.name + ' (' + participant.person.displayName + ')</b>') : '<b>Zargon (' + participant.person.displayName + ')</b>',
+						date = '<span class="gray-light">' + moment(new Date(ev.attributes.date)).format('MM-DD-YYYY, h:mm:ss a') + '</span>',
+						message = date + ' ' + name + ': ';
 
 					message += ev.attributes.message;
 
