@@ -15,7 +15,8 @@ module.exports = {
 	person: 'json',
 	attr: 'json',
 	hasSpell: 'boolean',
-	spellType: 'string'
+	spellType: 'string',
+	personId: 'string'
   }
 
 };

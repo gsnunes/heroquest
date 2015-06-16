@@ -37,13 +37,17 @@ module.exports = function(req, res, next) {
 				return new Error('Unable to parse user data: ' + e.toString());
 			}
 
+			//Added values to create
 			if (req.body) {
 				req.body.person = me;
+				req.body.personId = me.id;
 			}
 
+			//Added where to find
 			if (req.query) {
 				if (req.query.access_token) {
 					delete req.query.access_token;
+					req.query.personId = me.id;
 				}
 			}
 			

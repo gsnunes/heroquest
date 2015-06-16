@@ -10,7 +10,8 @@ module.exports = {
   attributes: {
   	name: 'string',
 	description: 'string',
-	person: 'json'
+	person: 'json',
+	personId: 'string'
   }
   
 };
