@@ -112,11 +112,16 @@ define([
 				character = this.characters[value.find('i').attr('class').split(' ').pop()];
 
 				if (monster) {
+					wrapper.find('.piece').css('z-index', 1);
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
+					wrapper.find('.piece').css('z-index', 2);
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: GLOBAL.charModel.attributes, key: key});
 					monsterPopoverView.render();
+				}
+				else {
+					wrapper.find('.piece').css('z-index', 0);
 				}
 
 				value.on({
