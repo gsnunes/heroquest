@@ -58,9 +58,8 @@ define([
 		sendTreasure: function (ev) {
 			ev.preventDefault();
 
-			var select = $('#cards-tab .options-content #treasure-participants');
-
-			GLOBAL.historyPanelView.addHistoryItem(select[0].textContent + ' está procurando por um tesouro!', {personId: select.val(), type: 'TREASURE'});
+			var select = this.$('#treasure-participants option:selected');
+			GLOBAL.historyPanelView.addHistoryItem('<div class="treasure"><span class="treasure-user-name" data-person-id="' + select.val() + '">' + select.text() + '</span> está procurando por um tesouro!</div>');
 		},
 
 

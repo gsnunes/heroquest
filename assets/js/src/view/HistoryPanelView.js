@@ -49,9 +49,33 @@ define([
 
 		updateHistory: function (ev) {
 			if (ev.addedKeys.length && this.isPiece(ev.addedKeys[0].key)) {
-				var value = ev.addedKeys[0].value;
+				var value = ev.addedKeys[0].value,
+					participant = gapi.hangout.getLocalParticipant(),
+					personId,
+					treasureId = 'treasure-' + (new Date()).getTime(),
+					self = this;
 
-				$('.history-list').append('<li>' + value + '</li>');
+				if ($(value).hasClass('treasure')) {
+					personId = $(value).find('span.treasure-user-name').data('personId');
+
+					if (participant.person.id === personId) {
+						value = $('<div>').append($(value).append('<a id="' + treasureId + '" href="javascript:;" class="check-treasure"> Clique aqui!</a>')).html();
+						$(document).on('click', '#' + treasureId, function () {
+							var treasureFound = Math.floor((Math.random() * self.treasures.length));
+
+							self.addHistoryItem('estava procurando por tesouros e encontrou um ' + self.treasures[treasureFound]);
+
+							if (self.treasures[treasureFound] !== 'errante') {
+								self.treasures.splice(treasureFound, 1);
+							}
+
+							$(this).off();
+							$(this).remove();
+						});
+					}
+				}
+
+				this.$('.history-list').append('<li>' + value + '</li>');
 
 				this.updateScroll();
 			}
@@ -80,32 +104,12 @@ define([
 						date = '<span class="gray-light">' + moment(new Date(ev.attributes.date)).format('MM-DD-YYYY, h:mm:ss a') + '</span>',
 						message = date + ' ' + name + ': ';
 
-					message += ev.attributes.message;
-
-					if (data && data.type === 'TREASURE') {
-						if (data.personId === participant.person.id) {
-							var treasureId = 'treasure-' + (new Date()).getTime();
-							message += ' <a href="javascript:;" class="check-treasure" id="' + treasureId + '">Clique aqui!</a>';
-
-							$(document).on('click', '#' + treasureId, function () {
-								var treasureFound = Math.floor((Math.random() * self.treasures.length));
-
-								self.addHistoryItem('estava procurando por tesouros e encontrou um ' + self.treasures[treasureFound]);
-
-								if (self.treasures[treasureFound] !== 'errante') {
-									self.treasures.splice(treasureFound, 1);
-								}
-
-								$(this).remove();
-							});
-						}
+					if ($('<div>' + ev.attributes.message + '</div>').hasClass('treasure')) {
+						message = $('<div>').append($(ev.attributes.message).prepend(message)).html();
 					}
-
-					/*
-					if (GLOBAL.displayIndex > 0) {
-
+					else {
+						message += ev.attributes.message;
 					}
-					*/
 
 					var historyKey = 'history-item-' + (new Date()).getTime();
 					gapi.hangout.data.setValue(historyKey, message);

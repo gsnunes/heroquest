@@ -1,8 +1,9 @@
 define([
 
-	'view/MonsterPopoverView'
+	'view/MonsterPopoverView',
+	'collection/CharCollection'
 
-], function (MonsterPopoverView) {
+], function (MonsterPopoverView, CharCollection) {
 
 	'use strict';
 
@@ -37,6 +38,9 @@ define([
 		},
 
 
+		charCollection: new CharCollection(),
+
+
 		initialize: function () {
 			var self = this;
 
@@ -53,7 +57,7 @@ define([
 				pieceIcon = 'sprite-characters icon-' + charModel.attributes.character.toLowerCase(),
 				piece;
 
-			piece = '<div id="' + pieceId + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
+			piece = '<div id="' + pieceId + '" data-char-id="' + charModel.attributes.id.toString() + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
 			gapi.hangout.data.setValue(pieceId, piece);
 
 			GLOBAL.historyPanelView.addHistoryItem('selected your character');
@@ -116,9 +120,15 @@ define([
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
-					wrapper.find('.piece').css('z-index', 2);
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: GLOBAL.charModel.attributes, key: key});
-					monsterPopoverView.render();
+					this.charCollection.fetch({
+						success: function () {
+							var charModel = self.charCollection.get(value.data('charId'));
+							
+							wrapper.find('.piece').css('z-index', 2);
+							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key});
+							monsterPopoverView.render();
+						}
+					});
 				}
 				else {
 					wrapper.find('.piece').css('z-index', 0);
@@ -190,12 +200,14 @@ define([
 
 					gapi.hangout.data.setValue(pieceId, piece);
 
+					/*
 					if (this.monsters[pieceIcon.split(' ').pop()]) {
 						GLOBAL.historyPanelView.addHistoryItem('put a ' + this.monsters[pieceIcon.split(' ').pop()].title + ' on the board.');
 					}
 					else {
 						GLOBAL.historyPanelView.addHistoryItem('put a piece on the board.');
-					}					
+					}
+					*/					
 				}
 			}
 		}

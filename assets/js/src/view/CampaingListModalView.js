@@ -44,7 +44,8 @@ define([
 		getData: function () {
 			var self = this;
 
-			this.campaingCollection.fetch({ 
+			this.campaingCollection.fetch({
+				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
 					self.populateListGroup();
 					self.campaingCollection.on('add', self.populateListGroup, self);

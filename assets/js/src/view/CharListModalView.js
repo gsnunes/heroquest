@@ -47,6 +47,7 @@ define([
 			var self = this;
 
 			this.charCollection.fetch({
+				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
 					self.populateListGroup();
 					self.charCollection.on('add', self.populateListGroup, self);
