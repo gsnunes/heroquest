@@ -48,7 +48,7 @@ module.exports = function(req, res, next) {
 				if (req.query.access_token) {
 					delete req.query.access_token;
 
-					if (req.options.model === 'campaing' && req.options.model === 'char') {
+					if (req.options.model === 'campaing' || req.options.model === 'char') {
 						req.query.personId = me.id;
 					}
 				}
