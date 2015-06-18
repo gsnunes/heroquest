@@ -69,6 +69,8 @@ define([
 				progressBar.width(newWidth + '%');
 				progressBar.attr('aria-valuenow', newValue);
 			}
+
+			gapi.hangout.data.setValue('popover-' + this.$el.attr('id'), $('<div>').append(progressBar.clone()).html());
 		}
 
 	});

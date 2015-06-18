@@ -65,7 +65,7 @@ define([
 
 
 		changePieces: function (ev) {
-			if (ev.addedKeys.length && this.isPiece(ev.addedKeys[0].key)) {
+			if (ev.addedKeys.length && this.isPiece(ev)) {
 				var value = $(ev.addedKeys[0].value),
 					key = ev.addedKeys[0].key,
 					wrapper = $('<div id="wrapper-' + key + '"></div>'),
@@ -166,12 +166,32 @@ define([
 		},
 
 
-		isPiece: function (key) {
-			if (key.match(/history-item-/gi)) {
+		isPiece: function (ev) {
+			if (ev.addedKeys[0].key.match(/history-item-/gi)) {
+				return false;
+			}
+
+			if (ev.addedKeys[0].key.match(/popover-/gi)) {
+				this.updatePopover(ev);
 				return false;
 			}
 
 			return true;
+		},
+
+
+		/**
+		 * updatePopover
+		 */
+		updatePopover: function (ev) {
+			if (ev.addedKeys.length) {
+				var value = ev.addedKeys[0].value,
+					barClass = $(value).attr('class').split(' ')[1],
+					key = ev.addedKeys[0].key,
+					wrapper = key.split('-')[3];
+
+				$('#wrapper-piece-' + wrapper).find('.popover .' + barClass).replaceWith(value);
+			}
 		},
 
 
