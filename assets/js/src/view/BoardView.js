@@ -55,9 +55,11 @@ define([
 		addCharPiece: function (charModel) {
 			var pieceId = 'piece-' + (new Date()).getTime(),
 				pieceIcon = 'sprite-characters icon-' + charModel.attributes.character.toLowerCase(),
-				piece;
+				piece,
+				left = (GLOBAL.displayIndex % 2) === 0 ? 900 : 835,
+				top = (GLOBAL.displayIndex <= 2) ? 30 : 90;
 
-			piece = '<div id="' + pieceId + '" data-char-id="' + charModel.attributes.id.toString() + '" class="draggable piece" style="top:' + 300 + 'px; left:' + 300 + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
+			piece = '<div id="' + pieceId + '" data-char-id="' + charModel.attributes.id.toString() + '" class="draggable piece" style="top:' + top + 'px; left:' + left + 'px;"><span class="glyphicon glyphicon-remove-circle remove-piece"></span><i class="' + pieceIcon + '"></i></div>';
 			gapi.hangout.data.setValue(pieceId, piece);
 
 			GLOBAL.historyPanelView.addHistoryItem('selected your character');
@@ -84,10 +86,12 @@ define([
 					wrapper.append(value);
 					$('.board').append(wrapper);
 
-					value.css({
-						left: value.offset().left - (value.width() / 2) + $('#app-wrapper').get(0).scrollLeft,
-						top: value.offset().top - (value.height() / 2) + $('#app-wrapper').get(0).scrollTop
-					});
+					if (!value.data('charId')) {
+						value.css({
+							left: value.offset().left - (value.width() / 2) + $('#app-wrapper').get(0).scrollLeft,
+							top: value.offset().top - (value.height() / 2) + $('#app-wrapper').get(0).scrollTop
+						});
+					}
 				}
 				else {
 					$('.board #' + key).attr('style', value.attr('style'));
