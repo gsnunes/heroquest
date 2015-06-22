@@ -129,7 +129,7 @@ define([
 							var charModel = self.charCollection.get(value.data('charId'));
 							
 							wrapper.find('.piece').css('z-index', 2);
-							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key});
+							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key, container: value});
 							monsterPopoverView.render();
 						}
 					});
