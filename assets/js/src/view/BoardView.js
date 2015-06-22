@@ -121,7 +121,7 @@ define([
 
 				if (monster) {
 					wrapper.find('.piece').css('z-index', 1);
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key, container: value});
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
 					this.charCollection.fetch({
@@ -129,7 +129,7 @@ define([
 							var charModel = self.charCollection.get(value.data('charId'));
 							
 							wrapper.find('.piece').css('z-index', 2);
-							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key, container: value});
+							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key});
 							monsterPopoverView.render();
 						}
 					});

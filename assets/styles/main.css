@@ -2,6 +2,9 @@ body {
 	margin: 0; padding: 0; overflow: hidden;
 }
 
+textarea {resize: none;}
+
+
 .gray-darker  {color:#222}
 .gray-dark    {color:#333}
 .gray         {color:#555}
