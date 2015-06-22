@@ -121,7 +121,7 @@ define([
 
 				if (monster) {
 					wrapper.find('.piece').css('z-index', 1);
-					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
+					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key, container: value});
 					monsterPopoverView.render();
 				} else if (character) {
 					this.charCollection.fetch({
