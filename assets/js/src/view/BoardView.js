@@ -1,9 +1,10 @@
 define([
 
 	'view/MonsterPopoverView',
+	'view/CharPopoverView',
 	'collection/CharCollection'
 
-], function (MonsterPopoverView, CharCollection) {
+], function (MonsterPopoverView, CharPopoverView, CharCollection) {
 
 	'use strict';
 
@@ -129,7 +130,7 @@ define([
 							var charModel = self.charCollection.get(value.data('charId'));
 							
 							wrapper.find('.piece').css('z-index', 2);
-							monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: charModel.attributes, key: key});
+							monsterPopoverView = new CharPopoverView({el: wrapper, monster: charModel.attributes, key: key});
 							monsterPopoverView.render();
 						}
 					});
