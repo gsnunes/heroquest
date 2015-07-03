@@ -27,6 +27,17 @@ util = (function () {
 			}
 
 			return env;
+		},
+
+
+		getMock: function () {
+			var data = {};
+
+			$.ajax({url: 'https://' + util.getHost() + '/mock.json', async: false}).success(function (result) {
+				data = result;
+			});
+
+			return data;
 		}
 
 	};

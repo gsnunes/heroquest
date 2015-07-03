@@ -9,9 +9,11 @@ define(function () {
 			description: '',
 			character: '',
 			quests: 0,
-			attr: {},
-			hasSpell: false,
-			spellType: ''
+			moviment: 0,
+			attack: 0,
+			defense: 0,
+			body: 0,
+			mind: 0
 		}
 
 	});

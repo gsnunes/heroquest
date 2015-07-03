@@ -2,10 +2,9 @@ define([
 
 	'text!template/CharFormModalView.html',
 	'view/component/ModalView',
-	'model/CharModel',
-	'collection/CharacterCollection'
+	'model/CharModel'
 
-], function (Template, ModalView, CharModel, CharacterCollection) {
+], function (Template, ModalView, CharModel) {
 
 	'use strict';
 
@@ -20,9 +19,6 @@ define([
 		},
 
 
-		characterCollection: new CharacterCollection(),
-
-
 		initialize: function () {
 			ModalView.prototype.initialize.apply(this, arguments);
 
@@ -31,21 +27,7 @@ define([
 			this.charModel = this.options.charModel;
 			this.charCollection = this.options.charCollection;
 
-			this.getData();
-		},
-
-
-		/**
-		 * getData
-		 */
-		getData: function () {
-			var self = this;
-
-			this.characterCollection.fetch({
-				success: function () {
-					self.populate();
-				}
-			});
+			this.populate();
 		},
 
 
@@ -61,7 +43,7 @@ define([
 
 				this.$el.find('input#quests').val(this.charModel.attributes.quests);
 
-				this.populateAttr(this.charModel.attributes.attr);
+				this.populateAttr(this.charModel.attributes);
 			}
 		},
 
@@ -70,25 +52,11 @@ define([
 		 * populateAttr
 		 */
 		populateAttr: function (attr) {
-			this.$el.find('input#mo').val(attr.mo);
-			this.$el.find('input#a').val(attr.a);
-			this.$el.find('input#d').val(attr.d);
-			this.$el.find('input#b').val(attr.b);
-			this.$el.find('input#m').val(attr.m);
-		},
-
-
-		/**
-		 * getAttr
-		 */
-		getAttr: function () {
-			return {
-				mo: this.$el.find('input#mo').val(),
-				a: this.$el.find('input#a').val(),
-				d: this.$el.find('input#d').val(),
-				b: this.$el.find('input#b').val(),
-				m: this.$el.find('input#m').val()
-			};
+			this.$el.find('input#mo').val(attr.moviment);
+			this.$el.find('input#a').val(attr.attack);
+			this.$el.find('input#d').val(attr.defense);
+			this.$el.find('input#b').val(attr.body);
+			this.$el.find('input#m').val(attr.mind);
 		},
 
 
@@ -100,13 +68,13 @@ define([
 
 			this.$el.find('select#character').html();
 
-			this.characterCollection.forEach(function (model) {
-				characters.push('<option value="' + model.attributes.name + '">' + model.attributes.name + '</option>');
+			GLOBAL.data.character.forEach(function (data) {
+				characters.push('<option value="' + data.name + '">' + data.name + '</option>');
 			});
 
 			this.$el.find('select#character').html(characters.join());
-			this.populateAttr(this.characterCollection.at(0).attributes.attr);
-			this.$el.find('textarea#description').val(this.characterCollection.at(0).attributes.description);
+			this.populateAttr(GLOBAL.data.character[0]);
+			this.$el.find('textarea#description').val(GLOBAL.data.character[0].description);
 		},
 
 
@@ -114,21 +82,9 @@ define([
 		 * characterChange
 		 */
 		characterChange: function () {
-			var charCollection = this.characterCollection.findWhere({name: $('select#character').val()});
-			this.$el.find('textarea#description').val(charCollection.attributes.description);
-			this.populateAttr(charCollection.attributes.attr);
-
-			if (charCollection.attributes.hasSpell) {
-				this.createSpellDropdown();
-			}
-		},
-
-
-		/**
-		 * createSpellDropdown
-		 */
-		createSpellDropdown: function () {
-			//this.$el.find('.modal-body').append('<select class="form-control" id="spellTypes"><option></option><option>test</option></select>');
+			var charCollection = _.where(GLOBAL.data.character, {name: $('select#character').val()})[0];
+			this.$el.find('textarea#description').val(charCollection.description);
+			this.populateAttr(charCollection);
 		},
 
 
@@ -139,7 +95,11 @@ define([
 				character: this.$el.find('select#character').val(),
 				quests: this.$el.find('input#quests').val(),
 				access_token: this.token.access_token,
-				attr: this.getAttr()
+				moviment: this.$el.find('input#mo').val(),
+				attack: this.$el.find('input#a').val(),
+				defense: this.$el.find('input#d').val(),
+				body: this.$el.find('input#b').val(),
+				mind: this.$el.find('input#m').val()
 			};
 
 			return data;

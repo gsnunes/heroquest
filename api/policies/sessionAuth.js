@@ -10,22 +10,24 @@
 
 var request = require('request');
 
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
+	'use strict';
 
-  	if (!req.param('access_token')) {
-  		return res.forbidden('You are not permitted to perform this action.');
-  	}
+	// User is allowed, proceed to the next policy,
+	// or if this is the last policy, the controller
 
-	request('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + req.param('access_token'), function (err, res, body) {
+	if (!req.param('access_token')) {
+		return res.send(403);
+	}
+
+	request('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + req.param('access_token'), function (err, resp, body) {
 		if (err) {
-			return err;
+			return res.send(404);
 		}
 
-		if (res.statusCode !== 200) {
-			return new Error('Invalid access token: ' + body);
+		if (resp.statusCode !== 200) {
+			return res.send(401);
 		}
 		else {
 			var me;
@@ -34,25 +36,25 @@ module.exports = function(req, res, next) {
 				me = JSON.parse(body);
 			}
 			catch (e) {
-				return new Error('Unable to parse user data: ' + e.toString());
+				return res.send(400);
 			}
 
 			//Added values to create
 			if (req.body) {
-				req.body.person = me;
-				req.body.personId = me.id;
+				if (req.body.personId && req.body.personId !== me.id) {
+					return res.send(403);
+				}
+				else {
+					req.body.person = me;
+					req.body.personId = me.id;
+					delete req.body.access_token;
+				}
 			}
 
 			//Added where to find
 			if (req.query) {
 				if (req.query.access_token) {
 					delete req.query.access_token;
-
-					/*
-					if (req.options.model === 'campaing' || req.options.model === 'char') {
-						req.query.personId = me.id;
-					}
-					*/
 				}
 			}
 			
@@ -60,9 +62,8 @@ module.exports = function(req, res, next) {
 		}
 	});
 
-
-
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  //return res.forbidden('You are not permitted to perform this action.');
+	// User is not allowed
+	// (default res.forbidden() behavior can be overridden in `config/403.js`)
+	//return res.forbidden('You are not permitted to perform this action.');
+	
 };

@@ -1,30 +1,36 @@
-<table class="table table-bordered monsters-attr">
-	<tr class="active">
-		<th>Mov</th>
-		<th>Att</th>
-		<th>Def</th>
-		<th>Body</th>
-		<th>Mind</th>
-	</tr>
-	<tr>
-		<td><%= attr.moviment %></td>
-		<td><%= attr.attack %></td>
-		<td><%= attr.defense %></td>
-		<td><%= attr.body %></td>
-		<td><%= attr.mind %></td>
-	</tr>
-</table>
-<div class="progress-wrapper danger-wrapper">
-	<span class="glyphicon glyphicon-minus"></span>
-	<div class="progress progress-striped">
-		<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%= attr.body %>" aria-valuemin="0" aria-valuemax="<%= attr.body %>" style="width: 100%;"><%= attr.body %></div>
-	</div>
-	<span class="glyphicon glyphicon-plus"></span>
-</div>
-<div class="progress-wrapper info-wrapper">
-	<span class="glyphicon glyphicon-minus"></span>
-	<div class="progress progress-striped">
-		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= attr.mind %>" aria-valuemin="0" aria-valuemax="<%= attr.mind %>" style="width: 100%;"><%= attr.mind %></div>
-	</div>
-	<span class="glyphicon glyphicon-plus"></span>
-</div>
+<script type="text/template">
+	<form>
+		<table class="table table-bordered monsters-attr">
+			<tr class="active">
+				<th>Mov</th>
+				<th>Att</th>
+				<th>Def</th>
+				<th>Body</th>
+				<th>Mind</th>
+			</tr>
+			<tr>
+				<td><input type="number" class="form-control" name="moviment" value="<%= moviment %>"></td>
+				<td><input type="number" class="form-control" name="attack" value="<%= attack %>"></td>
+				<td><input type="number" class="form-control" name="defense" value="<%= defense %>"></td>
+				<td><input type="number" class="form-control" name="body" value="<%= body %>"></td>
+				<td><input type="number" class="form-control" name="mind" value="<%= mind %>"></td>
+			</tr>
+		</table>
+		<div class="progress-wrapper danger-wrapper">
+			<span class="glyphicon glyphicon-minus"></span>
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%= typeof(bodyNow) !== 'undefined' && bodyNow < body ? bodyNow : body %>" aria-valuemin="0" aria-valuemax="<%= body %>" style="width: <%= typeof(bodyNow) !== 'undefined' && bodyNow < body ? (((bodyNow * 100) / body) + '%') : '100%' %>;"><%= typeof(bodyNow) !== 'undefined' && bodyNow < body ? bodyNow : body %></div>
+			</div>
+			<span class="glyphicon glyphicon-plus"></span>
+		</div>
+		<div class="progress-wrapper info-wrapper">
+			<span class="glyphicon glyphicon-minus"></span>
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%= typeof(mindNow) !== 'undefined' && mindNow < mind ? mindNow : mind %>" aria-valuemin="0" aria-valuemax="<%= mind %>" style="width: <%= typeof(mindNow) !== 'undefined' && mindNow < mind ? (((mindNow * 100) / mind) + '%') : '100%' %>;"><%= typeof(mindNow) !== 'undefined' && mindNow < mind ? mindNow : mind %></div>
+			</div>
+			<span class="glyphicon glyphicon-plus"></span>
+		</div>
+
+		<textarea name="description" style="width:100%"><%= description %></textarea>
+	</form>
+</script>

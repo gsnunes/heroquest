@@ -13,9 +13,11 @@ module.exports = {
 	character: 'string',
 	quests: 'integer',
 	person: 'json',
-	attr: 'json',
-	hasSpell: 'boolean',
-	spellType: 'string',
+	moviment: 'integer',
+	attack: 'integer',
+	defense: 'integer',
+	body: 'integer',
+	mind: 'integer',
 	personId: 'string'
   }
 

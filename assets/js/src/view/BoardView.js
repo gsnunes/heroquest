@@ -77,7 +77,8 @@ define([
 					monsterPopoverView,
 					self = this,
 					rotation = 0,
-					recoupLeft, recoupTop;
+					recoupLeft, recoupTop,
+					charPopoverView;
 
 				if (key === 'campaingId') {
 					return false;
@@ -102,6 +103,10 @@ define([
 				//http://bugs.jquery.com/ticket/8362
 				value.draggable({
 					start: function (event, ui) {
+						if (value.parent().find('.popover').length) {
+							value.popover('hide');
+						}
+
 						var left = parseInt($(this).css('left'),10);
 						left = isNaN(left) ? 0 : left;
 						var top = parseInt($(this).css('top'),10);
@@ -125,15 +130,47 @@ define([
 					monsterPopoverView = new MonsterPopoverView({el: wrapper, monster: monster, key: key});
 					monsterPopoverView.render();
 				} else if (character) {
+					var loadPopover = false;
+					value.popover({trigger: 'manual', html: true}).click(function () {
+						if (!loadPopover && !value.data('bs.popover')) {
+							if (!charPopoverView) {
+								self.charCollection.fetch({
+									success: function () {
+										var charModel = self.charCollection.get(value.data('charId'));
+										charPopoverView = new CharPopoverView({model: charModel, container: value});
+
+										var myPopover = value.data('bs.popover');
+										myPopover.options.title = 'aaa';
+										myPopover.options.content = charPopoverView.render().el;
+										myPopover.setContent();
+
+										value.popover('show');
+										loadPopover = true;
+									}
+								});
+							}
+						}
+						else {
+							if (value.parent().find('.popover').length) {
+								value.popover('hide');
+							}
+							else {
+								value.popover('show');
+							}
+						}
+					});
+
+					/*
 					this.charCollection.fetch({
 						success: function () {
 							var charModel = self.charCollection.get(value.data('charId'));
 							
 							wrapper.find('.piece').css('z-index', 2);
-							monsterPopoverView = new CharPopoverView({el: wrapper, monster: charModel.attributes, key: key});
+							monsterPopoverView = new CharPopoverView({el: wrapper, modal: charModel, key: key});
 							monsterPopoverView.render();
 						}
 					});
+					*/
 				}
 				else {
 					wrapper.find('.piece').css('z-index', 0);
@@ -191,11 +228,17 @@ define([
 		updatePopover: function (ev) {
 			if (ev.addedKeys.length) {
 				var value = ev.addedKeys[0].value,
-					barClass = $(value).attr('class').split(' ')[1],
 					key = ev.addedKeys[0].key,
-					wrapper = key.split('-')[3];
+					wrapper = key.split('-')[2],
+					myPopover = $('#piece-' + wrapper).data('bs.popover');
 
-				$('#wrapper-piece-' + wrapper).find('.popover .' + barClass).replaceWith(value);
+				if ($('#wrapper-piece-' + wrapper).find('.popover .popover-content > div').length) {
+					$('#wrapper-piece-' + wrapper).find('.popover .popover-content > div').html($(value).find('> div').html());
+				}
+				else {
+					myPopover.options.content = value;
+					myPopover.setContent();
+				}
 			}
 		},
 

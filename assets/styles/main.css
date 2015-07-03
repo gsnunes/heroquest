@@ -5,6 +5,9 @@ body {
 textarea {resize: none;}
 
 
+.popover {max-width: 404px}
+
+
 .gray-darker  {color:#222}
 .gray-dark    {color:#333}
 .gray         {color:#555}

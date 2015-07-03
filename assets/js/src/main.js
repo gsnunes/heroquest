@@ -33,6 +33,26 @@ window.GLOBAL = (function () {
 
 
 
+	$.fn.serializeObject = function () {
+		var o = {},
+			a = this.serializeArray();
+
+		$.each(a, function () {
+			if (o[this.name]) {
+				if (!o[this.name].push) {
+					o[this.name] = [o[this.name]];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+
+		return o;
+	};
+
+
+
 	require(['App'], function (App) {
 
 		gapi.hangout.onApiReady.add(function (event) {
@@ -45,8 +65,8 @@ window.GLOBAL = (function () {
 				}
 
 				GLOBAL.participant = participant;
-				//GLOBAL.displayIndex = participant.displayIndex;
-				GLOBAL.displayIndex = 1;
+				GLOBAL.displayIndex = participant.displayIndex;
+				//GLOBAL.displayIndex = 1;
 
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: clientId, immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
@@ -54,7 +74,6 @@ window.GLOBAL = (function () {
 						myApp.attachTo('#main-script', {method: 'before'}).start();
 					});
 				});
-
 			}
 		});
 
@@ -65,7 +84,10 @@ window.GLOBAL = (function () {
 	return {
 
 		config: {},
-		host: util.getHost()
+
+		host: util.getHost(),
+
+		data: util.getMock()
 
 	};
 

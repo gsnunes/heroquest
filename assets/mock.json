@@ -1,0 +1,19 @@
+{
+	"character": [
+		{"name": "Barbarian", "description": "Arma inicial: Espada larga; \nArmadura inicial: Nenhuma;", "moviment": 2, "attack": 3, "defense": 2, "body": 8, "mind": 2},
+		{"name": "Elf", "description": "Arma inicial: Espada curta; \nArmadura inicial: Nenhuma;", "moviment": 2, "attack": 2, "defense": 2, "body": 6, "mind": 4},
+		{"name": "Dwarf", "description": "Arma inicial: Adaga; \nArmadura inicial: Nenhuma;", "moviment": 2, "attack": 2, "defense": 2, "body": 7, "mind": 3},
+		{"name": "Wizard", "description": "Arma inicial: Adaga; \nArmadura inicial: Nenhuma;", "moviment": 2, "attack": 1, "defense": 2, "body": 4, "mind": 6}
+	],
+
+	"monster": [
+		{"name": "Chaos Warrior", "moviment": 7, "attack": 4, "defense": 4, "body": 3, "mind": 3},
+		{"name": "Fimir", "moviment": 6, "attack": 3, "defense": 3, "body": 2, "mind": 3},
+		{"name": "Gargoyle", "moviment": 6, "attack": 4, "defense": 5, "body": 3, "mind": 4},
+		{"name": "Goblin", "moviment": 10, "attack": 2, "defense": 1, "body": 1, "mind": 1},
+		{"name": "Mummy", "moviment": 4, "attack": 3, "defense": 4, "body": 2, "mind": 0},
+		{"name": "Orc", "moviment": 8, "attack": 3, "defense": 2, "body": 1, "mind": 2},
+		{"name": "Skeleton", "moviment": 6, "attack": 2, "defense": 2, "body": 1, "mind": 0},
+		{"name": "Zombie", "moviment": 5, "attack": 2, "defense": 3, "body": 1, "mind": 0}
+	]
+}

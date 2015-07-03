@@ -2,7 +2,7 @@ define(function () {
 
 	'use strict';
 
-	return Backbone.View.extend({
+	return Giraffe.View.extend({
 
 		initialize: function (options) {
 			this.options = options;
@@ -11,11 +11,6 @@ define(function () {
 
 		render: function () {
 			this.$el.popover(this.options);
-		},
-		
-
-		destroy: function () {
-			this.$el.popover('destroy');
 		}
 
 	});

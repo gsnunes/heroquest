@@ -21,7 +21,7 @@ define([
 		
 
 		showCharListModal: function () {
-			var charListModalView = new CharListModalView({backdrop: 'static'});
+			var charListModalView = new CharListModalView();
 			charListModalView.show();
 		},
 

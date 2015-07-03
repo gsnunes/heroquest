@@ -10,7 +10,11 @@ module.exports = {
   attributes: {
   	name: 'string',
 	description: 'string',
-	attr: 'json'
+	moviment: 'integer',
+	attack: 'integer',
+	defense: 'integer',
+	body: 'integer',
+	mind: 'integer',
   }
 
 };

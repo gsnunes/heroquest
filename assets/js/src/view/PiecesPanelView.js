@@ -11,7 +11,7 @@ define([
 
 	return NewPanelView.extend({
 
-		pieceTemplate: _.template(html),
+		//pieceTemplate: _.template(html),
 
 
 		className: 'pieces-panel',
@@ -87,7 +87,6 @@ define([
 
 		initialize: function () {
 			NewPanelView.prototype.initialize.apply(this, arguments);
-
 			Backbone.EventBus.on('PiecesPanel.SettingsTab.setName', this.populateSettings, this);
 		},
 
@@ -97,6 +96,8 @@ define([
 
 			this.setBody(html);
 			this.setTitle('Toolbar');
+
+			this.$('[data-toggle="tooltip"]').tooltip();
 
 			if (GLOBAL.displayIndex === 0) {
 				this.$('#myTab').find('a[href="#monsters-tab"]').parents('li').removeClass('hide');

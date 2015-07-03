@@ -1,58 +1,93 @@
 define([
 
 	'text!template/CharPopoverView.html',
-	'view/component/PopoverView'
+	'collection/CharCollection'
 
-], function (Template, PopoverView) {
+], function (html, CharCollection) {
 
 	'use strict';
 
-	return PopoverView.extend({
+	return Giraffe.View.extend({
 
-		template: _.template(Template),
+		template: html,
+
+
+		serialize: function () {
+			var value = gapi.hangout.data.getValue(this.id);
+			return value ? JSON.parse(value) : this.model.toJSON();
+		},
 
 
 		events: {
-			'click .glyphicon-minus, .glyphicon-plus': 'changeProgress'
+			'click .glyphicon': 'changeProgress',
+			'blur textarea': 'save',
+			'change input': 'save'
 		},
 
 
-		initialize: function (options) {
-			this.options = options;
-
-			this.options.selector = '#' + options.key;
-			this.options.html = true;
-			this.setContent();
-			this.setTitle();
+		initialize: function () {
+			this.bindEvents();
+			this.getModel();
 		},
 
 
-		setContent: function () {
-			var monster = this.options.monster,
-				attr = {
-					moviment: monster.attr.mo,
-					attack: monster.attr.a,
-					defense: monster.attr.d,
-					body: monster.attr.b,
-					mind: monster.attr.m
-				},
-				div;
+		getModel: function () {
+			var charCollection = new CharCollection();
 
-			if (!this.cache) {
-				div = document.createElement('div');
-				div.innerHTML = this.template({
-					attr: attr
-				});
+			charCollection.fetch({
+				success: _.bind(function () {
+					this.model = charCollection.get(this.id.substr(8));
+					this.setPopover();
+				}, this)
+			});
+		},
 
-				this.cache = div;
+
+		setPopover: function () {
+			var _this = this,
+				load = false;
+
+			this.selector.popover({trigger: 'manual', html: true, placement: 'top'}).click(function () {
+				if ($(this).attr('aria-describedby')) {
+					$(this).popover('hide');
+				}
+				else {
+					if (!load) {
+						var myPopover = $(this).data('bs.popover');
+						myPopover.options.content = _this.render().el;
+						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ')';
+						myPopover.setContent();
+						load = true;
+					}
+
+					$(this).popover('show');
+				}
+			});
+		},
+
+
+		afterRender: function () {
+			this.lockInputs();
+		},
+
+
+		lockInputs: function () {
+			if (this.model.attributes.personId !== GLOBAL.participant.person.id) {
+				this.$('.glyphicon').off('click').remove();
+				this.$('textarea').prop('disabled', true);
+				this.$('input').prop('disabled', true);
 			}
-
-			this.options.content = this.cache;
 		},
 
 
-		setTitle: function () {
-			this.options.title = this.options.monster.title || (this.options.monster.name + ' - ' + this.options.monster.character);
+		bindEvents: function () {
+			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
+				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/popover/gi)) {
+					if (this.id === ev.addedKeys[0].key) {
+						this.render();
+					}
+				}
+			}, this));
 		},
 		
 
@@ -62,15 +97,36 @@ define([
 				valueMin = parseInt(progressBar.attr('aria-valuemin'), 10),
 				valueMax = parseInt(progressBar.attr('aria-valuemax'), 10),
 				newValue = $(ev.target).attr('class') === 'glyphicon glyphicon-minus' ? (valueNow - 1) : (valueNow + 1),
-				newWidth = (newValue * 100) / (progressBar.hasClass('progress-bar-info') ? this.options.monster.attr.m : this.options.monster.attr.b);
+				newWidth = (newValue * 100) / (progressBar.hasClass('progress-bar-info') ? this.model.attributes.mind : this.model.attributes.body);
 
 			if (newValue >= valueMin && newValue <= valueMax) {
 				progressBar.html(newValue);
 				progressBar.width(newWidth + '%');
 				progressBar.attr('aria-valuenow', newValue);
+				
+				gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
+			}
+		},
+
+
+		getDataFromForm: function (share) {
+			var data = this.$('form').serializeObject();
+
+			if (share) {
+				data.bodyNow = parseInt(this.$('.progress-bar-danger').html(), 10);
+				data.mindNow = parseInt(this.$('.progress-bar-info').html(), 10);
 			}
 
-			gapi.hangout.data.setValue('popover-' + this.$el.attr('id'), $('<div>').append(progressBar.clone()).html());
+			return data;
+		},
+
+
+		save: function () {
+			this.model.save(this.getDataFromForm(), {
+				success: _.bind(function () {
+					gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
+				}, this)
+			});
 		}
 
 	});

@@ -2,7 +2,7 @@ define(function (require) {
  
 	"use strict";
 
-	var BoardView = require('view/BoardView'),
+	var BoardView = require('view/NewBoardView'),
 		DicePanelView = require('view/DicePanelView'),
 		PiecesPanelView = require('view/PiecesPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),

@@ -64,8 +64,8 @@ define([
 			this.listGroupView.reset();
 
 			this.charCollection.forEach(function (model) {
-				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
-					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Start', icon: 'glyphicon glyphicon-ok'}),
+				var listGroupItem = self.listGroupView.addItem(model.attributes.name + ' (' + model.attributes.character + ')', model.attributes.description),
+					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Add to board', icon: 'glyphicon glyphicon-ok'}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 					buttonToolbarView = new ButtonToolbarView();
@@ -77,7 +77,7 @@ define([
 				listGroupItem.append('<div class="clearfix"></div>');
 
 				$(listGroupItem).find('.btn-success').on('click', function () {
-					self.start(model);
+					self.start(self.charCollection.get(model.id));
 				});
 
 				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
@@ -95,6 +95,26 @@ define([
 		 * start
 		 */
 		start: function (model) {
+			var state = gapi.hangout.data.getState(),
+				key = 'piece-' + model.id,
+				hasPiece = false;
+
+			_.each(state, function (value, key) {
+				if (key.match(/piece/gi)) {
+					if (key.substr(6) === model.id.toString()) {
+						hasPiece = true;
+					}
+				}
+			});
+
+			if (hasPiece) {
+				alert('This hero is already on the board!');
+			}
+			else {
+				gapi.hangout.data.setValue(key, JSON.stringify({id: key, model: model}));
+			}
+
+			/*
 			var campaingId = gapi.hangout.data.getValue('campaingId'),
 				campaingModel,
 				self = this;
@@ -117,6 +137,7 @@ define([
 			else {
 				alert('O mestre ainda nao escolheu a campanha');
 			}
+			*/
 		},
 
 

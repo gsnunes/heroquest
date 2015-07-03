@@ -9,19 +9,22 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
-module.exports.bootstrap = function(cb) {
+module.exports.bootstrap = function (cb) {
 	
 	'use strict';
 
-	Character.find().exec(function(err, result) {
+	/*
+	Character.find().exec(function (err, result) {
 		var characters = [
-			{name: 'Barbarian', description: 'Arma inicial: Espada larga; \nArmadura inicial: Nenhuma;', attr: {mo: 2, a: 3, d: 2, b: 8, m: 2}, hasSpell: false},
-			{name: 'Elf', description: 'Arma inicial: Espada curta; \nArmadura inicial: Nenhuma;', attr: {mo: 2, a: 2, d: 2, b: 6, m: 4}, hasSpell: true},
-			{name: 'Dwarf', description: 'Arma inicial: Adaga; \nArmadura inicial: Nenhuma;', attr: {mo: 2, a: 2, d: 2, b: 7, m: 3}, hasSpell: false},
-			{name: 'Wizard', description: 'Arma inicial: Adaga; \nArmadura inicial: Nenhuma;', attr: {mo: 2, a: 1, d: 2, b: 4, m: 6}, hasSpell: true}
+			{name: 'Barbarian', description: 'Arma inicial: Espada larga; \nArmadura inicial: Nenhuma;', moviment: 2, attack: 3, defense: 2, body: 8, mind: 2},
+			{name: 'Elf', description: 'Arma inicial: Espada curta; \nArmadura inicial: Nenhuma;', moviment: 2, attack: 2, defense: 2, body: 6, mind: 4},
+			{name: 'Dwarf', description: 'Arma inicial: Adaga; \nArmadura inicial: Nenhuma;', moviment: 2, attack: 2, defense: 2, body: 7, mind: 3},
+			{name: 'Wizard', description: 'Arma inicial: Adaga; \nArmadura inicial: Nenhuma;', moviment: 2, attack: 1, defense: 2, body: 4, mind: 6}
 		];
 
-		if (result.length && result.length === characters.length) { return false; }
+		if (result.length && result.length === characters.length) {
+			return false;
+		}
 
 		Character.destroy(function (err) {
 			if (err) {
@@ -37,7 +40,7 @@ module.exports.bootstrap = function(cb) {
 			});
 		});
 	});
-
+	*/
 
 	cb();
 
