@@ -32,7 +32,17 @@ define([
 
 
 		afterRender: function () {
-			this.$('i').addClass('sprite-characters icon-' + this.model.character);
+			if (this.model && this.model.character) {
+				this.$('i').addClass('sprite-characters icon-' + this.model.character);
+			}
+			else if (this.itemSelected) {
+				if (this.itemSelected.data('monster')) {
+					this.$('i').addClass('sprite-monsters icon-' + this.itemSelected.data('monster').name.toLowerCase().replace(' ', '-'));
+				}
+				else {
+					this.$('i').addClass(this.itemSelected.find('i').attr('class'));
+				}
+			}
 
 			this.createPopover();
 			this.setDraggable();

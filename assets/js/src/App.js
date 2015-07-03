@@ -4,7 +4,7 @@ define(function (require) {
 
 	var BoardView = require('view/NewBoardView'),
 		DicePanelView = require('view/DicePanelView'),
-		PiecesPanelView = require('view/PiecesPanelView'),
+		PiecesPanelView = require('view/ToolbarPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),
 		HistoryPanelView = require('view/HistoryPanelView');
 

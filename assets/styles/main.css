@@ -42,8 +42,8 @@ textarea {resize: none;}
 
 
 
-.pieces-panel {width:500px; left:10px;}
-.pieces-panel .tab-pane {overflow: auto; max-height: 210px}
+.toolbar-panel {width:500px; left:10px;}
+.toolbar-panel .tab-pane {overflow: auto; max-height: 210px}
 
 #cards-tab {padding: 0 10px}
 #cards-tab form {margin: 0}
@@ -86,8 +86,18 @@ button.close {margin-top: -3px}
 
 ul.pieces-toolbar {list-style: none; padding: 0; margin: 0}
 ul.pieces-toolbar li {display: inline-block; margin-right: 10px; padding: 5px}
+ul.pieces-toolbar li:last-child {margin-right: 0}
 ul.pieces-toolbar li:hover {background-color: #CCC;}
-ul.pieces-toolbar li.highlight {background-color: #dcf5ff}
+ul.pieces-toolbar li.selected {background-color: #dcf5ff}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 
 

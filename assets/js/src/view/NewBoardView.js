@@ -62,7 +62,15 @@ define([
 
 
 		addPiece: function (ev) {
+			var key = 'piece-' +  (new Date()).getTime(),
+				itemSelected = GLOBAL.toolbar.itemSelected;
+
 			if ($(ev.target).hasClass('board')) {
+				if (itemSelected.length) {
+					gapi.hangout.data.setValue(key, JSON.stringify({id: key, ev: {offsetX: ev.offsetX || ev.originalEvent.layerX, offsetY: ev.offsetY || ev.originalEvent.layerY}, model: itemSelected.data('monster')}));
+				}
+
+				/*
 				var key = 'piece-' +  (new Date()).getTime(),
 					selectedItem = $('#myTabContent div.active ul.pieces-toolbar li.highlight');
 
@@ -71,6 +79,7 @@ define([
 				if (selectedItem) {
 					gapi.hangout.data.setValue(key, JSON.stringify({id: key, ev: {offsetX: ev.offsetX || ev.originalEvent.layerX, offsetY: ev.offsetY || ev.originalEvent.layerY}}));
 				}
+				*/
 			}
 		}
 		
