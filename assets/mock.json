@@ -18,18 +18,18 @@
 	],
 
 	"furniture": [
-		{"name": "Alchemist's Bench", "className": "sprite-furnitures.icon-alchemist-bench"},
-		{"name": "Bookcase", "className": "sprite-furnitures.icon-bookcase"},
-		{"name": "Cupboard", "className": "sprite-furnitures.icon-cupboard"},
-		{"name": "Door", "className": "sprite-furnitures.icon-door"},
-		{"name": "Opened Door", "className": "sprite-furnitures.icon-door-opened"},
-		{"name": "Fireplace", "className": "sprite-furnitures.icon-fireplace"},
-		{"name": "Rack", "className": "sprite-furnitures.icon-rack"},
-		{"name": "Sorcerer's Table", "className": "sprite-furnitures.icon-sorcerer-table"},
-		{"name": "Table", "className": "sprite-furnitures.icon-table"},
-		{"name": "Throne", "className": "sprite-furnitures.icon-throne"},
-		{"name": "Tomb", "className": "sprite-furnitures.icon-tomb"},
-		{"name": "Treasure Chest", "className": "sprite-furnitures.icon-tresure-chest"},
-		{"name": "Weapons Rack", "className": "sprite-furnitures.icon-weapons-rack"}
+		{"name": "Alchemist's Bench", "className": "sprite-furnitures icon-alchemist-bench"},
+		{"name": "Bookcase", "className": "sprite-furnitures icon-bookcase"},
+		{"name": "Cupboard", "className": "sprite-furnitures icon-cupboard"},
+		{"name": "Door", "className": "sprite-furnitures icon-door"},
+		{"name": "Opened Door", "className": "sprite-furnitures icon-door-opened"},
+		{"name": "Fireplace", "className": "sprite-furnitures icon-fireplace"},
+		{"name": "Rack", "className": "sprite-furnitures icon-rack"},
+		{"name": "Sorcerer's Table", "className": "sprite-furnitures icon-sorcerer-table"},
+		{"name": "Table", "className": "sprite-furnitures icon-table"},
+		{"name": "Throne", "className": "sprite-furnitures icon-throne"},
+		{"name": "Tomb", "className": "sprite-furnitures icon-tomb"},
+		{"name": "Treasure Chest", "className": "sprite-furnitures icon-tresure-chest"},
+		{"name": "Weapons Rack", "className": "sprite-furnitures icon-weapons-rack"}
 	]
 }

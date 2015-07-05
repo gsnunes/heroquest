@@ -27,7 +27,7 @@ define([
 				$li;
 
 			for (i = 0; i < len; i++) {
-				$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + ' (moviment: ' + data[i].moviment + ', attack: ' + data[i].attack + ', defense: ' + data[i].defense + ', body: ' + data[i].body + ', mind: ' + data[i].mind + ')"><i class="sprite-monsters icon-' + data[i].name.toLowerCase().replace(' ', '-') + '"></i></li>');
+				$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + ' (moviment: ' + data[i].moviment + ', attack: ' + data[i].attack + ', defense: ' + data[i].defense + ', body: ' + data[i].body + ', mind: ' + data[i].mind + ')"><i class="' + data[i].className + '"></i></li>');
 				this.$('.pieces-toolbar').append($li);
 				$li.data('monster', data[i]);
 			}

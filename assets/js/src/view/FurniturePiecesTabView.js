@@ -21,6 +21,21 @@ define([
 		},
 
 
+		afterRender: function () {
+			var data = GLOBAL.data.furniture,
+				i, len = data.length,
+				$li;
+
+			for (i = 0; i < len; i++) {
+				$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + '"><i class="' + data[i].className + '"></i></li>');
+				this.$('.pieces-toolbar').append($li);
+				//$li.data('monster', data[i]);
+			}
+
+			this.$('[data-toggle="tooltip"]').tooltip();
+		},
+
+
 		select: function (ev) {
 			$(ev.currentTarget).toggleClass('selected').siblings().removeClass('selected');
 			GLOBAL.toolbar.itemSelected = this.$('li.selected');
