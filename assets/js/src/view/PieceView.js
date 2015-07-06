@@ -1,9 +1,10 @@
 define([
 
 	'text!template/PieceView.html',
-	'view/CharPopoverView'
+	'view/CharPopoverView',
+	'view/MonsterPopoverView'
 
-], function (html, CharPopoverView) {
+], function (html, CharPopoverView, MonsterPopoverView) {
 
 	'use strict';
 
@@ -24,7 +25,8 @@ define([
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
 					if (this.id === ev.addedKeys[0].key) {
-						this.setPosition(JSON.parse(ev.state[ev.addedKeys[0].key]));
+						console.log('aaa');
+						this.setPosition(JSON.parse(ev.state[ev.addedKeys[0].key]).position);
 					}
 				}
 			}, this));
@@ -35,21 +37,15 @@ define([
 			if (this.model && this.model.character) {
 				this.$('i').addClass('sprite-characters icon-' + this.model.character);
 			}
-			else if (this.itemSelected) {
-				if (this.itemSelected.data('monster')) {
-					this.$('i').addClass('sprite-monsters icon-' + this.itemSelected.data('monster').name.toLowerCase().replace(' ', '-'));
-				}
-				else {
-					this.$('i').addClass(this.itemSelected.find('i').attr('class'));
-				}
+			else {
+				this.$('i').addClass(this.model.className);
 			}
 
 			this.createPopover();
 			this.setDraggable();
 
-			if (this.ev) {
-				this.setPosition();
-			}
+			console.log('bbb');
+			this.setPosition();
 		},
 
 
@@ -57,7 +53,7 @@ define([
 			this.$el.draggable({
 				containment: '.board',
 				start: this.startDraggable,
-				stop: this.stopDraggable
+				stop: _.bind(this.stopDraggable, this)
 			});
 		},
 
@@ -68,22 +64,27 @@ define([
 
 
 		stopDraggable: function () {
-			gapi.hangout.data.setValue(this.id, JSON.stringify({offsetX: parseInt($(this).css('left'), 10), offsetY: parseInt($(this).css('top'), 10)}));
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model}));
 		},
 
 
-		setPosition: function (data) {
+		setPosition: function (position) {
 			this.$el.popover('hide');
 
 			this.$el.css({
-				left: data ? data.offsetX : (this.ev.offsetX - (this.$el.width() / 2)),
-				top: data ? data.offsetY : (this.ev.offsetY - (this.$el.height() / 2))
+				left: position ? position.offsetX : (this.position.offsetX - (this.$el.width() / 2)),
+				top: position ? position.offsetY : (this.position.offsetY - (this.$el.height() / 2))
 			});
 		},
 
 
 		createPopover: function () {
-			new CharPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el});
+			if (this.model && this.model.character) {
+				new CharPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el});
+			}
+			else {
+				new MonsterPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
+			}
 		}
 
 	});

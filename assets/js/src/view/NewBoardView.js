@@ -66,20 +66,9 @@ define([
 				itemSelected = GLOBAL.toolbar.itemSelected;
 
 			if ($(ev.target).hasClass('board')) {
-				if (itemSelected.length) {
-					gapi.hangout.data.setValue(key, JSON.stringify({id: key, ev: {offsetX: ev.offsetX || ev.originalEvent.layerX, offsetY: ev.offsetY || ev.originalEvent.layerY}, model: itemSelected.data('monster')}));
+				if (itemSelected && itemSelected.length) {
+					gapi.hangout.data.setValue(key, JSON.stringify({id: key, position: {offsetX: ev.offsetX || ev.originalEvent.layerX, offsetY: ev.offsetY || ev.originalEvent.layerY}, model: itemSelected.data('piece')}));
 				}
-
-				/*
-				var key = 'piece-' +  (new Date()).getTime(),
-					selectedItem = $('#myTabContent div.active ul.pieces-toolbar li.highlight');
-
-				//GLOBAL.data.monster
-
-				if (selectedItem) {
-					gapi.hangout.data.setValue(key, JSON.stringify({id: key, ev: {offsetX: ev.offsetX || ev.originalEvent.layerX, offsetY: ev.offsetY || ev.originalEvent.layerY}}));
-				}
-				*/
 			}
 		}
 		

@@ -91,9 +91,6 @@ define([
 		},
 
 
-		/**
-		 * start
-		 */
 		start: function (model) {
 			var state = gapi.hangout.data.getState(),
 				key = 'piece-' + model.id,
@@ -111,33 +108,8 @@ define([
 				alert('This hero is already on the board!');
 			}
 			else {
-				gapi.hangout.data.setValue(key, JSON.stringify({id: key, model: model}));
+				gapi.hangout.data.setValue(key, JSON.stringify({id: key, position: {offsetX: 400, offsetY: 400}, model: model}));
 			}
-
-			/*
-			var campaingId = gapi.hangout.data.getValue('campaingId'),
-				campaingModel,
-				self = this;
-
-			if (campaingId) {
-				this.campaingCollection.fetch({
-					success: function () {
-						campaingModel = self.campaingCollection.get(campaingId);
-						GLOBAL.campaingModel = campaingModel;
-
-						Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
-						Backbone.EventBus.trigger('HistoryPanel.setTitle', campaingModel.attributes.name);
-
-						GLOBAL.charModel = model;
-						Backbone.EventBus.trigger('BoardView.AddCharPiece', model);
-						self.hide();
-					}
-				});
-			}
-			else {
-				alert('O mestre ainda nao escolheu a campanha');
-			}
-			*/
 		},
 
 
