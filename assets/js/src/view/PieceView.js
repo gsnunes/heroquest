@@ -25,7 +25,6 @@ define([
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
 					if (this.id === ev.addedKeys[0].key) {
-						console.log('aaa');
 						this.setPosition(JSON.parse(ev.state[ev.addedKeys[0].key]).position);
 					}
 				}
@@ -43,8 +42,6 @@ define([
 
 			this.createPopover();
 			this.setDraggable();
-
-			console.log('bbb');
 			this.setPosition();
 		},
 
@@ -64,7 +61,7 @@ define([
 
 
 		stopDraggable: function () {
-			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model}));
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true}));
 		},
 
 
@@ -72,8 +69,8 @@ define([
 			this.$el.popover('hide');
 
 			this.$el.css({
-				left: position ? position.offsetX : (this.position.offsetX - (this.$el.width() / 2)),
-				top: position ? position.offsetY : (this.position.offsetY - (this.$el.height() / 2))
+				left: position ? position.offsetX : this.adjustedPosition ? this.position.offsetX : (this.position.offsetX - (this.$el.width() / 2)),
+				top: position ? position.offsetY : this.adjustedPosition ? this.position.offsetY : (this.position.offsetY - (this.$el.height() / 2))
 			});
 		},
 

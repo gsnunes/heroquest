@@ -66,7 +66,7 @@ window.GLOBAL = (function () {
 
 				GLOBAL.participant = participant;
 				GLOBAL.displayIndex = participant.displayIndex;
-				//GLOBAL.displayIndex = 1;
+				GLOBAL.displayIndex = 1;
 
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: clientId, immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
