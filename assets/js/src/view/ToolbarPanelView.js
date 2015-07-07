@@ -3,10 +3,9 @@ define([
 	'text!template/ToolbarPanelView.html',
 	'view/component/NewPanelView',
 	'view/component/TabComponentView',
-	'view/MonsterPiecesTabView',
-	'view/FurniturePiecesTabView'
+	'view/PiecesTabView'
 
-], function (html, NewPanelView, TabComponentView, MonsterPiecesTabView, FurniturePiecesTabView) {
+], function (html, NewPanelView, TabComponentView, PiecesTabView) {
 
 	'use strict';
 
@@ -37,19 +36,27 @@ define([
 
 		createTabs: function () {
 			var tabComponent = new TabComponentView(),
-				monsterPiecesTabView = new MonsterPiecesTabView(),
-				furniturePiecesTabView = new FurniturePiecesTabView();
+				monsterPiecesTabView = new PiecesTabView({type: 'monster'}),
+				furniturePiecesTabView = new PiecesTabView({type: 'furniture'}),
+				tilePiecesTabView = new PiecesTabView({type: 'tile'}),
+				unselectPieces = function () {
+					monsterPiecesTabView.unselect();
+					furniturePiecesTabView.unselect();
+					tilePiecesTabView.unselect();
+				};
 				
 			tabComponent.attachTo(this.$('.panel-body'));
 
 			tabComponent.add('Monsters', monsterPiecesTabView, true, function () {
-				monsterPiecesTabView.unselect();
-				furniturePiecesTabView.unselect();
+				unselectPieces();
 			});
 
 			tabComponent.add('Furnitures', furniturePiecesTabView, null, function () {
-				monsterPiecesTabView.unselect();
-				furniturePiecesTabView.unselect();
+				unselectPieces();
+			});
+
+			tabComponent.add('Tiles', tilePiecesTabView, null, function () {
+				unselectPieces();
 			});
 		}
 

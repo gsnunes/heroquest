@@ -1,6 +1,6 @@
 define([
 
-	'text!template/FurniturePiecesTabView.html'
+	'text!template/PiecesTabView.html'
 
 ], function (html) {
 
@@ -22,12 +22,18 @@ define([
 
 
 		afterRender: function () {
-			var data = GLOBAL.data.furniture,
+			var data = GLOBAL.data[this.type],
 				i, len = data.length,
 				$li;
 
 			for (i = 0; i < len; i++) {
-				$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + '"><i class="' + data[i].className + '"></i></li>');
+				if (data[i].moviment) {
+					$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + ' (moviment: ' + data[i].moviment + ', attack: ' + data[i].attack + ', defense: ' + data[i].defense + ', body: ' + data[i].body + ', mind: ' + data[i].mind + ')"><i class="' + data[i].className + '"></i></li>');
+				}
+				else {
+					$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + '"><i class="' + data[i].className + '"></i></li>');
+				}
+				
 				this.$('.pieces-toolbar').append($li);
 				$li.data('piece', data[i]);
 			}

@@ -138,7 +138,7 @@ ul.pieces-toolbar li.selected {background-color: #dcf5ff}
 .sprite-furnitures.icon-throne { background-position: 0px -870px; width: 60px; height: 60px;  } 
 .sprite-furnitures.icon-tomb { background-position: 0px -940px; width: 180px; height: 120px;  } 
 .sprite-furnitures.icon-tresure-chest { background-position: 0px -1070px; width: 60px; height: 60px;  } 
-.sprite-furnitures.icon-weapons-rack { background-position: 0px -1140px; width: 294px; height: 98px;  } 
+.sprite-furnitures.icon-weapons-rack { background-position: 0px -1140px; width: 180px; height: 60px;  } 
 
 .sprite-characters.icon-barbarian { background-position: 0px 0px; width: 47px; height: 48px;  } 
 .sprite-characters.icon-dwarf { background-position: 0px -58px; width: 67px; height: 65px;  } 

@@ -31,5 +31,30 @@
 		{"name": "Tomb", "className": "sprite-furnitures icon-tomb"},
 		{"name": "Treasure Chest", "className": "sprite-furnitures icon-tresure-chest"},
 		{"name": "Weapons Rack", "className": "sprite-furnitures icon-weapons-rack"}
+	],
+
+	"tile": [
+		{"name": "Skull", "className": "sprite-tiles icon-tile1"},
+		{"name": "Secret Door", "className": "sprite-tiles icon-tile2"},
+		{"name": "Pit Trap", "className": "sprite-tiles icon-tile3"},
+		{"name": "Falling Block", "className": "sprite-tiles icon-tile4"},
+		{"name": "Blocked Square", "className": "sprite-tiles icon-tile5"},
+		{"name": "Blocked Square", "className": "sprite-tiles icon-tile6"},
+		{"name": "Stairs", "className": "sprite-tiles icon-tile7"}
+	],
+
+	"spell": [
+		{"name": "", "description": "", "type": ""}
+	],
+
+	"treasure": [
+		{"name": "Gem!", "description": "Tucked into the toe of an old boot you find a small gem worth 35 gold coins. Record the money on you sheet. Do not return this card to the deck.", "return": false},
+		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true},
+		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true},
+		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true}
+	],
+
+	"artifact": [
+		{"name": "Borin's Armor", "description": "This magical suit of plate mail allows the wearer to roll four combat dice in defense. Unlike normal plate mail, this mysterious, ultralight metal armor does not slow down its wearer. May not be used by Wizard."}
 	]
 }
