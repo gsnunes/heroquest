@@ -44,7 +44,16 @@
 	],
 
 	"spell": [
-		{"name": "", "description": "", "type": ""}
+		{"name": "aaa", "description": "aaa aaa", "type": "chaos"},
+		{"name": "bbb", "description": "bbb bbb", "type": "chaos"},
+		{"name": "aaa", "description": "aaa aaa", "type": "air"},
+		{"name": "bbb", "description": "bbb bbb", "type": "air"},
+		{"name": "aaa", "description": "aaa aaa", "type": "earth"},
+		{"name": "bbb", "description": "bbb bbb", "type": "earth"},
+		{"name": "aaa", "description": "aaa aaa", "type": "fire"},
+		{"name": "bbb", "description": "bbb bbb", "type": "fire"},
+		{"name": "aaa", "description": "aaa aaa", "type": "water"},
+		{"name": "bbb", "description": "bbb bbb", "type": "water"}
 	],
 
 	"treasure": [

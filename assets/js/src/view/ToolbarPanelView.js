@@ -3,9 +3,10 @@ define([
 	'text!template/ToolbarPanelView.html',
 	'view/component/NewPanelView',
 	'view/component/TabComponentView',
-	'view/PiecesTabView'
+	'view/PiecesTabView',
+	'view/SpellsTabView'
 
-], function (html, NewPanelView, TabComponentView, PiecesTabView) {
+], function (html, NewPanelView, TabComponentView, PiecesTabView, SpellsTabView) {
 
 	'use strict';
 
@@ -39,6 +40,7 @@ define([
 				monsterPiecesTabView = new PiecesTabView({type: 'monster'}),
 				furniturePiecesTabView = new PiecesTabView({type: 'furniture'}),
 				tilePiecesTabView = new PiecesTabView({type: 'tile'}),
+				spellsTabView = new SpellsTabView(),
 				unselectPieces = function () {
 					monsterPiecesTabView.unselect();
 					furniturePiecesTabView.unselect();
@@ -56,6 +58,10 @@ define([
 			});
 
 			tabComponent.add('Tiles', tilePiecesTabView, null, function () {
+				unselectPieces();
+			});
+
+			tabComponent.add('Spells', spellsTabView, null, function () {
 				unselectPieces();
 			});
 		}
