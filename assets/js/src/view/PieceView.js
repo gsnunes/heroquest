@@ -43,6 +43,20 @@ define([
 			this.createPopover();
 			this.setDraggable();
 			this.setPosition();
+			this.setZIndex();
+		},
+
+
+		setZIndex: function () {
+			if (this.model && this.model.moviment) {
+				this.$el.css('z-index', 1);
+			}
+			else if (this.model && this.model.character) {
+				this.$el.css('z-index', 2);
+			}
+			else {
+				this.$el.css('z-index', 0);
+			}
 		},
 
 
@@ -79,7 +93,7 @@ define([
 			if (this.model && this.model.character) {
 				new CharPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el});
 			}
-			else {
+			else if (this.model && this.model.moviment) {
 				new MonsterPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
 			}
 		}

@@ -3,6 +3,7 @@ define(function (require) {
 	"use strict";
 
 	var BoardView = require('view/NewBoardView'),
+		TreasureView = require('view/TreasureView'),
 		DicePanelView = require('view/DicePanelView'),
 		PiecesPanelView = require('view/ToolbarPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),
@@ -26,8 +27,15 @@ define(function (require) {
 
 
 		afterRender: function () {
+			this.shuffleTreasures();
 			this.buildDom();
 			this.welcome();
+		},
+
+
+		shuffleTreasures: function () {
+			var treasureView = new TreasureView();
+			treasureView.attachTo(this);
 		},
 
 

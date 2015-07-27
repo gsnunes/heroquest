@@ -8,6 +8,9 @@ define([
 
 	return Giraffe.View.extend({
 
+		className: 'tab-button-component',
+
+
 		template: html,
 
 
@@ -17,13 +20,13 @@ define([
 
 
 		add: function (title, content, active, callback) {
-			var id = 'tab' + (new Date()).getTime(),
-				$li = $('<label class="btn btn-primary ' + (active ? 'active' : '') + '"><input type="radio" id="option-' + id + '" autocomplete="off" ' + (active ? 'checked' : '') + '>' + title + '</label>');
+			var id = (new Date()).getTime(),
+				$li = $('<label class="btn btn-primary ' + (active ? 'active' : '') + '"><input type="radio" data-content-id="tab-button-content-' + id + '" autocomplete="off" ' + (active ? 'checked' : '') + '>' + title + '</label>');
 
 			this.$('.btn-group').append($li);
-			this.$('.tab-button-content').append('<div class="list-group ' + (active ? '' : 'hide') + '" id="list-group-option-' + id + '"></div>');
+			this.$('.tab-button-container').append('<div class="tab-button-content ' + (active ? '' : 'hide') + '" id="tab-button-content-' + id + '"></div>');
 
-			content.attachTo(this.$('#list-group-option-' + id));
+			content.attachTo(this.$('#tab-button-content-' + id));
 
 			$li.on('click', function () {
 				if (callback) {
@@ -34,8 +37,8 @@ define([
 
 
 		showContainer: function (ev) {
-			this.$('.list-group').addClass('hide');
-			this.$('#list-group-' + $(ev.target).find('input').attr('id')).removeClass('hide');
+			this.$('.tab-button-content').addClass('hide');
+			this.$('#' + $(ev.target).find('input').data('contentId')).removeClass('hide');
 		}
 
 	});

@@ -6,7 +6,9 @@ textarea {resize: none;}
 
 
 .popover {max-width: 404px}
+.tab-pane {padding: 0 10px}
 
+.tab-button-component .btn-group {margin-bottom: 10px}
 
 .gray-darker  {color:#222}
 .gray-dark    {color:#333}

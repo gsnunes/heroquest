@@ -68,7 +68,9 @@ define([
 				}
 			}
 
-			GLOBAL.historyPanelView.addHistoryItem('dice roll: ' + result);
+			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: GLOBAL.participant.person}));
+			//GLOBAL.historyPanelView.addHistoryItem('dice roll: ' + result);
+
 			this.$('.dice-result span').html(result);
 			ev.preventDefault();
 		},

@@ -44,23 +44,23 @@
 	],
 
 	"spell": [
-		{"name": "aaa", "description": "aaa aaa", "type": "chaos"},
-		{"name": "bbb", "description": "bbb bbb", "type": "chaos"},
-		{"name": "aaa", "description": "aaa aaa", "type": "air"},
-		{"name": "bbb", "description": "bbb bbb", "type": "air"},
-		{"name": "aaa", "description": "aaa aaa", "type": "earth"},
-		{"name": "bbb", "description": "bbb bbb", "type": "earth"},
-		{"name": "aaa", "description": "aaa aaa", "type": "fire"},
-		{"name": "bbb", "description": "bbb bbb", "type": "fire"},
-		{"name": "aaa", "description": "aaa aaa", "type": "water"},
-		{"name": "bbb", "description": "bbb bbb", "type": "water"}
+		{"name": "chaos aaa", "description": "aaa aaa", "type": "chaos"},
+		{"name": "chaos bbb", "description": "bbb bbb", "type": "chaos"},
+		{"name": "air aaa", "description": "aaa aaa", "type": "air"},
+		{"name": "air bbb", "description": "bbb bbb", "type": "air"},
+		{"name": "earth aaa", "description": "aaa aaa", "type": "earth"},
+		{"name": "earth bbb", "description": "bbb bbb", "type": "earth"},
+		{"name": "fire aaa", "description": "aaa aaa", "type": "fire"},
+		{"name": "fire bbb", "description": "bbb bbb", "type": "fire"},
+		{"name": "water aaa", "description": "aaa aaa", "type": "water"},
+		{"name": "water bbb", "description": "bbb bbb", "type": "water"}
 	],
 
 	"treasure": [
-		{"name": "Gem!", "description": "Tucked into the toe of an old boot you find a small gem worth 35 gold coins. Record the money on you sheet. Do not return this card to the deck.", "return": false},
-		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true},
-		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true},
-		{"name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "return": true}
+		{"id": 0, "name": "Gem!", "description": "Tucked into the toe of an old boot you find a small gem worth 35 gold coins. Record the money on you sheet. Do not return this card to the deck.", "remains": false},
+		{"id": 1, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true},
+		{"id": 2, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true},
+		{"id": 3, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true}
 	],
 
 	"artifact": [
