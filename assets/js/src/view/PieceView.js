@@ -16,6 +16,11 @@ define([
 		className: 'piece',
 
 
+		events: {
+			'mouseup': 'rotatePiece'
+		},
+
+
 		initialize: function () {
 			this.bindEvents();
 		},
@@ -61,16 +66,31 @@ define([
 
 
 		setDraggable: function () {
+			var recoupLeft, recoupTop;
+
+			if (this.$el.draggable('instance')) {
+				this.$el.draggable('destroy');
+			}
+			
 			this.$el.draggable({
 				containment: '.board',
-				start: this.startDraggable,
+				start: function (event, ui) {
+					var left = parseInt($(this).css('left'), 10),
+						top = parseInt($(this).css('top'), 10);
+
+					left = isNaN(left) ? 0 : left;
+					top = isNaN(top) ? 0 : top;
+					recoupLeft = left - ui.position.left;
+					recoupTop = top - ui.position.top;
+
+					$(this).popover('hide');
+				},
+				drag: function (event, ui) {
+					ui.position.left += recoupLeft;
+					ui.position.top += recoupTop;
+				},
 				stop: _.bind(this.stopDraggable, this)
 			});
-		},
-
-
-		startDraggable: function () {
-			$(this).popover('hide');
 		},
 
 
@@ -96,6 +116,26 @@ define([
 			else if (this.model && this.model.moviment) {
 				new MonsterPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
 			}
+		},
+
+
+		rotatePiece: function (ev) {
+			this.rotation = typeof this.rotation === 'undefined' ? 0 : this.rotation;
+
+			if (ev.button === 2) {
+				this.rotation = this.rotation === 360 ? 90 : (this.rotation + 90);
+
+				this.$el.css({
+					'-webkit-transform': 'rotate(' + this.rotation + 'deg)',
+					'-moz-transform': 'rotate(' + this.rotation + 'deg)',
+					'-ms-transform': 'rotate(' + this.rotation + 'deg)',
+					'transform': 'rotate(' + this.rotation + 'deg)'
+				});
+
+				return false;
+			}
+
+			return true;
 		}
 
 	});

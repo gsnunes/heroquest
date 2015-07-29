@@ -19,7 +19,8 @@ define([
 
 		events: {
 			'click .glyphicon': 'changeProgress',
-			'change input': 'save'
+			'change input': 'save',
+			'click .btn-danger': 'removePiece'
 		},
 
 
@@ -115,6 +116,12 @@ define([
 
 		save: function () {
 			gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
+		},
+
+
+		removePiece: function () {
+			this.selector.popover('destroy');
+			gapi.hangout.data.clearValue(this.selector.attr('id'));
 		}
 
 	});

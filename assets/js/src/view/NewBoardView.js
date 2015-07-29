@@ -52,6 +52,11 @@ define([
 					this.newPiece(ev.state[ev.addedKeys[0].key]);
 				}
 			}
+			else if (ev.removedKeys.length && ev.removedKeys[0].match(/piece/gi)) {
+				if (this.$el.find('#' + ev.removedKeys[0]).length) {
+					this.$el.find('#' + ev.removedKeys[0]).remove();
+				}
+			}
 		},
 
 
