@@ -6,7 +6,7 @@ define(function () {
 
 		defaults: {
 			name: '',
-			description: '',
+			inventory: '',
 			character: '',
 			quests: 0,
 			moviment: 0,

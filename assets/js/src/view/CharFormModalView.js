@@ -36,7 +36,7 @@ define([
 
 			if (this.charModel) {
 				this.$el.find('input#name').val(this.charModel.attributes.name);
-				this.$el.find('textarea#description').val(this.charModel.attributes.description);
+				this.$el.find('textarea#inventory').val(this.charModel.attributes.inventory);
 				
 				this.$el.find('select#character').val(this.charModel.attributes.character);
 				this.$el.find('select#character').prop('disabled', true);
@@ -74,7 +74,7 @@ define([
 
 			this.$el.find('select#character').html(characters.join());
 			this.populateAttr(GLOBAL.data.character[0]);
-			this.$el.find('textarea#description').val(GLOBAL.data.character[0].description);
+			this.$el.find('textarea#inventory').val(GLOBAL.data.character[0].inventory);
 		},
 
 
@@ -83,7 +83,7 @@ define([
 		 */
 		characterChange: function () {
 			var charCollection = _.where(GLOBAL.data.character, {name: $('select#character').val()})[0];
-			this.$el.find('textarea#description').val(charCollection.description);
+			this.$el.find('textarea#inventory').val(charCollection.inventory);
 			this.populateAttr(charCollection);
 		},
 
@@ -91,7 +91,7 @@ define([
 		getDataFromForm: function () {
 			var data = {
 				name: this.$el.find('input#name').val(),
-				description: this.$el.find('textarea#description').val(),
+				inventory: this.$el.find('textarea#inventory').val(),
 				character: this.$el.find('select#character').val(),
 				quests: this.$el.find('input#quests').val(),
 				access_token: this.token.access_token,

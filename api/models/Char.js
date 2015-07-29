@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
   	name: 'string',
-	description: 'string',
+	inventory: 'string',
 	character: 'string',
 	quests: 'integer',
 	person: 'json',

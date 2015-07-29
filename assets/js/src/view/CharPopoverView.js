@@ -21,7 +21,8 @@ define([
 		events: {
 			'click .glyphicon': 'changeProgress',
 			'blur textarea': 'save',
-			'change input': 'save'
+			'change input': 'save',
+			'click .btn-danger': 'removePiece'
 		},
 
 
@@ -73,6 +74,7 @@ define([
 
 		lockInputs: function () {
 			if (this.model.attributes.personId !== GLOBAL.participant.person.id) {
+				this.$('.btn-danger').off('click').remove();
 				this.$('.glyphicon').off('click').remove();
 				this.$('textarea').prop('disabled', true);
 				this.$('input').prop('disabled', true);
@@ -127,6 +129,12 @@ define([
 					gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
 				}, this)
 			});
+		},
+
+
+		removePiece: function () {
+			this.selector.popover('destroy');
+			gapi.hangout.data.clearValue(this.selector.attr('id'));
 		}
 
 	});

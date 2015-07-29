@@ -75,6 +75,7 @@ define([
 
 		lockInputs: function () {
 			if (GLOBAL.displayIndex !== 0) {
+				this.$('.btn-danger').off('click').remove();
 				this.$('.glyphicon').off('click').remove();
 				this.$('input').prop('disabled', true);
 			}

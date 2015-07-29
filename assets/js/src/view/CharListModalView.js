@@ -64,7 +64,7 @@ define([
 			this.listGroupView.reset();
 
 			this.charCollection.forEach(function (model) {
-				var listGroupItem = self.listGroupView.addItem(model.attributes.name + ' (' + model.attributes.character + ')', model.attributes.description),
+				var listGroupItem = self.listGroupView.addItem(model.attributes.name + ' (' + model.attributes.character + ')', model.attributes.inventory),
 					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Add to board', icon: 'glyphicon glyphicon-ok'}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
