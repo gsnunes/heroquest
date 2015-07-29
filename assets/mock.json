@@ -11,10 +11,13 @@
 		{"name": "Fimir", "moviment": 6, "attack": 3, "defense": 3, "body": 2, "mind": 3, "className": "sprite-monsters icon-fimir"},
 		{"name": "Gargoyle", "moviment": 6, "attack": 4, "defense": 5, "body": 3, "mind": 4, "className": "sprite-monsters icon-gargoyle"},
 		{"name": "Goblin", "moviment": 10, "attack": 2, "defense": 1, "body": 1, "mind": 1, "className": "sprite-monsters icon-goblin"},
+		{"name": "Goblin (Axe)", "moviment": 10, "attack": 2, "defense": 1, "body": 1, "mind": 1, "className": "sprite-monsters icon-goblin-axe"},
 		{"name": "Mummy", "moviment": 4, "attack": 3, "defense": 4, "body": 2, "mind": 0, "className": "sprite-monsters icon-mummy"},
 		{"name": "Orc", "moviment": 8, "attack": 3, "defense": 2, "body": 1, "mind": 2, "className": "sprite-monsters icon-orc"},
+		{"name": "Orc (Cleaver)", "moviment": 8, "attack": 3, "defense": 2, "body": 1, "mind": 2, "className": "sprite-monsters icon-orc-cleaver"},
 		{"name": "Skeleton", "moviment": 6, "attack": 2, "defense": 2, "body": 1, "mind": 0, "className": "sprite-monsters icon-skeleton"},
-		{"name": "Zombie", "moviment": 5, "attack": 2, "defense": 3, "body": 1, "mind": 0, "className": "sprite-monsters icon-zombie"}
+		{"name": "Zombie", "moviment": 5, "attack": 2, "defense": 3, "body": 1, "mind": 0, "className": "sprite-monsters icon-zombie"},
+		{"name": "Warlock", "moviment": 1, "attack": 1, "defense": 1, "body": 1, "mind": 1, "className": "sprite-monsters icon-warlock"}
 	],
 
 	"furniture": [

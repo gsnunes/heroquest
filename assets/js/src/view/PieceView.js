@@ -2,9 +2,10 @@ define([
 
 	'text!template/PieceView.html',
 	'view/CharPopoverView',
+	'view/PiecePopoverView',
 	'view/MonsterPopoverView'
 
-], function (html, CharPopoverView, MonsterPopoverView) {
+], function (html, CharPopoverView, PiecePopoverView, MonsterPopoverView) {
 
 	'use strict';
 
@@ -115,6 +116,9 @@ define([
 			}
 			else if (this.model && this.model.moviment) {
 				new MonsterPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
+			}
+			else {
+				new PiecePopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
 			}
 		},
 

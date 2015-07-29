@@ -6,6 +6,7 @@ textarea {resize: none;}
 
 
 .popover {max-width: 404px}
+.popover-content form {margin-bottom: 0}
 .tab-pane {padding: 0 10px}
 
 .tab-button-component .btn-group {margin-bottom: 10px}
@@ -111,14 +112,17 @@ ul.pieces-toolbar li.selected {background-color: #dcf5ff}
 .sprite-characters { background: url(../images/sprite-characters.png) no-repeat top left; display: inline-block; } 
 
 
-.sprite-monsters.icon-chaos-warrior { background-position: 0px 0px; width: 47px; height: 47px;  } 
-.sprite-monsters.icon-fimir { background-position: 0px -57px; width: 47px; height: 56px;  } 
-.sprite-monsters.icon-gargoyle { background-position: 0px -123px; width: 47px; height: 50px;  } 
-.sprite-monsters.icon-goblin { background-position: 0px -183px; width: 47px; height: 47px;  } 
-.sprite-monsters.icon-mummy { background-position: 0px -240px; width: 47px; height: 47px;  } 
-.sprite-monsters.icon-orc { background-position: 0px -297px; width: 47px; height: 47px;  } 
-.sprite-monsters.icon-skeleton { background-position: 0px -354px; width: 47px; height: 47px;  } 
-.sprite-monsters.icon-zombie { background-position: 0px -411px; width: 55px; height: 48px;  } 
+.sprite-monsters.icon-chaos-warrior { background-position: 0px 0px; width: 47px; height: 47px}
+.sprite-monsters.icon-fimir { background-position: 0px -57px; width: 47px; height: 56px}
+.sprite-monsters.icon-gargoyle { background-position: 0px -123px; width: 47px; height: 50px}
+.sprite-monsters.icon-goblin { background-position: 0px -183px; width: 47px; height: 47px}
+.sprite-monsters.icon-mummy { background-position: 0px -240px; width: 47px; height: 47px}
+.sprite-monsters.icon-orc { background-position: 0px -297px; width: 47px; height: 47px}
+.sprite-monsters.icon-skeleton { background-position: 0px -354px; width: 47px; height: 47px}
+.sprite-monsters.icon-zombie { background-position: 0px -411px; width: 49px; height: 48px}
+.sprite-monsters.icon-goblin-axe { background-position: 0px -469px; width: 47px; height: 47px}
+.sprite-monsters.icon-orc-cleaver { background-position: 0px -526px; width: 47px; height: 47px}
+.sprite-monsters.icon-warlock { background-position: 0px -583px; width: 47px; height: 47px}
 
 .sprite-tiles.icon-tile1 { background-position: 0px 0px; width: 60px; height: 60px;  } 
 .sprite-tiles.icon-tile2 { background-position: 0px -70px; width: 60px; height: 60px;  } 
