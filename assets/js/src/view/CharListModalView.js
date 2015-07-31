@@ -92,7 +92,8 @@ define([
 
 
 		start: function (model) {
-			var state = gapi.hangout.data.getState(),
+			var charLen = $('.board').find('.piece .sprite-characters').length,
+				state = gapi.hangout.data.getState(),
 				key = 'piece-' + model.id,
 				hasPiece = false;
 
@@ -108,7 +109,7 @@ define([
 				alert('This hero is already on the board!');
 			}
 			else {
-				gapi.hangout.data.setValue(key, JSON.stringify({id: key, position: {offsetX: 400, offsetY: 400}, model: model}));
+				gapi.hangout.data.setValue(key, JSON.stringify({id: key, position: {offsetX: (552 + (charLen * 62)), offsetY: 52}, model: model}));
 			}
 		},
 

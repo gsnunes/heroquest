@@ -49,19 +49,21 @@ define([
 				
 			tabComponent.attachTo(this.$('.panel-body'));
 
-			tabComponent.add('Monsters', monsterPiecesTabView, true, function () {
-				unselectPieces();
-			});
+			if (GLOBAL.displayIndex === 0) {
+				tabComponent.add('Monsters', monsterPiecesTabView, true, function () {
+					unselectPieces();
+				});
 
-			tabComponent.add('Furnitures', furniturePiecesTabView, null, function () {
-				unselectPieces();
-			});
+				tabComponent.add('Furnitures', furniturePiecesTabView, null, function () {
+					unselectPieces();
+				});
 
-			tabComponent.add('Tiles', tilePiecesTabView, null, function () {
-				unselectPieces();
-			});
+				tabComponent.add('Tiles', tilePiecesTabView, null, function () {
+					unselectPieces();
+				});
+			}
 
-			tabComponent.add('Cards', cardsTabView, null, function () {
+			tabComponent.add('Cards', cardsTabView, (GLOBAL.displayIndex === 0 ? null : true), function () {
 				unselectPieces();
 			});
 		}

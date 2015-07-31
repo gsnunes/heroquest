@@ -29,7 +29,7 @@ define([
 			}
 
 			if (GLOBAL.displayIndex === 1) {
-				tabButtonComponent.add('Air', new SpellsTabButtonView({data: spells.air}));
+				tabButtonComponent.add('Air', new SpellsTabButtonView({data: spells.air}), true);
 				tabButtonComponent.add('Earth', new SpellsTabButtonView({data: spells.earth}));
 				tabButtonComponent.add('Fire', new SpellsTabButtonView({data: spells.fire}));
 				tabButtonComponent.add('Water', new SpellsTabButtonView({data: spells.water}));
