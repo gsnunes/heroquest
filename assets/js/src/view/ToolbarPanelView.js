@@ -4,9 +4,10 @@ define([
 	'view/component/NewPanelView',
 	'view/component/TabComponentView',
 	'view/PiecesTabView',
-	'view/CardsTabView'
+	'view/CardsTabView',
+	'view/SettingsTabView'
 
-], function (html, NewPanelView, TabComponentView, PiecesTabView, CardsTabView) {
+], function (html, NewPanelView, TabComponentView, PiecesTabView, CardsTabView, SettingsTabView) {
 
 	'use strict';
 
@@ -41,15 +42,17 @@ define([
 				furniturePiecesTabView = new PiecesTabView({type: 'furniture'}),
 				tilePiecesTabView = new PiecesTabView({type: 'tile'}),
 				cardsTabView = new CardsTabView(),
+				settingsTabView = new SettingsTabView(),
 				unselectPieces = function () {
 					monsterPiecesTabView.unselect();
 					furniturePiecesTabView.unselect();
 					tilePiecesTabView.unselect();
-				};
+				},
+				isMaster = util.isMaster();
 				
 			tabComponent.attachTo(this.$('.panel-body'));
 
-			if (GLOBAL.displayIndex === 0) {
+			if (isMaster) {
 				tabComponent.add('Monsters', monsterPiecesTabView, true, function () {
 					unselectPieces();
 				});
@@ -63,7 +66,11 @@ define([
 				});
 			}
 
-			tabComponent.add('Cards', cardsTabView, (GLOBAL.displayIndex === 0 ? null : true), function () {
+			tabComponent.add('Cards', cardsTabView, (isMaster ? null : true), function () {
+				unselectPieces();
+			});
+
+			tabComponent.add('Settings', settingsTabView, false, function () {
 				unselectPieces();
 			});
 		}

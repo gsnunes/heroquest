@@ -15,6 +15,8 @@ define(function (require) {
 		
 
 		initialize: function () {
+			this.bindEvents();
+
 			/*
 			var my_dictionary = {
 				'some text': 'a translation',
@@ -26,9 +28,39 @@ define(function (require) {
 		},
 
 
+		bindEvents: function () {
+			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
+				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
+					this.buildDom();
+				}
+			}, this));
+
+
+			gapi.hangout.onParticipantsRemoved.add(function (ev) {
+				if (ev.removedParticipants && ev.removedParticipants.length) {
+					var master = util.getMaster(),
+						participants = gapi.hangout.getParticipants();
+
+					if (ev.removedParticipants[0].person.id === master.person.id) {
+						gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
+					}
+				}
+			});
+		},
+
+
 		afterRender: function () {
+			var participant = gapi.hangout.getLocalParticipant(),
+				master = util.getMaster();
+
+			if (master) {
+				this.buildDom();
+			}
+			else {
+				gapi.hangout.data.setValue('master', JSON.stringify(participant));
+			}
+
 			this.shuffleTreasures();
-			this.buildDom();
 			this.welcome();
 		},
 

@@ -1,17 +1,22 @@
 define([
 
-	'text!template/WelcomeModalView.html',
-	'view/component/ModalView',
+	'text!template/SettingsTabView.html',
 	'view/CampaingListModalView',
 	'view/CharListModalView'
 
-], function (Template, ModalView, CampaingListModalView, CharListModalView) {
+], function (html, CampaingListModalView, CharListModalView) {
 
 	'use strict';
 
-	return ModalView.extend({
+	return Giraffe.View.extend({
 
-		template: _.template(Template),
+		template: html,
+
+
+		events: {
+			'click .manage-heroes': 'showCharListModal',
+			'click .manage-campaings': 'showCampaingListModal'
+		},
 
 
 		showCampaingListModal: function () {
@@ -23,16 +28,6 @@ define([
 		showCharListModal: function () {
 			var charListModalView = new CharListModalView();
 			charListModalView.show();
-		},
-
-
-		onHidden: function () {
-			if (util.isMaster()) {
-				this.showCampaingListModal();
-			}
-			else {
-				this.showCharListModal();
-			}
 		}
 
 	});

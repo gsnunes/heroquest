@@ -6,9 +6,10 @@ define([
 	'collection/CampaingCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
-	'view/component/ButtonToolbarView'
+	'view/component/ButtonToolbarView',
+	'view/ChangeMasterModalView'
 
-], function (Template, ModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView) {
+], function (Template, ModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView) {
 
 	'use strict';
 
@@ -18,7 +19,8 @@ define([
 
 
 		events: {
-			'click .add-campaing': 'addCampaing'
+			'click .add-campaing': 'addCampaing',
+			'click .btn-change-master': 'changeMaster'
 		},
 
 
@@ -30,8 +32,31 @@ define([
 
 			this.token = gapi.auth.getToken('token', true);
 
+			this.showChangeMasterButton();
 			this.createListGroup();
 			this.getData();
+		},
+
+
+		bindEvents: function () {
+			ModalView.prototype.bindEvents.apply(this, arguments);
+
+			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
+				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
+					this.showChangeMasterButton();
+					this.populateListGroup();
+				}
+			}, this));
+		},
+
+
+		showChangeMasterButton: function () {
+			if (util.isMaster()) {
+				this.$('.btn-change-master').show();
+			}
+			else {
+				this.$('.btn-change-master').hide();
+			}
 		},
 
 
@@ -63,20 +88,23 @@ define([
 
 			this.campaingCollection.forEach(function (model) {
 				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
-					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Start', icon: 'glyphicon glyphicon-ok'}),
+					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Load', icon: 'glyphicon glyphicon-ok'}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
-					buttonToolbarView = new ButtonToolbarView();
+					buttonToolbarView = new ButtonToolbarView(),
+					buttons = util.isMaster() ? [btnStart, btnEdit, btnRemove] : [btnEdit, btnRemove];
 
-				buttonToolbarView.addButtons([btnStart, btnEdit, btnRemove]);
+				buttonToolbarView.addButtons(buttons);
 				buttonToolbarView.addClass('pull-right');
 
 				listGroupItem.append(buttonToolbarView.template());
 				listGroupItem.append('<div class="clearfix"></div>');
 
-				$(listGroupItem).find('.btn-success').on('click', function () {
-					self.start(model);
-				});
+				if (util.isMaster()) {
+					$(listGroupItem).find('.btn-success').on('click', function () {
+						self.start(model);
+					});
+				}
 
 				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
 					self.addCampaing(ev, model);
@@ -107,6 +135,14 @@ define([
 		addCampaing: function (ev, model) {
 			var campaingFormModalView = new CampaingFormModalView({campaingModel: model, campaingCollection: this.campaingCollection});
 			campaingFormModalView.show();
+		},
+
+
+		changeMaster: function () {
+			if (util.isMaster()) {
+				var changeMasterModalView = new ChangeMasterModalView();
+				changeMasterModalView.show();
+			}
 		}
 
 	});

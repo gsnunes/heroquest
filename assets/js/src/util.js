@@ -38,6 +38,24 @@ util = (function () {
 			});
 
 			return data;
+		},
+
+
+		getMaster: function () {
+			var master = gapi.hangout.data.getValue('master');
+			return master ? JSON.parse(master) : null;
+		},
+
+
+		isMaster: function () {
+			var master = this.getMaster(),
+				participant = gapi.hangout.getLocalParticipant();
+
+			if (master && master.person.id === participant.person.id) {
+				return true;
+			}
+
+			return false;
 		}
 
 	};
