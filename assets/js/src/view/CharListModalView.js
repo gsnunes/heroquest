@@ -30,8 +30,6 @@ define([
 		initialize: function () {
 			ModalView.prototype.initialize.apply(this, arguments);
 
-			gapi.hangout.data.setValue('campaingId', '1');
-
 			this.createListGroup();
 			this.getData();
 		},

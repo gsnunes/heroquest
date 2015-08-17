@@ -11,7 +11,8 @@ module.exports = {
   	name: 'string',
 	description: 'string',
 	person: 'json',
-	personId: 'string'
+	personId: 'string',
+	state: 'json'
   }
   
 };

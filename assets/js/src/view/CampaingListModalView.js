@@ -121,12 +121,11 @@ define([
 		 * start
 		 */
 		start: function (model) {
-			GLOBAL.campaingModel = model;
+			gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
 
-			gapi.hangout.data.setValue('campaingId', model.attributes.id.toString());
-
-			Backbone.EventBus.trigger('PiecesPanel.SettingsTab.setName', model.attributes.name);
-			Backbone.EventBus.trigger('HistoryPanel.setTitle', model.attributes.name);
+			if (model.attributes.state) {
+				gapi.hangout.data.submitDelta(model.attributes.state);
+			}
 			
 			this.hide();
 		},

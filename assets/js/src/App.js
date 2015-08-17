@@ -7,7 +7,8 @@ define(function (require) {
 		DicePanelView = require('view/DicePanelView'),
 		PiecesPanelView = require('view/ToolbarPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),
-		HistoryPanelView = require('view/HistoryPanelView');
+		HistoryPanelView = require('view/HistoryPanelView'),
+		CampaingCollection = require('collection/CampaingCollection');
 
 	return Giraffe.App.extend({
 
@@ -16,15 +17,6 @@ define(function (require) {
 
 		initialize: function () {
 			this.bindEvents();
-
-			/*
-			var my_dictionary = {
-				'some text': 'a translation',
-				'some more text': 'another translation'
-			};
-
-			$.i18n.load(my_dictionary);
-			*/
 		},
 
 
@@ -33,6 +25,8 @@ define(function (require) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
 					this.buildDom();
 				}
+
+				this.saveState(ev);
 			}, this));
 
 
@@ -45,6 +39,38 @@ define(function (require) {
 						gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
 					}
 				}
+			});
+		},
+
+
+		saveState: function (ev) {
+			if (util.isMaster()) {
+				var campaing = parseInt(gapi.hangout.data.getValue('campaing'));
+
+				if (campaing) {
+					if (this.campaingModel && this.campaingModel.attributes.id === campaing) {
+						this.campaingModel.save({state: ev.state});
+					}
+					else {
+						this.getCampaingModel(campaing, _.bind(function () {
+							this.campaingModel.save({state: ev.state});
+						}, this));
+					}
+				}
+			}
+		},
+
+
+		getCampaingModel: function (campaing, callback) {
+			var campaingCollection = new CampaingCollection();
+
+			campaingCollection.fetch({
+				success: _.bind(function () {
+					this.campaingModel = campaingCollection.get(campaing);
+					if (callback) {
+						callback();
+					}
+				}, this)
 			});
 		},
 

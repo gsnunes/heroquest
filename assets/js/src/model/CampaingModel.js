@@ -6,7 +6,8 @@ define(function () {
 
 		defaults: {
 			name: '',
-			description: ''
+			description: '',
+			state: {}
 		}
 
 	});
