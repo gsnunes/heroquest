@@ -2,9 +2,10 @@ define([
 
 	'text!template/DicePanelView.html',
 	'view/component/NewPanelView',
-	'view/component/AlertModalView'
+	'view/component/AlertModalView',
+	'view/component/ConfirmModalView'
 
-], function (html, NewPanelView, AlertModalView) {
+], function (html, NewPanelView, AlertModalView, ConfirmModalView) {
 
 	'use strict';
 
@@ -33,7 +34,7 @@ define([
 		roll: function (ev) {
 			ev.preventDefault();
 
-			var newModal = new AlertModalView({body: 'xxx', title: 'kkk', callback: function () {
+			var newModal = new ConfirmModalView({body: 'xxx', callback: function () {
 				console.log('aqui');
 			}});
 			newModal.open();

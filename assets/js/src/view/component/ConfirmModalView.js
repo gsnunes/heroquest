@@ -1,16 +1,12 @@
 define([
 
-	'text!template/component/AlertModalView.html',
 	'view/component/NewModalView'
 
-], function (html, NewModalView) {
+], function (NewModalView) {
 
 	'use strict';
 
 	return NewModalView.extend({
-
-		template: html,
-		
 
 		events: {
 			'click .btn-primary': 'confirm'
