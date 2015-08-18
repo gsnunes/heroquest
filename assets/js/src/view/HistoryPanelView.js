@@ -40,8 +40,16 @@ define([
 
 		bindEvents: function () {
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
-				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/history/gi)) {
-					this.addItem(ev.metadata[ev.addedKeys[0].key]);
+				if (ev.addedKeys.length) {
+					for (var i = 0, len = ev.addedKeys.length; i < len; i++) {
+						if (ev.addedKeys[i].key.match(/history/gi)) {
+							this.addItem(ev.metadata[ev.addedKeys[i].key]);
+						}
+
+						if (ev.addedKeys[i].key.match(/campaing/gi)) {
+							this.setTitle('History - a');
+						}
+					}
 				}
 			}, this));
 		},

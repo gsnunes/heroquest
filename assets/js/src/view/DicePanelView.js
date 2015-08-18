@@ -1,9 +1,10 @@
 define([
 
 	'text!template/DicePanelView.html',
-	'view/component/NewPanelView'
+	'view/component/NewPanelView',
+	'view/component/AlertModalView'
 
-], function (html, NewPanelView) {
+], function (html, NewPanelView, AlertModalView) {
 
 	'use strict';
 
@@ -30,6 +31,16 @@ define([
 
 
 		roll: function (ev) {
+			ev.preventDefault();
+
+			var newModal = new AlertModalView({body: 'xxx', title: 'kkk', callback: function () {
+				console.log('aqui');
+			}});
+			newModal.open();
+			//newModal.show();
+
+
+			/*
 			var combatDice = {
 					1: 'Caveira',
 					2: 'Caveira',
@@ -69,9 +80,9 @@ define([
 			}
 
 			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: GLOBAL.participant.person}));
-			//GLOBAL.historyPanelView.addHistoryItem('dice roll: ' + result);
 
 			this.$('.dice-result span').html(result);
+			*/
 			ev.preventDefault();
 		},
 

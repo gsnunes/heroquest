@@ -12,8 +12,12 @@ define(function () {
 
 		bindEvents: function () {
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
-				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/treasure/gi)) {
-					this.manageTreasure(ev.addedKeys[0]);
+				if (ev.addedKeys.length) {
+					for (var i = 0, len = ev.addedKeys.length; i < len; i++) {
+						if (ev.addedKeys[i].key.match(/treasure/gi)) {
+							this.manageTreasure(ev.addedKeys[i]);
+						}
+					}
 				}
 			}, this));
 		},

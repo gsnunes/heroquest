@@ -40,6 +40,7 @@ define([
 			ev.preventDefault();
 
 			var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
+			gapi.hangout.data.submitDelta(null, 'campaing');
 			gapi.hangout.data.setValue('master', JSON.stringify(participant));
 			this.$('#' + this.id).modal('hide');
 		}

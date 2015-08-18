@@ -47,14 +47,22 @@ define([
 
 
 		changeBoard: function (ev) {
-			if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
-				if (!this.$el.find('#' + ev.addedKeys[0].key).length) {
-					this.newPiece(ev.state[ev.addedKeys[0].key]);
+			if (ev.addedKeys.length) {
+				for (var i = 0, len = ev.addedKeys.length; i < len; i++) {
+					if (ev.addedKeys[i].key.match(/piece/gi)) {
+						if (!this.$el.find('#' + ev.addedKeys[i].key).length) {
+							this.newPiece(ev.state[ev.addedKeys[i].key]);
+						}
+					}
 				}
 			}
-			else if (ev.removedKeys.length && ev.removedKeys[0].match(/piece/gi)) {
-				if (this.$el.find('#' + ev.removedKeys[0]).length) {
-					this.$el.find('#' + ev.removedKeys[0]).remove();
+			else if (ev.removedKeys.length) {
+				for (var i = 0, len = ev.removedKeys.length; i < len; i++) {
+					if (ev.removedKeys[i].match(/piece/gi)) {
+						if (this.$el.find('#' + ev.removedKeys[i]).length) {
+							this.$el.find('#' + ev.removedKeys[i]).remove();
+						}
+					}
 				}
 			}
 		},

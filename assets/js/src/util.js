@@ -56,6 +56,24 @@ util = (function () {
 			}
 
 			return false;
+		},
+
+
+		removeAllMasterPiecesFromBoard: function () {
+			var stateMetadata = gapi.hangout.data.getStateMetadata(),
+				keys = [];
+
+			_.each(stateMetadata, function (state, key) {
+				if (key.match(/piece/gi)) {
+					var value = JSON.parse(state.value);
+
+					if (!value.model || !value.model.person) {
+						keys.push(key);
+					}
+				}
+			});
+
+			gapi.hangout.data.submitDelta(null, keys);
 		}
 
 	};

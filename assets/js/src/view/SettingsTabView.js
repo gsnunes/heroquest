@@ -15,7 +15,10 @@ define([
 
 		events: {
 			'click .manage-heroes': 'showCharListModal',
-			'click .manage-campaings': 'showCampaingListModal'
+			'click .manage-campaings': 'showCampaingListModal',
+			'click .remove-all-pieces': function () {
+				util.removeAllMasterPiecesFromBoard();
+			}
 		},
 
 

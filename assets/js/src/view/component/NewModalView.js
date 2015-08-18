@@ -11,43 +11,43 @@ define([
 		template: html,
 
 
+		className: 'modal fade',
+
+
 		id: 'modal-' + (new Date()).getTime(),
 
 
-		initialize: function () {},
-
-
-		render: function () {
-			this.append(this.template({id: this.id}));
-			this.$('#' + this.id).modal(this.options);
+		initialize: function () {
+			this.bindEvents();
 		},
 
 
-		show: function () {
-			this.$('#' + this.id).modal('show');
+		setBody: function (data) {
+			this.$('.modal-body').html(data);
 		},
-		
 
-		hide: function () {
-			this.$('#' + this.id).modal('hide');
+
+		setTitle: function (data) {
+			this.$('.modal-title').html(data);
+		},
+
+
+		open: function () {
+			this.attachTo(Giraffe.app);
+			this.$el.modal('show');
+		},
+
+
+		close: function () {
+			this.$el.modal('hide');
 		},
 
 
 		bindEvents: function () {
-			var self = this;
-
-			this.$('#' + this.id).on('hidden.bs.modal', function (ev) {
-				self.undelegateEvents();
-				
-				$(this).data('modal', null);
+			this.$el.on('hidden.bs.modal', function () {
 				$(this).remove();
-
-				self.onHidden(ev);
 			});
-		},
-
-
-		onHidden: function () {}
+		}
 
 	});
 
