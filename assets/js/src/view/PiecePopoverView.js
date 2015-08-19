@@ -1,8 +1,9 @@
 define([
 
-	'text!template/PiecePopoverView.html'
+	'text!template/PiecePopoverView.html',
+	'view/component/ConfirmModalView'
 
-], function (html) {
+], function (html, ConfirmModalView) {
 
 	'use strict';
 
@@ -56,8 +57,13 @@ define([
 
 
 		removePiece: function () {
-			this.selector.popover('destroy');
-			gapi.hangout.data.clearValue(this.selector.attr('id'));
+			var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove this piece ?', callback: _.bind(function () {
+				this.selector.popover('destroy');
+				gapi.hangout.data.clearValue(this.selector.attr('id'));
+
+				newModal.close();
+			}, this)});
+			newModal.open();
 		}
 
 	});

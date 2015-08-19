@@ -2,9 +2,10 @@ define([
 
 	'text!template/SettingsTabView.html',
 	'view/CampaingListModalView',
-	'view/CharListModalView'
+	'view/CharListModalView',
+	'view/component/ConfirmModalView'
 
-], function (html, CampaingListModalView, CharListModalView) {
+], function (html, CampaingListModalView, CharListModalView, ConfirmModalView) {
 
 	'use strict';
 
@@ -17,20 +18,24 @@ define([
 			'click .manage-heroes': 'showCharListModal',
 			'click .manage-campaings': 'showCampaingListModal',
 			'click .remove-all-pieces': function () {
-				util.removeAllMasterPiecesFromBoard();
+				var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove all pieces from the board but heroes ?', callback: _.bind(function () {
+					util.removeAllMasterPiecesFromBoard();
+					newModal.close();
+				}, this)});
+				newModal.open();
 			}
 		},
 
 
 		showCampaingListModal: function () {
 			var campaingListModalView = new CampaingListModalView();
-			campaingListModalView.show();
+			campaingListModalView.open();
 		},
 		
 
 		showCharListModal: function () {
 			var charListModalView = new CharListModalView();
-			charListModalView.show();
+			charListModalView.open();
 		}
 
 	});

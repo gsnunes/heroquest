@@ -1,21 +1,22 @@
 define([
 
 	'text!template/CharListModalView.html',
-	'view/component/ModalView',
+	'view/component/NewModalView',
 	'view/CharFormModalView',
 	'collection/CharCollection',
 	'collection/CampaingCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
-	'view/component/ButtonToolbarView'
+	'view/component/ButtonToolbarView',
+	'view/component/ConfirmModalView'
 
-], function (Template, ModalView, CharFormModalView, CharCollection, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView) {
+], function (html, NewModalView, CharFormModalView, CharCollection, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ConfirmModalView) {
 
 	'use strict';
 
-	return ModalView.extend({
+	return NewModalView.extend({
 
-		template: _.template(Template),
+		template: html,
 
 
 		events: {
@@ -28,8 +29,11 @@ define([
 
 
 		initialize: function () {
-			ModalView.prototype.initialize.apply(this, arguments);
+			NewModalView.prototype.initialize.apply(this, arguments);
+		},
 
+
+		afterRender: function () {
 			this.createListGroup();
 			this.getData();
 		},
@@ -68,7 +72,7 @@ define([
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 					buttonToolbarView = new ButtonToolbarView();
 
-				buttonToolbarView.addButtons([btnStart, btnEdit, btnRemove]);
+				buttonToolbarView.addButtons([btnRemove, btnEdit, btnStart]);
 				buttonToolbarView.addClass('pull-right');
 
 				listGroupItem.append(buttonToolbarView.template());
@@ -83,7 +87,11 @@ define([
 				});
 
 				$(listGroupItem).find('.btn-danger').on('click', function () {
-					model.destroy();
+					var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove <b>' + model.attributes.name + ' (' + model.attributes.character + ')' + '</b> ?', callback: function () {
+						model.destroy();
+						newModal.close();
+					}});
+					newModal.open();
 				});
 			});
 		},

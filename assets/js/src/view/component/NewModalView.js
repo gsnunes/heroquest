@@ -44,8 +44,17 @@ define([
 
 
 		bindEvents: function () {
-			this.$el.on('hidden.bs.modal', function () {
+			var self = this;
+
+			this.$el.on('hidden.bs.modal', function (ev) {
+				self.undelegateEvents();
+				
+				$(this).data('modal', null);
 				$(this).remove();
+
+				if (self.onHidden) {
+					self.onHidden(ev);
+				}
 			});
 		}
 

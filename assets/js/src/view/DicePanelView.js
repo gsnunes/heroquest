@@ -32,16 +32,6 @@ define([
 
 
 		roll: function (ev) {
-			ev.preventDefault();
-
-			var newModal = new ConfirmModalView({body: 'xxx', callback: function () {
-				console.log('aqui');
-			}});
-			newModal.open();
-			//newModal.show();
-
-
-			/*
 			var combatDice = {
 					1: 'Caveira',
 					2: 'Caveira',
@@ -83,7 +73,7 @@ define([
 			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: GLOBAL.participant.person}));
 
 			this.$('.dice-result span').html(result);
-			*/
+			
 			ev.preventDefault();
 		},
 

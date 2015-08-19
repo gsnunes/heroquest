@@ -1,15 +1,16 @@
 define([
 
 	'text!template/ChangeMasterModalView.html',
-	'view/component/ModalView'
+	'view/component/NewModalView',
+	'view/component/ConfirmModalView'
 
-], function (html, ModalView) {
+], function (html, NewModalView, ConfirmModalView) {
 
 	'use strict';
 
-	return ModalView.extend({
+	return NewModalView.extend({
 
-		template: _.template(html),
+		template: html,
 
 
 		events: {
@@ -17,8 +18,7 @@ define([
 		},
 
 
-		initialize: function () {
-			ModalView.prototype.initialize.apply(this, arguments);
+		afterRender: function () {
 			this.populateParticipants();
 		},
 
@@ -39,10 +39,15 @@ define([
 		changeMaster: function (ev) {
 			ev.preventDefault();
 
-			var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
-			gapi.hangout.data.submitDelta(null, 'campaing');
-			gapi.hangout.data.setValue('master', JSON.stringify(participant));
-			this.$('#' + this.id).modal('hide');
+			var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to change the master to <b>' + this.$('#change-master-participants').text() + '</b> ?', callback: _.bind(function () {
+				var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
+				gapi.hangout.data.clearValue('campaing');
+				gapi.hangout.data.setValue('master', JSON.stringify(participant));
+				this.close();
+
+				newModal.close();
+			}, this)});
+			newModal.open();
 		}
 
 	});

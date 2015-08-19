@@ -9,6 +9,11 @@ define(function () {
 
 		addItem: function (item) {
 			this.$el.append(item);
+		},
+
+
+		clear: function () {
+			this.$el.html('');
 		}
 
 	});

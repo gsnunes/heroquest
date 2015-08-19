@@ -9,11 +9,11 @@ define([
 	return NewModalView.extend({
 
 		events: {
-			'click .btn-primary': 'confirm'
+			'click .btn-yes': 'yes'
 		},
 
 
-		confirm: function () {
+		yes: function () {
 			if (this.callback) {
 				this.callback();
 			}
@@ -27,6 +27,11 @@ define([
 
 			if (this.body) {
 				this.setBody(this.body);
+			}
+
+			if (this.type) {
+				this.$('.modal-body').addClass('alert-' + this.type);
+				this.$('.btn-yes').addClass('btn-' + this.type);
 			}
 		}
 

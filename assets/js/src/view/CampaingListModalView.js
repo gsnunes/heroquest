@@ -1,21 +1,22 @@
 define([
 
 	'text!template/CampaingListModalView.html',
-	'view/component/ModalView',
+	'view/component/NewModalView',
 	'view/CampaingFormModalView',
 	'collection/CampaingCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
-	'view/ChangeMasterModalView'
+	'view/ChangeMasterModalView',
+	'view/component/ConfirmModalView'
 
-], function (Template, ModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView) {
+], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView) {
 
 	'use strict';
 
-	return ModalView.extend({
+	return NewModalView.extend({
 
-		template: _.template(Template),
+		template: html,
 
 
 		events: {
@@ -28,10 +29,12 @@ define([
 
 
 		initialize: function () {
-			ModalView.prototype.initialize.apply(this, arguments);
-
+			NewModalView.prototype.initialize.apply(this, arguments);
 			this.token = gapi.auth.getToken('token', true);
+		},
 
+
+		afterRender: function () {
 			this.showChangeMasterButton();
 			this.createListGroup();
 			this.getData();
@@ -39,7 +42,7 @@ define([
 
 
 		bindEvents: function () {
-			ModalView.prototype.bindEvents.apply(this, arguments);
+			NewModalView.prototype.bindEvents.apply(this, arguments);
 
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
@@ -61,7 +64,7 @@ define([
 
 
 		createListGroup: function () {
-			this.listGroupView = new ListGroupView({el: this.$el.find('.campaing-list-group')});
+			this.listGroupView = new ListGroupView({el: this.$('.campaing-list-group')});
 			this.listGroupView.render();
 		},
 
@@ -92,7 +95,7 @@ define([
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 					buttonToolbarView = new ButtonToolbarView(),
-					buttons = util.isMaster() ? [btnStart, btnEdit, btnRemove] : [btnEdit, btnRemove];
+					buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
 
 				buttonToolbarView.addButtons(buttons);
 				buttonToolbarView.addClass('pull-right');
@@ -102,7 +105,11 @@ define([
 
 				if (util.isMaster()) {
 					$(listGroupItem).find('.btn-success').on('click', function () {
-						self.start(model);
+						var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will overwrite the current state.', callback: function () {
+							self.start(model);
+							newModal.close();
+						}});
+						newModal.open();
 					});
 				}
 
@@ -111,7 +118,11 @@ define([
 				});
 
 				$(listGroupItem).find('.btn-danger').on('click', function () {
-					model.destroy();
+					var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove <b>' + model.attributes.name + '</b> ?', callback: function () {
+						model.destroy();
+						newModal.close();
+					}});
+					newModal.open();
 				});
 			});
 		},
@@ -141,7 +152,7 @@ define([
 		changeMaster: function () {
 			if (util.isMaster()) {
 				var changeMasterModalView = new ChangeMasterModalView();
-				changeMasterModalView.show();
+				changeMasterModalView.open();
 			}
 		}
 

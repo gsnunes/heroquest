@@ -16,13 +16,13 @@ define([
 
 		showCampaingListModal: function () {
 			var campaingListModalView = new CampaingListModalView();
-			campaingListModalView.show();
+			campaingListModalView.open();
 		},
 		
 
 		showCharListModal: function () {
 			var charListModalView = new CharListModalView();
-			charListModalView.show();
+			charListModalView.open();
 		},
 
 
