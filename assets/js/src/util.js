@@ -74,6 +74,20 @@ util = (function () {
 			});
 
 			gapi.hangout.data.submitDelta(null, keys);
+		},
+
+
+		clearState: function () {
+			var stateMetadata = gapi.hangout.data.getStateMetadata(),
+				keys = [];
+
+			_.each(stateMetadata, function (state, key) {
+				if (!key.match(/master/gi)) {
+					keys.push(key);
+				}
+			});
+
+			gapi.hangout.data.submitDelta(null, keys);
 		}
 
 	};

@@ -132,14 +132,16 @@ define([
 		 * start
 		 */
 		start: function (model) {
+			gapi.hangout.data.clearValue('campaing');
+			util.clearState();
+			
+			gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
+
 			if (_.keys(model.attributes.state).length) {
 				gapi.hangout.data.submitDelta(model.attributes.state);
 			}
-			else {
-				gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
-			}
 			
-			this.hide();
+			this.close();
 		},
 
 

@@ -45,7 +45,7 @@ define(function (require) {
 
 		saveState: function (ev) {
 			if (util.isMaster()) {
-				var campaing = parseInt(gapi.hangout.data.getValue('campaing'));
+				var campaing = parseInt(gapi.hangout.data.getValue('campaing'), 10);
 
 				if (campaing) {
 					if (this.campaingModel && this.campaingModel.attributes.id === campaing) {
