@@ -94,7 +94,7 @@ util = (function () {
 		setValue: function (key, value, time, callback) {
 			gapi.hangout.data.setValue(key, value);
 
-			var interval = setInterval(_.bind(function () {
+			var interval = setInterval(function () {
 				if (gapi.hangout.data.getValue(key)) {
 					clearInterval(interval);
 
@@ -102,7 +102,7 @@ util = (function () {
 						callback();
 					}
 				}
-			}, this), time);
+			}, time);
 		},
 
 
@@ -115,9 +115,9 @@ util = (function () {
 
 			gapi.hangout.data.submitDelta(obj);
 
-			interval = setInterval(_.bind(function () {
+			interval = setInterval(function () {
 				var currentKeys = gapi.hangout.data.getKeys();
-				
+
 				if (currentKeys.length === total) {
 					clearInterval(interval);
 
@@ -125,7 +125,22 @@ util = (function () {
 						callback();
 					}
 				}
-			}, this), time);
+			}, time);
+		},
+
+
+		clearValue: function (key, time, callback) {
+			gapi.hangout.data.clearValue(key);
+
+			var interval = setInterval(function () {
+				if (typeof gapi.hangout.data.getValue(key) === 'undefined') {
+					clearInterval(interval);
+
+					if (callback) {
+						callback();
+					}
+				}
+			}, time);
 		}
 
 	};

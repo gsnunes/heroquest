@@ -129,14 +129,9 @@ define([
 
 
 		start: function (model) {
-			gapi.hangout.data.clearValue('campaing');
-
-			var interval = setInterval(_.bind(function () {
-				if (typeof gapi.hangout.data.getValue('campaing') === 'undefined') {
-					this.clearOldCampaing(model);
-					clearInterval(interval);
-				}
-			}, this), 300);
+			util.clearValue('campaing', 300, _.bind(function () {
+				this.clearOldCampaing(model);
+			}, this));
 		},
 
 
