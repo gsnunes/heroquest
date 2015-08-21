@@ -128,13 +128,35 @@ define([
 		},
 
 
-		/**
-		 * start
-		 */
 		start: function (model) {
 			gapi.hangout.data.clearValue('campaing');
+
+			var interval = setInterval(_.bind(function () {
+				if (typeof gapi.hangout.data.getValue('campaing') === 'undefined') {
+					this.clearOldCampaing(model);
+					clearInterval(interval);
+				}
+			}, this), 300);
+		},
+
+
+		clearOldCampaing: function (model) {
 			util.clearState();
-			
+
+			var interval = setInterval(_.bind(function () {
+				var keys = gapi.hangout.data.getKeys();
+
+				console.log(keys);
+				
+				if (keys.length === 1) {
+					clearInterval(interval);
+					this.loadNewCampaing(model);
+				}
+			}, this), 300);
+		},
+
+
+		loadNewCampaing: function (model) {
 			gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
 
 			if (_.keys(model.attributes.state).length) {

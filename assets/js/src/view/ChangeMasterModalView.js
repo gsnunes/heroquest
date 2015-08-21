@@ -41,10 +41,11 @@ define([
 
 			var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to change the master to <b>' + this.$('#change-master-participants').text() + '</b> ?', callback: _.bind(function () {
 				var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
+
 				gapi.hangout.data.clearValue('campaing');
 				gapi.hangout.data.setValue('master', JSON.stringify(participant));
+				
 				this.close();
-
 				newModal.close();
 			}, this)});
 			newModal.open();
