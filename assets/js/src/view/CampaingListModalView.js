@@ -145,8 +145,6 @@ define([
 
 			var interval = setInterval(_.bind(function () {
 				var keys = gapi.hangout.data.getKeys();
-
-				console.log(keys);
 				
 				if (keys.length === 1) {
 					clearInterval(interval);
@@ -157,13 +155,15 @@ define([
 
 
 		loadNewCampaing: function (model) {
-			gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
-
-			if (_.keys(model.attributes.state).length) {
-				gapi.hangout.data.submitDelta(model.attributes.state);
-			}
+			var _this = this;
 			
-			this.close();
+			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
+				if (_.keys(model.attributes.state).length) {
+					util.submitDelta(model.attributes.state, 300, function () {
+						_this.close();
+					});
+				}
+			});
 		},
 
 

@@ -88,6 +88,44 @@ util = (function () {
 			});
 
 			gapi.hangout.data.submitDelta(null, keys);
+		},
+
+
+		setValue: function (key, value, time, callback) {
+			gapi.hangout.data.setValue(key, value);
+
+			var interval = setInterval(_.bind(function () {
+				if (gapi.hangout.data.getValue(key)) {
+					clearInterval(interval);
+
+					if (callback) {
+						callback();
+					}
+				}
+			}, this), time);
+		},
+
+
+		submitDelta: function (obj, time, callback) {
+			var keys = gapi.hangout.data.getKeys(),
+				objKeys = _.keys(obj),
+				newState = _.union(keys, objKeys),
+				total = newState.length,
+				interval;
+
+			gapi.hangout.data.submitDelta(obj);
+
+			interval = setInterval(_.bind(function () {
+				var currentKeys = gapi.hangout.data.getKeys();
+				
+				if (currentKeys.length === total) {
+					clearInterval(interval);
+
+					if (callback) {
+						callback();
+					}
+				}
+			}, this), time);
 		}
 
 	};
