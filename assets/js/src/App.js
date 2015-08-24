@@ -36,7 +36,9 @@ define(function (require) {
 						participants = gapi.hangout.getParticipants();
 
 					if (ev.removedParticipants[0].person.id === master.person.id) {
-						gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
+						util.clearValue('campaing', 300, _.bind(function () {
+							gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
+						}, this));
 					}
 				}
 			});
