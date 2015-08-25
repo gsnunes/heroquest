@@ -27,9 +27,9 @@ define(function () {
 			var value = JSON.parse(state.value),
 				participant = gapi.hangout.getLocalParticipant();
 
-			if (participant.person.id === value.person.id) {
+			if (participant.person.id === value.person.id && !value.disabled) {
 				if (value.treasure) {
-					this.foundTreasure(value);
+					this.foundTreasure(state.key, value);
 				}
 				else {
 					this.unlockDeck(state.key, value);
@@ -47,9 +47,12 @@ define(function () {
 		},
 
 
-		foundTreasure: function (value) {
+		foundTreasure: function (key, value) {
 			var message = 'found the treasure ' + value.treasure.name;
 			gapi.hangout.data.setValue('history-' + (new Date()).getTime(), JSON.stringify({message: message, person: value.person}));
+
+			value.disabled = true;
+			gapi.hangout.data.setValue(key, JSON.stringify(value));
 
 			if (!value.treasure.remains) {
 				this.treasure = _.filter(this.treasure, function (data) {
@@ -72,6 +75,9 @@ define(function () {
 				$(ev.target).off();
 
 				gapi.hangout.data.setValue($(ev.target).attr('id'), JSON.stringify({person: person, treasure: boughtTreasure}));
+
+				value.disabled = true;
+				gapi.hangout.data.setValue(key, JSON.stringify(value));
 			}
 		}
 

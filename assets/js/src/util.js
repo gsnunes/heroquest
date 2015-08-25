@@ -59,12 +59,12 @@ util = (function () {
 		},
 
 
-		removeAllMasterPiecesFromBoard: function () {
+		removeAllMasterPiecesFromBoard: function (filter) {
 			var stateMetadata = gapi.hangout.data.getStateMetadata(),
 				keys = [];
 
 			_.each(stateMetadata, function (state, key) {
-				if (key.match(/piece/gi)) {
+				if (key.match(new RegExp(filter, 'gi'))) {
 					var value = JSON.parse(state.value);
 
 					if (!value.model || !value.model.person) {

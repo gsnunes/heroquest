@@ -22,13 +22,12 @@ define([
 
 			tabButtonComponent.attachTo(this);
 
-			if (GLOBAL.displayIndex === 0) {
+			if (util.isMaster()) {
 				tabButtonComponent.add('Chaos', new SpellsTabButtonView({data: spells.chaos}), true);
 				tabButtonComponent.add('Artifacts', new ArtifactsTabButtonView({data: GLOBAL.data.artifact}));
 				tabButtonComponent.add('Treasures', new TreasuresTabButtonView({data: GLOBAL.data.treasure}));
 			}
-
-			if (GLOBAL.displayIndex === 1) {
+			else {
 				tabButtonComponent.add('Air', new SpellsTabButtonView({data: spells.air}), true);
 				tabButtonComponent.add('Earth', new SpellsTabButtonView({data: spells.earth}));
 				tabButtonComponent.add('Fire', new SpellsTabButtonView({data: spells.fire}));

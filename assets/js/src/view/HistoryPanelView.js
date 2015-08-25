@@ -32,9 +32,13 @@ define([
 		populate: function () {
 			var state = gapi.hangout.data.getStateMetadata();
 
-			_.each(state, _.bind(function (value, key) {
-				if (key.match(/history/gi)) {
-					this.addItem(value);
+			state = _.sortBy(state, function (a) {
+				return a.timestamp;
+			});
+
+			_.each(state, _.bind(function (data) {
+				if (data.key.match(/history/gi)) {
+					this.addItem(data);
 				}
 			}, this));
 		},

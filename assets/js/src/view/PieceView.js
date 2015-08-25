@@ -32,6 +32,7 @@ define([
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
 					if (this.id === ev.addedKeys[0].key) {
 						this.setPosition(JSON.parse(ev.state[ev.addedKeys[0].key]).position);
+						this.setRotateCss(JSON.parse(ev.state[ev.addedKeys[0].key]).rotation);
 					}
 				}
 			}, this));
@@ -49,6 +50,7 @@ define([
 			this.createPopover();
 			this.setDraggable();
 			this.setPosition();
+			this.setRotateCss(this.rotation);
 			this.setZIndex();
 		},
 
@@ -96,7 +98,7 @@ define([
 
 
 		stopDraggable: function () {
-			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true}));
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation}));
 		},
 
 
@@ -128,18 +130,24 @@ define([
 
 			if (ev.button === 2) {
 				this.rotation = this.rotation === 360 ? 90 : (this.rotation + 90);
-
-				this.$el.css({
-					'-webkit-transform': 'rotate(' + this.rotation + 'deg)',
-					'-moz-transform': 'rotate(' + this.rotation + 'deg)',
-					'-ms-transform': 'rotate(' + this.rotation + 'deg)',
-					'transform': 'rotate(' + this.rotation + 'deg)'
-				});
+				gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation}));
 
 				return false;
 			}
 
 			return true;
+		},
+
+
+		setRotateCss: function (rotation) {
+			if (rotation) {
+				this.$el.css({
+					'-webkit-transform': 'rotate(' + rotation + 'deg)',
+					'-moz-transform': 'rotate(' + rotation + 'deg)',
+					'-ms-transform': 'rotate(' + rotation + 'deg)',
+					'transform': 'rotate(' + rotation + 'deg)'
+				});
+			}
 		}
 
 	});
