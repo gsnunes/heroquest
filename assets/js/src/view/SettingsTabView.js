@@ -39,12 +39,15 @@ define([
 				newModal.open();
 			},
 			'click .check-deck': function () {
+				console.log(util.getTreasure(true));
+				/*
 				var data = Giraffe.app.children;
 				for (var i = 0, len = data.length; i < len; i++) {
 					if (data[i].treasure) {
 						console.log(data[i].treasure);
 					}
 				}
+				*/
 			}
 		},
 

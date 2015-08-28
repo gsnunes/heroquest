@@ -141,6 +141,21 @@ util = (function () {
 					}
 				}
 			}, time);
+		},
+
+
+		getTreasure: function (test) {
+			var boughtTreasuresValue = gapi.hangout.data.getValue('boughtTreasures'),
+				boughtTreasures = boughtTreasuresValue ? JSON.parse(boughtTreasuresValue) : null,
+				treasures = _.shuffle(GLOBAL.data.treasure);
+
+			if (boughtTreasures) {
+				treasures = _.filter(treasures, function (data) {
+					return !_.contains(boughtTreasures, data.id);
+				});
+			}
+
+			return test ? treasures : treasures[Math.floor((Math.random() * treasures.length))];
 		}
 
 	};

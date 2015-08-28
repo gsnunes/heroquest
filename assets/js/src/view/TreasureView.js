@@ -48,26 +48,27 @@ define(function () {
 
 
 		foundTreasure: function (key, value) {
-			var message = 'found the treasure ' + value.treasure.name;
+			var message = 'found the treasure ' + value.treasure.name,
+				boughtTreasuresValue = gapi.hangout.data.getValue('boughtTreasures'),
+				boughtTreasures = boughtTreasuresValue ? JSON.parse(boughtTreasuresValue) : [];
+
 			gapi.hangout.data.setValue('history-' + (new Date()).getTime(), JSON.stringify({message: message, person: value.person}));
 
 			value.disabled = true;
 			gapi.hangout.data.setValue(key, JSON.stringify(value));
 
-			if (!value.treasure.remains) {
-				this.treasure = _.filter(this.treasure, function (data) {
-					return data.id !== value.treasure.id;
-				});
-			}
+			//if (!value.treasure.remains) {
+				gapi.hangout.data.setValue('boughtTreasures', JSON.stringify(boughtTreasures.push(value.treasure.id)));
+			//}
 		},
 
 
 		buyTreasure: function (ev) {
 			var key = $(ev.target).attr('id'),
+				boughtTreasure = util.getTreasure(),
 				historyKey = $(ev.target).data('historyKey'),
-				value = JSON.parse(gapi.hangout.data.getValue(key)),
-				boughtTreasure = this.treasure[Math.floor((Math.random() * this.treasure.length))],
-				person = gapi.hangout.getLocalParticipant().person;
+				person = gapi.hangout.getLocalParticipant().person,
+				value = JSON.parse(gapi.hangout.data.getValue(key));
 
 			if (!value.treasure) {
 				gapi.hangout.data.clearValue(historyKey);
