@@ -61,7 +61,7 @@
 
 	"treasure": [
 		{"id": 0, "name": "Gem!", "description": "Tucked into the toe of an old boot you find a small gem worth 35 gold coins. Record the money on you sheet. Do not return this card to the deck.", "remains": false},
-		{"id": 1, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true},
+		{"id": 1, "name": "Gem!", "description": "Tucked into the toe of an old boot you find a small gem worth 35 gold coins. Record the money on you sheet. Do not return this card to the deck.", "remains": false},
 		{"id": 2, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true},
 		{"id": 3, "name": "Wandering Monster", "description": "As you are searching, a monster stalks you and attacks! Zargon places the wandering monster (listed in the Quest Book) on any square next to you. The monster attacks immediately! Return this card to the bottom of the deck.", "remains": true}
 	],
