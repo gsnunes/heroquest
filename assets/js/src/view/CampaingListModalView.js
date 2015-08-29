@@ -154,6 +154,7 @@ define([
 			
 			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
 				if (_.keys(model.attributes.state).length) {
+					console.log(model.attributes.state);
 					util.submitDelta(model.attributes.state, 300, function () {
 						_this.close();
 					});

@@ -28,6 +28,8 @@ define(function () {
 				participant = gapi.hangout.getLocalParticipant();
 
 			console.log(value);
+			console.log(participant.person.id === value.person.id);
+			console.log(!value.disabled);
 
 			if (participant.person.id === value.person.id && !value.disabled) {
 				if (value.treasure) {
@@ -45,19 +47,22 @@ define(function () {
 				message = '"I am searching for treasure." <a href="javascript:;" id="' + key + '" data-history-key="' + historyKey + '">click here</a>';
 
 			$(document).on('click', '#' + key, _.bind(this.buyTreasure, this));
-			gapi.hangout.data.setValue(historyKey, JSON.stringify({message: message, person: value.person, pvt: true}));
+			util.setValue(historyKey, JSON.stringify({message: message, person: value.person, pvt: true}), 300, function () {
+				value.disabled = true;
+				gapi.hangout.data.setValue(key, JSON.stringify(value));
+			});
 		},
 
 
 		foundTreasure: function (key, value) {
 			var message = 'found the treasure ' + value.treasure.name,
 				boughtTreasuresValue = gapi.hangout.data.getValue('boughtTreasures'),
-				boughtTreasures = boughtTreasuresValue ? JSON.parse(boughtTreasuresValue) : new Array();
+				boughtTreasures = boughtTreasuresValue ? JSON.parse(boughtTreasuresValue) : [];
 
-			gapi.hangout.data.setValue('history-' + (new Date()).getTime(), JSON.stringify({message: message, person: value.person}));
-
-			value.disabled = true;
-			gapi.hangout.data.setValue(key, JSON.stringify(value));
+			util.setValue('history-' + (new Date()).getTime(), JSON.stringify({message: message, person: value.person}), 300, function () {
+				value.disabled = true;
+				gapi.hangout.data.setValue(key, JSON.stringify(value));
+			});
 
 			if (!value.treasure.remains) {
 				boughtTreasures.push(value.treasure.id);
@@ -69,17 +74,16 @@ define(function () {
 		buyTreasure: function (ev) {
 			var key = $(ev.target).attr('id'),
 				boughtTreasure = util.getTreasure(),
-				person = gapi.hangout.getLocalParticipant().person,
 				value = JSON.parse(gapi.hangout.data.getValue(key));
 
 			if (!value.treasure) {
 				$(ev.target).off();
 				$(ev.target).remove();
+				gapi.hangout.data.clearValue($(ev.target).data('historyKey'));
 
-				util.setValue(key, JSON.stringify({person: person, treasure: boughtTreasure}), 300, function () {
-					//value.disabled = true;
-					//gapi.hangout.data.setValue(key, JSON.stringify(value));
-				});
+				value.disabled = false;
+				value.treasure = boughtTreasure;
+				gapi.hangout.data.setValue(key, JSON.stringify(value));
 			}
 		}
 
