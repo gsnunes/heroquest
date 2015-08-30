@@ -27,10 +27,6 @@ define(function () {
 			var value = JSON.parse(state.value),
 				participant = gapi.hangout.getLocalParticipant();
 
-			console.log(value);
-			console.log(participant.person.id === value.person.id);
-			console.log(!value.disabled);
-
 			if (participant.person.id === value.person.id && !value.disabled) {
 				if (value.treasure) {
 					this.foundTreasure(state.key, value);

@@ -37,18 +37,6 @@ define([
 					newModal.close();
 				}, this)});
 				newModal.open();
-			},
-			'click .check-deck': function () {
-				console.log(gapi.hangout.data.getState());
-				console.log(util.getTreasure(true));
-				/*
-				var data = Giraffe.app.children;
-				for (var i = 0, len = data.length; i < len; i++) {
-					if (data[i].treasure) {
-						console.log(data[i].treasure);
-					}
-				}
-				*/
 			}
 		},
 

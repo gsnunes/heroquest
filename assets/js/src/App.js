@@ -37,6 +37,7 @@ define(function (require) {
 
 					if (ev.removedParticipants[0].person.id === master.person.id) {
 						util.clearValue('campaing', 300, _.bind(function () {
+							util.removeAllMasterPiecesFromBoard('treasure');
 							gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
 						}, this));
 					}

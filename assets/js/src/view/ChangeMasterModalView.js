@@ -43,6 +43,7 @@ define([
 				var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
 
 				util.clearValue('campaing', 300, _.bind(function () {
+					util.removeAllMasterPiecesFromBoard('treasure');
 					gapi.hangout.data.setValue('master', JSON.stringify(participant));
 
 					this.close();
