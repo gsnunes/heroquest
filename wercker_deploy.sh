@@ -9,6 +9,6 @@ fi
 
 if [ "$WERCKER_DEPLOYTARGET_NAME" = "test" ]; then
 	sed -i 's!localhost:1337!test.hangoutsplay.com!g' assets/app.xml
-	sed -i 's!<!-- main-script -->!<script src="//localhost:1337/js/src/main-built.js" id="main-script"></script>!g' assets/app.xml
+	sed -i 's#<!-- main-script -->#<script src="//test.hangoutsplay.com/js/src/main-built.js" id="main-script"></script>#g' assets/app.xml
 	scp -ri $PRIVATEKEY_PATH * root@104.236.20.173:/var/www/test.hangoutsplay.com
 fi
