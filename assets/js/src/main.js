@@ -53,7 +53,7 @@ window.GLOBAL = (function () {
 
 
 
-	require(['App'], function (App) {
+	require(['App', 'jquery-ui'], function (App) {
 
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
