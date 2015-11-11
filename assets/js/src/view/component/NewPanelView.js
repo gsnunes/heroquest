@@ -25,7 +25,7 @@ define(['text!template/component/NewPanelView.html'], function (html) {
 
 		setDraggable: function () {
 			this.$el.draggable({
-				containment: '.board',
+				containment: '#app-wrapper',
 				handle: '.panel-heading'
 			});
 		},

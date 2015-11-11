@@ -74,7 +74,7 @@ define([
 
 
 		lockInputs: function () {
-			if (this.model.attributes.personId !== GLOBAL.participant.person.id) {
+			if (this.model.attributes.personId !== gapi.hangout.getLocalParticipant().person.id) {
 				this.$('.btn-danger').off('click').remove();
 				this.$('.glyphicon').off('click').remove();
 				this.$('textarea').prop('disabled', true);

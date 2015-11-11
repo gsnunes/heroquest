@@ -70,7 +70,7 @@ define([
 				}
 			}
 
-			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: GLOBAL.participant.person}));
+			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: gapi.hangout.getLocalParticipant().person}));
 
 			this.$('.dice-result span').html(result);
 			

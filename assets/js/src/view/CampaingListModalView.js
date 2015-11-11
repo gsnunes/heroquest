@@ -172,6 +172,8 @@ define([
 			if (util.isMaster()) {
 				var changeMasterModalView = new ChangeMasterModalView();
 				changeMasterModalView.open();
+
+				this.close();
 			}
 		}
 

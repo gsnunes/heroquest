@@ -107,6 +107,8 @@ define(function (require) {
 
 
 		buildDom: function () {
+			this.$el.html('');
+
 			this.buildBoard();
 			this.buildDicePanel();
 			this.buildPiecesPanel();

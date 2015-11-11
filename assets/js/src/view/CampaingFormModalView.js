@@ -28,11 +28,6 @@ define([
 			this.campaingCollection = this.options.campaingCollection;
 
 			this.populate();
-
-			if (this.campaingModel) {
-				this.historyCollection = new HistoryCollection([], {campaing_id: this.campaingModel.attributes.id});
-				this.getHistoryData();
-			}
 		},
 
 
@@ -41,38 +36,6 @@ define([
 				this.$el.find('input#name').val(this.campaingModel.attributes.name);
 				this.$el.find('textarea#description').val(this.campaingModel.attributes.description);
 			}
-		},
-
-
-		getHistoryData: function () {
-			var self = this;
-
-			this.historyCollection.fetch({
-				success: function () {
-					self.populateHistory();
-				}
-			});
-		},
-
-
-		populateHistory: function () {
-			var self = this;
-
-			this.$el.find('.campaing-history').html('');
-
-			this.historyCollection.forEach(function (model) {
-				var name = 'Zargon (' + model.attributes.person.name + ')',
-					date = moment(new Date(model.attributes.date)).format('MM-DD-YYYY, h:mm:ss a'),
-					message = date + ' ' + name + ' - ' + model.attributes.message;
-
-				/*
-				if (model.attributes.displayIndex > 0) {
-
-				}
-				*/
-
-				self.$el.find('.campaing-history').append('<li>' + message + '<li>');
-			});
 		},
 
 

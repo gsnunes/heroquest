@@ -26,7 +26,7 @@ define([
 		initialize: function () {
 			// fix to prevent click event after draggable
 			setTimeout(_.bind(function () {
-				if (GLOBAL.displayIndex === 0) {
+				if (util.isMaster()) {
 					this.setPopover();
 				}
 			}, this));

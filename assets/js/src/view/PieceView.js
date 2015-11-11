@@ -31,8 +31,10 @@ define([
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
 					if (this.id === ev.addedKeys[0].key) {
-						this.setPosition(JSON.parse(ev.state[ev.addedKeys[0].key]).position);
-						this.setRotateCss(JSON.parse(ev.state[ev.addedKeys[0].key]).rotation);
+						var state = JSON.parse(ev.state[ev.addedKeys[0].key]);
+
+						this.setPosition(state.position, state.localParticipant);
+						this.setRotateCss(state.rotation);
 					}
 				}
 			}, this));
@@ -98,12 +100,14 @@ define([
 
 
 		stopDraggable: function () {
-			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation}));
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation, localParticipant: gapi.hangout.getLocalParticipant()}));
 		},
 
 
-		setPosition: function (position) {
-			this.$el.popover('hide');
+		setPosition: function (position, localParticipant) {
+			if (this.$el.is(':visible') && localParticipant && localParticipant.id !== gapi.hangout.getLocalParticipant().id) {
+				this.$el.popover('hide');
+			}
 
 			this.$el.css({
 				left: position ? position.offsetX : this.adjustedPosition ? this.position.offsetX : (this.position.offsetX - (this.$el.width() / 2)),

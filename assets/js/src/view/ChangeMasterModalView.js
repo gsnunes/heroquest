@@ -18,21 +18,40 @@ define([
 		},
 
 
+		initialize: function () {
+			this.bindEvents();
+		},
+
+
 		afterRender: function () {
 			this.populateParticipants();
 		},
 
 
+		bindEvents: function () {
+			gapi.hangout.onParticipantsChanged.add(_.bind(function () {
+				this.populateParticipants();
+			}, this));
+		},
+
+
 		populateParticipants: function () {
-			var participants = gapi.hangout.getParticipants(),
+			var localParticipant = gapi.hangout.getLocalParticipant(),
+				participants = gapi.hangout.getParticipants(),
 				i, len = participants.length,
 				options = [];
 
 			for (i = 0; i < len; i++) {
-				options.push('<option value="' + participants[i].id + '">' + participants[i].person.displayName + '</option>');
+				if (participants[i].id !== localParticipant.id) {
+					options.push('<option value="' + participants[i].id + '">' + participants[i].person.displayName + '</option>');
+				}
 			}
 
 			this.$('#change-master-participants').html(options.join());
+
+			if (!options.length) {
+				this.$('#change-master-button').prop('disabled', true);
+			}
 		},
 
 
@@ -43,6 +62,7 @@ define([
 				var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
 
 				util.clearValue('campaing', 300, _.bind(function () {
+					util.clearState();
 					util.removeAllMasterPiecesFromBoard('treasure');
 					gapi.hangout.data.setValue('master', JSON.stringify(participant));
 
@@ -50,7 +70,24 @@ define([
 					newModal.close();
 				}, this));
 			}, this)});
-			newModal.open();
+
+			if (this.$('#change-master-participants').val()) {
+				newModal.open();
+			}
+		},
+
+
+		clearOldCampaing: function (model) {
+			util.clearState();
+
+			var interval = setInterval(_.bind(function () {
+				var keys = gapi.hangout.data.getKeys();
+				
+				if (keys.length === 1) {
+					clearInterval(interval);
+					this.loadNewCampaing(model);
+				}
+			}, this), 300);
 		}
 
 	});

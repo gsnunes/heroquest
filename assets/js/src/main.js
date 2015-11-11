@@ -57,21 +57,22 @@ window.GLOBAL = (function () {
 
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
-				var participant = gapi.hangout.getLocalParticipant(),
-					clientId = '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com';
+				var clientId = '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com';
 
 				if (util.getEnv() === 'test') {
 					clientId = '235382286790-t3ijhq35kbdccuuc93og4ajdll9oilai.apps.googleusercontent.com';
 				}
 
-				GLOBAL.participant = participant;
-				GLOBAL.displayIndex = participant.displayIndex;
-				//GLOBAL.displayIndex = 1;
-
 				gapi.auth.init(function () {
 					gapi.auth.authorize({client_id: clientId, immediate: true, scope: 'https://www.googleapis.com/auth/plus.login'}, function () {
-						var myApp = new App();
-						myApp.attachTo('#main-script', {method: 'before'}).start();
+
+						$.ajax({url: 'https://' + util.getHost() + '/mock.json'}).success(function (result) {
+							GLOBAL.data = result;
+
+							var myApp = new App();
+							myApp.attachTo('#main-script', {method: 'before'}).start();
+						});
+
 					});
 				});
 			}
@@ -87,7 +88,7 @@ window.GLOBAL = (function () {
 
 		host: util.getHost(),
 
-		data: util.getMock()
+		data: {}
 
 	};
 
