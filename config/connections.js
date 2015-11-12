@@ -56,13 +56,22 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-  someMongodbServer: {
+  digitaloceanHeroquest: {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
     //user: 'gsnunes',
     // password: 'password',
     database: 'heroquest'
+  },
+
+  mongolabHeroquestTest: {
+	adapter: 'sails-mongo',
+	host: 'ds053774.mongolab.com',
+	port: 53774,
+	user: 'heroquest-user',
+	password: 'Tg+HhHjP;8E.r;&/',
+	database: 'heroquest-test'
   },
 
   /***************************************************************************
