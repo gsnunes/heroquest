@@ -27,8 +27,8 @@ define([
 				$li;
 
 			for (i = 0; i < len; i++) {
-				if (data[i].moviment) {
-					$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + ' (moviment: ' + data[i].moviment + ', attack: ' + data[i].attack + ', defense: ' + data[i].defense + ', body: ' + data[i].body + ', mind: ' + data[i].mind + ')"><i class="' + data[i].className + '"></i></li>');
+				if (data[i].movement) {
+					$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + ' (movement: ' + data[i].movement + ', attack: ' + data[i].attack + ', defense: ' + data[i].defense + ', body: ' + data[i].body + ', mind: ' + data[i].mind + ')"><i class="' + data[i].className + '"></i></li>');
 				}
 				else {
 					$li = $('<li data-toggle="tooltip" data-placement="top" title="' + data[i].name + '"><i class="' + data[i].className + '"></i></li>');

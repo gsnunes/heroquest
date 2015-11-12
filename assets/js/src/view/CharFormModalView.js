@@ -52,7 +52,7 @@ define([
 		 * populateAttr
 		 */
 		populateAttr: function (attr) {
-			this.$el.find('input#mo').val(attr.moviment);
+			this.$el.find('input#mo').val(attr.movement);
 			this.$el.find('input#a').val(attr.attack);
 			this.$el.find('input#d').val(attr.defense);
 			this.$el.find('input#b').val(attr.body);
@@ -95,7 +95,7 @@ define([
 				character: this.$el.find('select#character').val(),
 				quests: this.$el.find('input#quests').val(),
 				access_token: this.token.access_token,
-				moviment: this.$el.find('input#mo').val(),
+				movement: this.$el.find('input#mo').val(),
 				attack: this.$el.find('input#a').val(),
 				defense: this.$el.find('input#d').val(),
 				body: this.$el.find('input#b').val(),

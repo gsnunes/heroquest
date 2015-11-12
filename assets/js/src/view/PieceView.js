@@ -58,7 +58,7 @@ define([
 
 
 		setZIndex: function () {
-			if (this.model && this.model.moviment) {
+			if (this.model && this.model.movement) {
 				this.$el.css('z-index', 1);
 			}
 			else if (this.model && this.model.character) {
@@ -120,7 +120,7 @@ define([
 			if (this.model && this.model.character) {
 				new CharPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el});
 			}
-			else if (this.model && this.model.moviment) {
+			else if (this.model && this.model.movement) {
 				new MonsterPopoverView({id: 'popover-' + this.id.substr(6), selector: this.$el, model: this.model});
 			}
 			else {
