@@ -2,7 +2,7 @@ box: wercker/nodejs
 
 build:
   steps:
-    - npm-install
+    #- npm-install
     - script:
         name: install bower
         code: sudo npm install -g bower
@@ -15,11 +15,6 @@ build:
     - script:
         name: build js script
         code: r.js -o assets/js/src/build.js
-    - script:
-        name: echo nodejs information
-        code: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
 
 deploy:
   steps:
@@ -33,7 +28,7 @@ deploy:
         content: $WERCKER_PRIVATE
         overwrite: true
     - script:
-        name: Update instances
+        name: Update target
         code: |
           chmod 755 ./wercker_deploy.sh
           ./wercker_deploy.sh
