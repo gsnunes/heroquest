@@ -33,12 +33,12 @@ define([
 
 		roll: function (ev) {
 			var combatDice = {
-					1: 'Caveira',
-					2: 'Caveira',
-					3: 'Caveira',
-					4: 'Escudo',
-					5: 'Escudo',
-					6: 'Besouro'
+					1: '<i class="sprite-dice icon-skull"></i>',
+					2: '<i class="sprite-dice icon-skull"></i>',
+					3: '<i class="sprite-dice icon-skull"></i>',
+					4: '<i class="sprite-dice icon-shield"></i>',
+					5: '<i class="sprite-dice icon-shield"></i>',
+					6: '<i class="sprite-dice icon-black-shield"></i>'
 				},
 				diceOption = this.$('input[name="dice-options"]:checked').val(),
 				len = this.$('#count-dice').val(),
@@ -65,12 +65,12 @@ define([
 					result += combatDice[random];
 
 					if (i < (len - 1)) {
-						result += ' + ';
+						result += '&nbsp;';
 					}
 				}
 			}
 
-			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: 'roll ' + result, person: gapi.hangout.getLocalParticipant().person}));
+			gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: result, person: gapi.hangout.getLocalParticipant().person}));
 
 			this.$('.dice-result span').html(result);
 			

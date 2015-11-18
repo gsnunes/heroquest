@@ -36,6 +36,7 @@ define([
 
 		showProfilePicture: function (ev) {
 			if ($(ev.target).is(':checked')) {
+				this.selector.find('i').css('opacity', '0');
 				this.selector.css({
 					'background-image': 'url(' + gapi.hangout.getLocalParticipant().person.image.url + ')',
 					'background-size': (this.selector.width() + 'px ' + this.selector.height() + 'px')
@@ -43,6 +44,7 @@ define([
 				this.selector.addClass('img-circle');
 			}
 			else {
+				this.selector.find('i').css('opacity', '1');
 				this.selector.css({
 					'background-image': 'none',
 					'background-size': 'auto'
