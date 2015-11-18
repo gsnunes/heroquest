@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "bootstrap": "latest",
+    "bootstrap": "3.3.5",
     "moment": "latest",
     "jquery": "latest",
     "backbone.giraffe": "0.2.6",
