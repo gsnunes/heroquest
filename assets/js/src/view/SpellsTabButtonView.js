@@ -17,7 +17,7 @@ define([
 				listGroupComponentView.addItem($item);
 
 				$item.find('.btn-primary').on('click', value, function (ev) {
-					var message = 'cast the spell ' + ev.data.name + ' (' + ev.data.description + ')';
+					var message = 'cast the spell <b>' + ev.data.name + '</b> (' + ev.data.description + ')';
 					gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: message, person: gapi.hangout.getLocalParticipant().person}));
 				});
 			}, this));

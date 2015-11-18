@@ -7,5 +7,6 @@
     "disallowDanglingUnderscores": null,
     "requireLineFeedAtFileEnd": null,
     "disallowTrailingWhitespace": "ignoreEmptyLines",
-    "disallowKeywordsOnNewLine": null
+    "disallowKeywordsOnNewLine": null,
+	"requireVarDeclFirst": false
 }

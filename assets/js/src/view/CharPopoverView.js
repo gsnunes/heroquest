@@ -22,14 +22,33 @@ define([
 		events: {
 			'click .glyphicon': 'changeProgress',
 			'blur textarea': 'save',
-			'change input': 'save',
-			'click .btn-danger': 'removePiece'
+			'change input[type="number"]': 'save',
+			'click .btn-danger': 'removePiece',
+			'click #show-profile-picture': 'showProfilePicture'
 		},
 
 
 		initialize: function () {
 			this.bindEvents();
 			this.getModel();
+		},
+
+
+		showProfilePicture: function (ev) {
+			if ($(ev.target).is(':checked')) {
+				this.selector.css({
+					'background-image': 'url(' + gapi.hangout.getLocalParticipant().person.image.url + ')',
+					'background-size': (this.selector.width() + 'px ' + this.selector.height() + 'px')
+				});
+				this.selector.addClass('img-circle');
+			}
+			else {
+				this.selector.css({
+					'background-image': 'none',
+					'background-size': 'auto'
+				});
+				this.selector.removeClass('img-circle');
+			}
 		},
 
 
@@ -92,7 +111,7 @@ define([
 				}
 			}, this));
 		},
-		
+
 
 		changeProgress: function (ev) {
 			var progressBar = $(ev.target).parents('.progress-wrapper').find('.progress-bar'),
@@ -106,7 +125,7 @@ define([
 				progressBar.html(newValue);
 				progressBar.width(newWidth + '%');
 				progressBar.attr('aria-valuenow', newValue);
-				
+
 				gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
 			}
 		},
@@ -135,9 +154,7 @@ define([
 
 		removePiece: function () {
 			var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove this piece ?', callback: _.bind(function () {
-				this.selector.popover('destroy');
 				gapi.hangout.data.clearValue(this.selector.attr('id'));
-
 				newModal.close();
 			}, this)});
 			newModal.open();

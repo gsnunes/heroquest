@@ -52,9 +52,9 @@ define([
 				listGroupComponentView.addItem($item);
 
 				$item.find('.btn-primary').on('click', value, _.bind(function (ev) {
-					var message = 'found the artifact ' + ev.data.name + ' (' + ev.data.description + ')',
+					var message = 'found the artifact <b>' + ev.data.name + '</b> (' + ev.data.description + ')',
 						person = gapi.hangout.getParticipantById(this.$('#participants').val()).person;
-					
+
 					gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: message, person: person}));
 				}, this));
 			}, this));

@@ -47,6 +47,14 @@ define([
 		},
 
 
+		initialize: function () {
+			this.totalTreasures = GLOBAL.data.treasure.length;
+			this.countTreasures = GLOBAL.data.treasure.length;
+
+			this.bindEvents();
+		},
+
+
 		afterRender: function () {
 			if (util.isMaster()) {
 				this.$('.reset-settings').removeClass('hide');
@@ -54,6 +62,40 @@ define([
 			else {
 				this.$('.reset-settings').remove();
 			}
+
+			this.populate();
+		},
+
+
+		bindEvents: function () {
+			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
+				if (ev.addedKeys.length) {
+					for (var i = 0, len = ev.addedKeys.length; i < len; i++) {
+						if (ev.addedKeys[i].key.match(/boughtTreasures/gi)) {
+							this.countTreasures = this.totalTreasures - (JSON.parse(ev.state[ev.addedKeys[i].key])).length;
+							this.populateResetButton();
+						}
+					}
+				}
+			}, this));
+		},
+
+
+		populate: function () {
+			var state = gapi.hangout.data.getState();
+
+			_.each(state, _.bind(function (value, key) {
+				if (key.match(/boughtTreasures/gi)) {
+					this.countTreasures = this.totalTreasures - (JSON.parse(value)).length;
+				}
+			}, this));
+
+			this.populateResetButton();
+		},
+
+
+		populateResetButton: function () {
+			this.$('.reset-treasures').html('<span class="glyphicon glyphicon-remove"></span> Reset treasures (' + this.countTreasures + '/' + this.totalTreasures + ')');
 		},
 
 
@@ -61,7 +103,7 @@ define([
 			var campaingListModalView = new CampaingListModalView();
 			campaingListModalView.open();
 		},
-		
+
 
 		showCharListModal: function () {
 			var charListModalView = new CharListModalView();

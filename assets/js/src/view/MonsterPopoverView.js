@@ -81,7 +81,7 @@ define([
 				this.$('input').prop('disabled', true);
 			}
 		},
-		
+
 
 		changeProgress: function (ev) {
 			var progressBar = $(ev.target).parents('.progress-wrapper').find('.progress-bar'),
@@ -95,7 +95,7 @@ define([
 				progressBar.html(newValue);
 				progressBar.width(newWidth + '%');
 				progressBar.attr('aria-valuenow', newValue);
-				
+
 				gapi.hangout.data.setValue(this.id, JSON.stringify(this.getDataFromForm(true)));
 			}
 		},
@@ -123,9 +123,7 @@ define([
 
 		removePiece: function () {
 			var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove this piece ?', callback: _.bind(function () {
-				this.selector.popover('destroy');
 				gapi.hangout.data.clearValue(this.selector.attr('id'));
-
 				newModal.close();
 			}, this)});
 			newModal.open();

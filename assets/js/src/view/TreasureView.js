@@ -51,7 +51,7 @@ define(function () {
 
 
 		foundTreasure: function (key, value) {
-			var message = 'found the treasure ' + value.treasure.name,
+			var message = 'found the treasure <b>' + value.treasure.name + '</b> (' + value.treasure.description + ')',
 				boughtTreasuresValue = gapi.hangout.data.getValue('boughtTreasures'),
 				boughtTreasures = boughtTreasuresValue ? JSON.parse(boughtTreasuresValue) : [];
 

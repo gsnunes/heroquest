@@ -58,9 +58,7 @@ define([
 
 		removePiece: function () {
 			var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove this piece ?', callback: _.bind(function () {
-				this.selector.popover('destroy');
 				gapi.hangout.data.clearValue(this.selector.attr('id'));
-
 				newModal.close();
 			}, this)});
 			newModal.open();
