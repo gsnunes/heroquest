@@ -74,7 +74,9 @@ define([
 			var campaing = parseInt(gapi.hangout.data.getValue('campaing'), 10);
 
 			if (campaing) {
+				console.log(campaing);
 				this.getCampaingModel(campaing, _.bind(function (campaingModel) {
+					console.log(campaingModel);
 					this.setTitle('History (' + campaingModel.attributes.name + ')');
 				}, this));
 			}
@@ -100,6 +102,7 @@ define([
 			campaingCollection.fetch({
 				success: _.bind(function () {
 					if (callback) {
+						console.log(campaingCollection);
 						callback(campaingCollection.get(campaing));
 					}
 				}, this)
