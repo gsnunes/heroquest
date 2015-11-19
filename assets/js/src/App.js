@@ -26,7 +26,10 @@ define(function (require) {
 					this.buildDom();
 				}
 
-				this.saveState(ev);
+
+				if ((ev.addedKeys[0] && !ev.addedKeys[0].key.match(/campaing/gi)) || (ev.removedKeys[0] && !ev.removedKeys[0].match(/campaing/gi))) {
+					this.saveState(ev);
+				}
 			}, this));
 
 
