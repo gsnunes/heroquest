@@ -71,12 +71,10 @@ define([
 
 
 		setTitleCampaing: function () {
-			var campaing = parseInt(gapi.hangout.data.getValue('campaing'), 10);
+			var campaingId = gapi.hangout.data.getValue('campaing');
 
-			if (campaing) {
-				console.log(campaing);
-				this.getCampaingModel(campaing, _.bind(function (campaingModel) {
-					console.log(campaingModel);
+			if (campaingId) {
+				this.getCampaingModel(campaingId, _.bind(function (campaingModel) {
 					this.setTitle('History (' + campaingModel.attributes.name + ')');
 				}, this));
 			}
@@ -96,14 +94,13 @@ define([
 		},
 
 
-		getCampaingModel: function (campaing, callback) {
+		getCampaingModel: function (campaingId, callback) {
 			var campaingCollection = new CampaingCollection();
 
 			campaingCollection.fetch({
 				success: _.bind(function () {
 					if (callback) {
-						console.log(campaingCollection);
-						callback(campaingCollection.get(campaing));
+						callback(campaingCollection.get(campaingId));
 					}
 				}, this)
 			});

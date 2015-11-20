@@ -26,10 +26,7 @@ define(function (require) {
 					this.buildDom();
 				}
 
-
-				if ((ev.addedKeys[0] && !ev.addedKeys[0].key.match(/campaing/gi)) || (ev.removedKeys[0] && !ev.removedKeys[0].match(/campaing/gi))) {
-					this.saveState(ev);
-				}
+				this.saveState(ev);
 			}, this));
 
 
@@ -51,14 +48,14 @@ define(function (require) {
 
 		saveState: function (ev) {
 			if (util.isMaster()) {
-				var campaing = parseInt(gapi.hangout.data.getValue('campaing'), 10);
+				var campaingId = gapi.hangout.data.getValue('campaing');
 
-				if (campaing) {
-					if (this.campaingModel && this.campaingModel.attributes.id === campaing) {
+				if (campaingId) {
+					if (this.campaingModel && this.campaingModel.attributes.id == campaingId) {
 						this.campaingModel.save({state: ev.state});
 					}
 					else {
-						this.getCampaingModel(campaing, _.bind(function () {
+						this.getCampaingModel(campaingId, _.bind(function () {
 							this.campaingModel.save({state: ev.state});
 						}, this));
 					}
@@ -67,12 +64,12 @@ define(function (require) {
 		},
 
 
-		getCampaingModel: function (campaing, callback) {
+		getCampaingModel: function (campaingId, callback) {
 			var campaingCollection = new CampaingCollection();
 
 			campaingCollection.fetch({
 				success: _.bind(function () {
-					this.campaingModel = campaingCollection.get(campaing);
+					this.campaingModel = campaingCollection.get(campaingId);
 					if (callback) {
 						callback();
 					}
