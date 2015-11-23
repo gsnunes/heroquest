@@ -20,11 +20,9 @@ define([
 
 
 		events: {
-			'click .glyphicon': 'changeProgress',
-			'blur textarea': 'save',
 			'change input[type="number"]': 'save',
-			'click .btn-danger': 'removePiece',
-			'click #show-profile-picture': 'showProfilePicture'
+			'click .glyphicon': 'changeProgress',
+			'blur textarea': 'save'
 		},
 
 
@@ -34,8 +32,11 @@ define([
 		},
 
 
-		showProfilePicture: function (ev) {
+		showProfilePicture: function (ev, level) {
 			if ($(ev.target).is(':checked')) {
+				level.val(1);
+				level.prop('disabled', false);
+
 				this.selector.find('i').css('opacity', '0');
 				this.selector.css({
 					'background-image': 'url(' + gapi.hangout.getLocalParticipant().person.image.url + ')',
@@ -44,6 +45,9 @@ define([
 				this.selector.addClass('img-circle');
 			}
 			else {
+				level.val(0);
+				level.prop('disabled', true);
+
 				this.selector.find('i').css('opacity', '1');
 				this.selector.css({
 					'background-image': 'none',
@@ -78,13 +82,36 @@ define([
 					if (!load) {
 						var myPopover = $(this).data('bs.popover');
 						myPopover.options.content = _this.render().el;
-						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ')';
+						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') <div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled><option value="1">0%</option><option value="0.1">10%</option><option value="0.2">20%</option><option value="0.3">30%</option><option value="0.4">40%</option><option value="0.5">50%</option><option value="0.6">60%</option><optionval="0.7">70%</option><option value="0.8">80%</option><option value="0.9">90%</option><option value="0" selected>100%</option></select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>';
 						myPopover.setContent();
 						load = true;
 					}
 
 					$(this).popover('show');
+					console.log($(this).popover());
+					_this.bindDropdown(myPopover.$tip);
 				}
+			});
+		},
+
+
+		bindDropdown: function ($popover) {
+			var _this = this;
+
+			$popover.find('h3 .dropdown-menu input, h3 .dropdown-menu label').on('click', function (ev) {
+				ev.stopPropagation();
+			});
+
+			$popover.find('h3 .dropdown-menu input[type="checkbox"]').on('click', function (ev) {
+				_this.showProfilePicture(ev, $popover.find('h3 .dropdown-menu select'));
+			});
+
+			$popover.find('h3 .dropdown-menu select').on('change', function (ev) {
+				_this.selector.find('i').css('opacity', $(this).val());
+			});
+
+			$popover.find('h3 .remove-piece').on('click', function () {
+				_this.removePiece();
 			});
 		},
 
