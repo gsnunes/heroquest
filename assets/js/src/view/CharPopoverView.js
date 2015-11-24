@@ -34,7 +34,7 @@ define([
 
 		showProfilePicture: function (ev, level) {
 			if ($(ev.target).is(':checked')) {
-				level.val(1);
+				level.val(0);
 				level.prop('disabled', false);
 
 				this.selector.find('i').css('opacity', '0');
@@ -45,7 +45,7 @@ define([
 				this.selector.addClass('img-circle');
 			}
 			else {
-				level.val(0);
+				level.val(1);
 				level.prop('disabled', true);
 
 				this.selector.find('i').css('opacity', '1');
@@ -82,16 +82,38 @@ define([
 					if (!load) {
 						var myPopover = $(this).data('bs.popover');
 						myPopover.options.content = _this.render().el;
-						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') <div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled><option value="1">0%</option><option value="0.1">10%</option><option value="0.2">20%</option><option value="0.3">30%</option><option value="0.4">40%</option><option value="0.5">50%</option><option value="0.6">60%</option><optionval="0.7">70%</option><option value="0.8">80%</option><option value="0.9">90%</option><option value="0" selected>100%</option></select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>';
+						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') <div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled>' + _this.getTransparencyOptions() + '</select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>';
 						myPopover.setContent();
 						load = true;
 					}
 
 					$(this).popover('show');
-					console.log($(this).popover());
-					_this.bindDropdown(myPopover.$tip);
+					_this.bindDropdown($(this).data('bs.popover').$tip);
 				}
 			});
+		},
+
+
+		getTransparencyOptions: function () {
+			var value = '0',
+				text = '0%',
+				options = '',
+				i = 0, len = 11;
+
+			for (i = 0; i < len; i++) {
+				if (i > 0 && i < 10) {
+					value = '0.' + i;
+					text = i + '0%';
+				}
+				else if (i === 10) {
+					value = '1';
+					text = '100%';
+				}
+
+				options += '<option value="' + value + '" ' + (i === 10 ? 'selected' : '') + '>' + text + '</option>';
+			}
+
+			return options;
 		},
 
 
@@ -104,15 +126,21 @@ define([
 
 			$popover.find('h3 .dropdown-menu input[type="checkbox"]').on('click', function (ev) {
 				_this.showProfilePicture(ev, $popover.find('h3 .dropdown-menu select'));
+				gapi.hangout.data.setValue(_this.selector.attr('id'), JSON.stringify({showProfilePicture: _this.selector.hasClass('img-circle'), opacity: _this.selector.find('i').css('opacity')}));
 			});
 
 			$popover.find('h3 .dropdown-menu select').on('change', function (ev) {
 				_this.selector.find('i').css('opacity', $(this).val());
+				gapi.hangout.data.setValue(_this.selector.attr('id'), JSON.stringify({showProfilePicture: _this.selector.hasClass('img-circle'), opacity: _this.selector.find('i').css('opacity')}));
 			});
 
 			$popover.find('h3 .remove-piece').on('click', function () {
 				_this.removePiece();
 			});
+
+
+			$popover.find('h3 .dropdown-menu input[type="checkbox"]').prop('checked', this.selector.hasClass('img-circle'));
+			$popover.find('h3 .dropdown-menu select').prop('disabled', !this.selector.hasClass('img-circle')).val(this.selector.find('i').css('opacity'));
 		},
 
 
