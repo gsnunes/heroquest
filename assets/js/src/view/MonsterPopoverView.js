@@ -13,6 +13,11 @@ define([
 
 
 		serialize: function () {
+			return this.getValue();
+		},
+
+
+		getValue: function () {
 			var value = gapi.hangout.data.getValue(this.id);
 			return value ? JSON.parse(value) : this.model;
 		},
@@ -26,11 +31,15 @@ define([
 
 
 		initialize: function () {
+			var value = gapi.hangout.data.getValue(this.id);
+			this.value ? JSON.parse(value) : this.model
+
 			this.bindEvents();
 
 			// fix to prevent click event after draggable
 			setTimeout(_.bind(function () {
 				this.setPopover();
+				this.setTooltip();
 			}, this));
 		},
 
@@ -40,9 +49,19 @@ define([
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/popover/gi)) {
 					if (this.id === ev.addedKeys[0].key) {
 						this.render();
+						this.setTooltip(this.getDataFromForm(true));
 					}
 				}
 			}, this));
+		},
+
+
+		setTooltip: function (shareData) {
+			var data = this.getValue();
+			data = $.extend(data, shareData || {});
+
+			this.selector.find('i').attr('data-original-title', (data.name + ' (movement: ' + data.movement + ', attack: ' + data.attack + ', defense: ' + data.defense + ', body: ' + (data.bodyNow || data.body) + ', mind: ' + (data.mindNow || data.mind) + ')'));
+			this.selector.find('i').tooltip('fixTitle');
 		},
 
 

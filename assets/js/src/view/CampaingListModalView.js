@@ -108,6 +108,7 @@ define([
 						var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will overwrite the current state.', callback: function () {
 							self.start(model);
 							newModal.close();
+							self.close();
 						}});
 						newModal.open();
 					});
