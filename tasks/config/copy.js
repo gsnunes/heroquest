@@ -17,12 +17,20 @@ module.exports = function(grunt) {
 
 	grunt.config.set('copy', {
 		dev: {
-			files: [{
-				expand: true,
-				cwd: './assets',
-				src: ['**/*.!(coffee|less)'],
-				dest: '.tmp/public'
-			}]
+			files: [
+				{
+					expand: true,
+					cwd: './assets',
+					src: ['**/*.!(coffee|less)'],
+					dest: '.tmp/public'
+				},
+				{
+					expand: true,
+					cwd: './assets/bower_components/jquery-ui/themes/smoothness',
+					src: ['images/*'],
+					dest: '.tmp/public/styles'
+				}
+			]
 		},
 		build: {
 			files: [{
@@ -30,6 +38,14 @@ module.exports = function(grunt) {
 				cwd: '.tmp/public',
 				src: ['**/*'],
 				dest: 'www'
+			}]
+		},
+		prod: {
+			files: [{
+				expand: true,
+				cwd: './assets/bower_components/jquery-ui/themes/smoothness',
+				src: ['images/*'],
+				dest: '.tmp/public/styles'
 			}]
 		}
 	});
