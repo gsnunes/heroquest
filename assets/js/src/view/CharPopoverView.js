@@ -32,32 +32,6 @@ define([
 		},
 
 
-		showProfilePicture: function (ev, level) {
-			if ($(ev.target).is(':checked')) {
-				level.val(0);
-				level.prop('disabled', false);
-
-				this.selector.find('i').css('opacity', '0');
-				this.selector.css({
-					'background-image': 'url(' + gapi.hangout.getLocalParticipant().person.image.url + ')',
-					'background-size': (this.selector.width() + 'px ' + this.selector.height() + 'px')
-				});
-				this.selector.addClass('img-circle');
-			}
-			else {
-				level.val(1);
-				level.prop('disabled', true);
-
-				this.selector.find('i').css('opacity', '1');
-				this.selector.css({
-					'background-image': 'none',
-					'background-size': 'auto'
-				});
-				this.selector.removeClass('img-circle');
-			}
-		},
-
-
 		getModel: function () {
 			var charCollection = new CharCollection();
 
@@ -82,13 +56,16 @@ define([
 					if (!load) {
 						var myPopover = $(this).data('bs.popover');
 						myPopover.options.content = _this.render().el;
-						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') <div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled>' + _this.getTransparencyOptions() + '</select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>';
+						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') ' + ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id) ? '<div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled>' + _this.getTransparencyOptions() + '</select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>' : '');
 						myPopover.setContent();
 						load = true;
 					}
 
 					$(this).popover('show');
-					_this.bindDropdown($(this).data('bs.popover').$tip);
+
+					if ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id)) {
+						_this.bindPopoverDropdown($(this).data('bs.popover').$tip);
+					}
 				}
 			});
 		},
@@ -117,7 +94,7 @@ define([
 		},
 
 
-		bindDropdown: function ($popover) {
+		bindPopoverDropdown: function ($popover) {
 			var _this = this;
 
 			$popover.find('h3 .dropdown-menu input, h3 .dropdown-menu label').on('click', function (ev) {
@@ -125,13 +102,12 @@ define([
 			});
 
 			$popover.find('h3 .dropdown-menu input[type="checkbox"]').on('click', function (ev) {
-				_this.showProfilePicture(ev, $popover.find('h3 .dropdown-menu select'));
-				gapi.hangout.data.setValue(_this.selector.attr('id'), JSON.stringify({showProfilePicture: _this.selector.hasClass('img-circle'), opacity: _this.selector.find('i').css('opacity')}));
+				_this.enableTransparencySelect(ev, $popover.find('h3 .dropdown-menu select'));
+				_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
 			});
 
 			$popover.find('h3 .dropdown-menu select').on('change', function (ev) {
-				_this.selector.find('i').css('opacity', $(this).val());
-				gapi.hangout.data.setValue(_this.selector.attr('id'), JSON.stringify({showProfilePicture: _this.selector.hasClass('img-circle'), opacity: _this.selector.find('i').css('opacity')}));
+				_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
 			});
 
 			$popover.find('h3 .remove-piece').on('click', function () {
@@ -141,6 +117,27 @@ define([
 
 			$popover.find('h3 .dropdown-menu input[type="checkbox"]').prop('checked', this.selector.hasClass('img-circle'));
 			$popover.find('h3 .dropdown-menu select').prop('disabled', !this.selector.hasClass('img-circle')).val(this.selector.find('i').css('opacity'));
+		},
+
+
+		getAvatarOptions: function ($popover) {
+			return {
+				show: $popover.find('h3 .dropdown-menu input[type="checkbox"]').is(':checked'),
+				profilePicture: gapi.hangout.getLocalParticipant().person.image.url,
+				opacity: $popover.find('h3 .dropdown-menu select').val()
+			};
+		},
+
+
+		enableTransparencySelect: function (ev, select) {
+			if ($(ev.target).is(':checked')) {
+				select.val(0);
+				select.prop('disabled', false);
+			}
+			else {
+				select.val(1);
+				select.prop('disabled', true);
+			}
 		},
 
 

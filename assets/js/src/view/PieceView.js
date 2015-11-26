@@ -18,7 +18,8 @@ define([
 
 
 		events: {
-			'mouseup': 'rotatePiece'
+			'mouseup': 'rotatePiece',
+			'shareUpdateAvatar': 'shareUpdateAvatar'
 		},
 
 
@@ -35,9 +36,40 @@ define([
 
 						this.setPosition(state.position, state.localParticipant);
 						this.setRotateCss(state.rotation);
+						this.setAvatar(state.avatar);
 					}
 				}
 			}, this));
+		},
+
+
+		/**
+		 * setAvatar
+		 */
+		setAvatar: function (data) {
+			if (data) {
+				this.showProfilePicture(data);
+			}
+		},
+
+
+		showProfilePicture: function (data) {
+			if (data.show) {
+				this.$el.find('i').css('opacity', data.opacity);
+				this.$el.css({
+					'background-image': 'url(' + data.profilePicture + ')',
+					'background-size': (this.$el.width() + 'px ' + this.$el.height() + 'px')
+				});
+				this.$el.addClass('img-circle');
+			}
+			else {
+				this.$el.find('i').css('opacity', data.opacity);
+				this.$el.css({
+					'background-image': 'none',
+					'background-size': 'auto'
+				});
+				this.$el.removeClass('img-circle');
+			}
 		},
 
 
@@ -54,6 +86,11 @@ define([
 			this.setPosition();
 			this.setRotateCss(this.rotation);
 			this.setZIndex();
+		},
+
+
+		shareUpdateAvatar: function (ev, data) {
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation, localParticipant: gapi.hangout.getLocalParticipant(), avatar: data.avatar}));
 		},
 
 
