@@ -92,7 +92,6 @@ define([
 				this.$('i').attr('class', 'sprite-characters icon-' + this.model.character);
 			}
 			else {
-				console.log(this.model.className);
 				this.$('i').attr('class', this.model.className);
 			}
 		},
