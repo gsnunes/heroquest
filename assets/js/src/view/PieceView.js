@@ -19,7 +19,8 @@ define([
 
 		events: {
 			'mouseup': 'rotatePiece',
-			'shareUpdateAvatar': 'shareUpdateAvatar'
+			'shareUpdateAvatar': 'shareUpdateAvatar',
+			'shareOpenDoor': 'shareOpenDoor'
 		},
 
 
@@ -34,9 +35,12 @@ define([
 					if (this.id === ev.addedKeys[0].key) {
 						var state = JSON.parse(ev.state[ev.addedKeys[0].key]);
 
+						this.model = state.model;
+
 						this.setPosition(state.position, state.localParticipant);
 						this.setRotateCss(state.rotation);
 						this.setAvatar(state.avatar);
+						this.setIcon();
 					}
 				}
 			}, this));
@@ -74,18 +78,29 @@ define([
 
 
 		afterRender: function () {
-			if (this.model && this.model.character) {
-				this.$('i').addClass('sprite-characters icon-' + this.model.character);
-			}
-			else {
-				this.$('i').addClass(this.model.className);
-			}
-
+			this.setIcon();
 			this.createPopover();
 			this.setDraggable();
 			this.setPosition();
 			this.setRotateCss(this.rotation);
 			this.setZIndex();
+		},
+
+
+		setIcon: function () {
+			if (this.model && this.model.character) {
+				this.$('i').attr('class', 'sprite-characters icon-' + this.model.character);
+			}
+			else {
+				console.log(this.model.className);
+				this.$('i').attr('class', this.model.className);
+			}
+		},
+
+
+		shareOpenDoor: function (ev, data) {
+			this.model.className = data.openDoor.className;
+			gapi.hangout.data.setValue(this.id, JSON.stringify({id: this.id, position: {offsetX: parseFloat(this.$el.css('left')), offsetY: parseFloat(this.$el.css('top'))}, model: this.model, adjustedPosition: true, rotation: this.rotation, localParticipant: gapi.hangout.getLocalParticipant()}));
 		},
 
 

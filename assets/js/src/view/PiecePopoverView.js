@@ -19,7 +19,8 @@ define([
 
 
 		events: {
-			'click .btn-danger': 'removePiece'
+			'click .btn-danger': 'removePiece',
+			'click .openDoor': 'openDoor'
 		},
 
 
@@ -30,6 +31,21 @@ define([
 					this.setPopover();
 				}
 			}, this));
+		},
+
+
+		afterRender: function () {
+			if (this.selector.find('i').hasClass('icon-door') || this.selector.find('i').hasClass('icon-door-opened')) {
+				this.$el.prepend('<button type="button" class="btn btn-block openDoor" style="margin-bottom: 10px">open/close door</button>');
+			}
+		},
+
+
+		/**
+		 * openDoor
+		 */
+		openDoor: function () {
+			this.selector.trigger('shareOpenDoor', [{openDoor: {className: ((this.selector.find('i').hasClass('icon-door')) ? 'sprite-furnitures icon-door-opened' : 'sprite-furnitures icon-door')}}]);
 		},
 
 
