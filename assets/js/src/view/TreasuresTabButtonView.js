@@ -34,15 +34,25 @@ define([
 
 
 		populateParticipants: function () {
-			var participants = gapi.hangout.getParticipants(),
+			var localParticipant = gapi.hangout.getLocalParticipant(),
+				participants = gapi.hangout.getParticipants(),
 				i, len = participants.length,
 				options = [];
 
 			for (i = 0; i < len; i++) {
-				options.push('<option value="' + participants[i].id + '">' + participants[i].person.displayName + '</option>');
+				if (participants[i].id !== localParticipant.id) {
+					options.push('<option value="' + participants[i].id + '">' + participants[i].person.displayName + '</option>');
+				}
 			}
 
 			this.$('#participants').html(options.join());
+
+			if (!options.length) {
+				this.$('.btn-default').prop('disabled', true);
+			}
+			else {
+				this.$('.btn-default').prop('disabled', false);
+			}
 		},
 
 

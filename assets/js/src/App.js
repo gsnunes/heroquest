@@ -64,6 +64,23 @@ define(function (require) {
 		},
 
 
+		/**
+		 * limitHistory
+		 */
+		limitHistory: function (state) {
+			var count = 0,
+				limit = 10;
+
+			return _.pick(state, function (val, key) {
+				if (key.match(/history/gi)) {
+					count++;
+				}
+
+				return !key.match(/history/gi) || (key.match(/history/gi) && count < limit);
+			});
+		},
+
+
 		getCampaingModel: function (campaingId, callback) {
 			var campaingCollection = new CampaingCollection();
 
