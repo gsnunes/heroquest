@@ -151,13 +151,29 @@ define([
 
 
 		loadNewCampaing: function (model) {
-			var _this = this;
+			var total = _.keys(model.attributes.state).length,
+				rounds = Math.floor(total / 10),
+				currentRound = 0,
+				_this = this,
+				state = {},
+				count = 0,
+				i;
 			
 			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
 				if (_.keys(model.attributes.state).length) {
-					util.submitDelta(model.attributes.state, 300, function () {
-						_this.close();
-					});
+					for (i in model.attributes.state) {
+						state[i] = model.attributes.state[i];
+						count++;
+
+						if ((count === 10) || (currentRound === rounds && count === (total % 10))) {
+							gapi.hangout.data.submitDelta(state);
+							currentRound++;
+							state = {};
+							count = 0;
+						}
+					}
+
+					_this.close();
 				}
 			});
 		},

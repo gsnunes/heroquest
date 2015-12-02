@@ -52,11 +52,11 @@ define(function (require) {
 
 				if (campaingId) {
 					if (this.campaingModel && this.campaingModel.attributes.id == campaingId) {
-						this.campaingModel.save({state: ev.state});
+						this.campaingModel.save({state: this.limitHistory(ev.state)});
 					}
 					else {
 						this.getCampaingModel(campaingId, _.bind(function () {
-							this.campaingModel.save({state: ev.state});
+							this.campaingModel.save({state: this.limitHistory(ev.state)});
 						}, this));
 					}
 				}
@@ -68,16 +68,38 @@ define(function (require) {
 		 * limitHistory
 		 */
 		limitHistory: function (state) {
-			var count = 0,
-				limit = 10;
+			var historyState = {},
+				newState = {},
+				history = [],
+				limit = 10,
+				i = 0;
 
-			return _.pick(state, function (val, key) {
-				if (key.match(/history/gi)) {
-					count++;
+			for (i in state) {
+				if (i.match(/history/gi)) {
+					history.push({key: i, value: state[i], timestamp: i.substring(8)});
 				}
+				else {
+					newState[i] = state[i];
+				}
+			}
 
-				return !key.match(/history/gi) || (key.match(/history/gi) && count < limit);
+			history = history.sort(function (a, b) {
+				return a.timestamp - b.timestamp;
 			});
+			history.reverse();
+
+			for (i = 0; i < history.length; i++) {
+				if (i < limit) {
+					historyState[history[i].key] = history[i].value;
+				}
+				else {
+					break;
+				}
+			}
+
+			newState = $.extend({}, newState, historyState);
+
+			return newState;
 		},
 
 

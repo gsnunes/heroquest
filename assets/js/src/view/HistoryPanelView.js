@@ -30,32 +30,55 @@ define([
 
 
 		populate: function () {
-			var state = gapi.hangout.data.getStateMetadata();
+			this.populateHistory(gapi.hangout.data.getStateMetadata());
+		},
 
-			state = _.sortBy(state, function (a) {
-				return a.timestamp;
+
+		/**
+		 * populateHistory
+		 */
+		populateHistory: function (state) {
+			var historyState = {},
+				newState = {},
+				history = [],
+				len = 0,
+				i = 0;
+
+			for (i in state) {
+				if (i.match(/history/gi)) {
+					history.push({key: i, value: state[i].value, timestamp: i.substring(8)});
+				}
+			}
+
+			history = history.sort(function (a, b) {
+				return a.timestamp - b.timestamp;
 			});
 
-			_.each(state, _.bind(function (data) {
-				if (data.key.match(/history/gi)) {
-					this.addItem(data);
-				}
-			}, this));
+			len = history.length;
+
+			for (i = 0; i < len; i++) {
+				this.addItem(history[i]);
+			}
 		},
 
 
 		bindEvents: function () {
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length) {
-					for (var i = 0, len = ev.addedKeys.length; i < len; i++) {
+					var metadata = {},
+						i = 0, len = ev.addedKeys.length;
+
+					for (i = 0; i < len; i++) {
 						if (ev.addedKeys[i].key.match(/history/gi)) {
-							this.addItem(ev.metadata[ev.addedKeys[i].key]);
+							metadata[ev.addedKeys[i].key] = ev.metadata[ev.addedKeys[i].key];
 						}
 
 						if (ev.addedKeys[i].key.match(/campaing/gi)) {
 							this.setTitleCampaing();
 						}
 					}
+
+					this.populateHistory(metadata);
 				}
 				else if (ev.removedKeys.length) {
 					for (var i = 0, len = ev.removedKeys.length; i < len; i++) {
@@ -108,18 +131,18 @@ define([
 
 
 		addItem: function (state) {
-			var date = '<span class="gray-light">' + moment(state.timestamp).format('MM-DD-YYYY, h:mm a') + '</span>',
+			var date = '<span class="gray-light">' + moment(Number(state.timestamp)).format('MM-DD-YYYY, h:mm a') + ' </span>',
 				participant = gapi.hangout.getLocalParticipant(),
 				value = JSON.parse(state.value),
 				name = value.person.displayName;
 
 			if (value.pvt) {
 				if (participant.person.id === value.person.id) {
-					this.$('ul').append('<li id="' + state.key + '"><b>' + name + '</b>: ' + value.message + '</li>');
+					this.$('ul').append('<li id="' + state.key + '">' + date + '<b>' + name + '</b>: ' + value.message + '</li>');
 				}
 			}
 			else {
-				this.$('ul').append('<li id="' + state.key + '"><b>' + name + '</b>: ' + value.message + '</li>');
+				this.$('ul').append('<li id="' + state.key + '">' + date + '<b>' + name + '</b>: ' + value.message + '</li>');
 			}
 
 			this.updateScroll();
