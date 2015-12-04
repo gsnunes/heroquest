@@ -160,6 +160,8 @@ define([
 				i;
 			
 			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
+				console.log(model.attributes.state);
+				
 				if (_.keys(model.attributes.state).length) {
 					for (i in model.attributes.state) {
 						state[i] = model.attributes.state[i];
