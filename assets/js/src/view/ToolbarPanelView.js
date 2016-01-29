@@ -5,9 +5,10 @@ define([
 	'view/component/TabComponentView',
 	'view/PiecesTabView',
 	'view/CardsTabView',
-	'view/SettingsTabView'
+	'view/SettingsTabView',
+	'view/JukeboxTabView'
 
-], function (html, NewPanelView, TabComponentView, PiecesTabView, CardsTabView, SettingsTabView) {
+], function (html, NewPanelView, TabComponentView, PiecesTabView, CardsTabView, SettingsTabView, JukeboxTabView) {
 
 	'use strict';
 
@@ -43,6 +44,7 @@ define([
 				tilePiecesTabView = new PiecesTabView({type: 'tile'}),
 				cardsTabView = new CardsTabView(),
 				settingsTabView = new SettingsTabView(),
+				jukeboxTabView = new JukeboxTabView(),
 				unselectPieces = function () {
 					monsterPiecesTabView.unselect();
 					furniturePiecesTabView.unselect();
@@ -68,6 +70,11 @@ define([
 
 			tabComponent.add('Cards', cardsTabView, (isMaster ? null : true), function () {
 				unselectPieces();
+			});
+
+			tabComponent.add('Jukebox', jukeboxTabView, false, function () {
+				unselectPieces();
+				jukeboxTabView.createTab();
 			});
 
 			tabComponent.add('Settings', settingsTabView, false, function () {
