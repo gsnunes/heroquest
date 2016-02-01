@@ -1,6 +1,13 @@
 <script type="text/template">
-	<p>Playlist <button type="button" class="btn btn-success btn-xs">add</button></li></p>
-	<ul class="playlist"></ul>
+	<div class="input-group add-track-group">
+		<input type="text" class="form-control track-url" placeholder="SoundCloud Track URL">
+		<div class="input-group-btn">
+			<button type="submit" class="btn btn-success add-track">Add Track</button>
+		</div>
+	</div>
+
+	<p>Playlist</p>
+	<ul class="playlist list-group"></ul>
 
 	<p>Now Playing</p>
 	<ul class="playing"></ul>
