@@ -9,7 +9,7 @@ define([
 	return Giraffe.View.extend({
 
 
-		className: 'board',
+		className: 'board original-board',
 
 
 		events: {
