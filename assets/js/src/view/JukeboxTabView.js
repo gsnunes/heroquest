@@ -12,17 +12,11 @@ define([
 
 
 		events: {
-			'click .stop': function (ev) {
-				var id = $(ev.target).parents('li').attr('id');
-				this.stopTrack(id);
-
-				gapi.hangout.data.clearValue(id);
-			},
 			'click .play-now': function (ev) {
 				var oEmbed = $(ev.target).parents('li').data('oEmbed');
 				this.playTrack(oEmbed);
 
-				gapi.hangout.data.setValue('jukebox-' + oEmbed.randomId, JSON.stringify(oEmbed));
+				gapi.hangout.data.setValue('jukebox-' + oEmbed.id, JSON.stringify(oEmbed));
 			},
 			'click .add-track': 'embedTrack',
 			'click .remove-track': 'removeTrack'
@@ -31,6 +25,7 @@ define([
 
 		initialize: function () {
 			this.load = false;
+			this.players = {};
 
 			this.bindEvents();
 
@@ -99,15 +94,32 @@ define([
 
 
 		stopTrack: function (id) {
+			this.players[id.substr(8)].pause();
 			this.$('.playing').find('#' + id).remove();
 		},
 
 
 		playTrack: function (oEmbed) {
-			var item = $('<li id="jukebox-' + oEmbed.randomId + '">' + oEmbed.html.replace('visual=true&', '').replace('height=\"400\"', 'height=\"80\"') + '<button type="button" class="btn btn-danger btn-xs stop">stop</button></li>');
+			var _this = this,
+				item = $('<li id="jukebox-' + oEmbed.id + '">' + oEmbed.title + '<div><button type="button" class="btn btn-danger btn-xs stop">stop</button><div class="volume"></div></div></li>');
 
 			this.$('.playing').append(item);
 			item.data('oEmbed', oEmbed);
+
+			SC.stream('/tracks/' + oEmbed.id).then(function (player) {
+				item.find('.volume').slider({value: 50, slide: function (event, ui) {
+					player.setVolume(parseFloat((ui.value / 100).toFixed(1)));
+				}});
+
+				item.find('.stop').on('click', function (ev) {
+					var id = $(ev.target).parents('li').attr('id');
+					gapi.hangout.data.clearValue(id);
+				});
+
+				_this.players[oEmbed.id] = player;
+				player.setVolume(0.5);
+				player.play();
+			});
 		},
 
 
@@ -149,21 +161,7 @@ define([
 
 			ev.preventDefault();
 
-			SC.oEmbed(trackUrl, {
-				auto_play: true,
-				single_active: false,
-				show_artwork: false,
-				buying: false,
-				sharing: false,
-				download: false,
-				show_playcount: false,
-				show_user: false,
-				show_bpm: false,
-				show_comments: false,
-				default_width: 415
-			}).then(function (oEmbed) {
-				oEmbed.randomId = (new Date()).getTime();
-
+			SC.resolve(trackUrl).then(function (oEmbed) {
 				_this.addTrack(oEmbed);
 				_this.updateLocalStorage();
 				$(ev.target).parents('.input-group').find('.track-url').val('');
@@ -174,7 +172,7 @@ define([
 
 
 		addTrack: function (oEmbed) {
-			var item = $('<li class="list-group-item"><span class="pull-right btn-toolbar"><button type="button" class="btn btn-success btn-xs play-now">play now</button><button type="button" class="btn btn-danger btn-xs remove-track">remove</button></span>' + oEmbed.author_name + ' - ' + oEmbed.title + '</li>');
+			var item = $('<li class="list-group-item"><span class="pull-right btn-toolbar"><button type="button" class="btn btn-success btn-xs play-now">play now</button><button type="button" class="btn btn-danger btn-xs remove-track">remove</button></span>' + oEmbed.title + '</li>');
 			this.$('.playlist').append(item);
 			item.data('oEmbed', oEmbed);
 		}
