@@ -8,6 +8,10 @@ window.GLOBAL = (function () {
 
 
 
+	$.widget.bridge('uitooltip', $.ui.tooltip);
+	
+
+
 	Backbone.EventBus = _.extend({}, Backbone.Events);
 
 
