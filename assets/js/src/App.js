@@ -8,7 +8,8 @@ define(function (require) {
 		PiecesPanelView = require('view/ToolbarPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),
 		HistoryPanelView = require('view/HistoryPanelView'),
-		CampaingCollection = require('collection/CampaingCollection');
+		CampaingCollection = require('collection/CampaingCollection'),
+		CampaingModel = require('model/CampaingModel');
 
 	return Giraffe.App.extend({
 
@@ -17,6 +18,37 @@ define(function (require) {
 
 		initialize: function () {
 			this.bindEvents();
+			this.checkCampaing();
+		},
+
+
+		checkCampaing: function () {
+			var campaingCollection = new CampaingCollection(),
+				url = gapi.hangout.getHangoutUrl(),
+				_this = this;
+
+			campaingCollection.fetch({
+				data: {url: url},
+				success: function (result) {
+					if (!result.length) {
+						_this.createCampaing(url);
+					}
+				}
+			});
+		},
+
+
+		createCampaing: function (url) {
+			var campaingCollection = new CampaingCollection(),
+				campaingModel;
+
+			campaingCollection.fetch({
+				data: {personId: gapi.hangout.getLocalParticipant().person.id},
+				success: function (result) {
+					campaingModel = new CampaingModel({name: 'New game ' + (result.length + 1), url: url});
+					campaingCollection.create(campaingModel);
+				}
+			});
 		},
 
 
@@ -25,8 +57,6 @@ define(function (require) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
 					this.buildDom();
 				}
-
-				this.saveState(ev);
 			}, this));
 
 
@@ -36,83 +66,9 @@ define(function (require) {
 						participants = gapi.hangout.getParticipants();
 
 					if (ev.removedParticipants[0].person.id === master.person.id) {
-						util.clearValue('campaing', 300, _.bind(function () {
-							util.removeAllMasterPiecesFromBoard('treasure');
-							gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
-						}, this));
+						gapi.hangout.data.setValue('master', JSON.stringify(participants[0]));
 					}
 				}
-			});
-		},
-
-
-		saveState: function (ev) {
-			if (util.isMaster()) {
-				var campaingId = gapi.hangout.data.getValue('campaing');
-
-				if (campaingId) {
-					if (this.campaingModel && this.campaingModel.attributes.id == campaingId) {
-						this.campaingModel.save({state: this.limitHistory(ev.state)});
-					}
-					else {
-						this.getCampaingModel(campaingId, _.bind(function () {
-							this.campaingModel.save({state: this.limitHistory(ev.state)});
-						}, this));
-					}
-				}
-			}
-		},
-
-
-		/**
-		 * limitHistory
-		 */
-		limitHistory: function (state) {
-			var historyState = {},
-				newState = {},
-				history = [],
-				limit = 10,
-				i = 0;
-
-			for (i in state) {
-				if (i.match(/history/gi)) {
-					history.push({key: i, value: state[i], timestamp: i.substring(8)});
-				}
-				else {
-					newState[i] = state[i];
-				}
-			}
-
-			history = history.sort(function (a, b) {
-				return a.timestamp - b.timestamp;
-			});
-			history.reverse();
-
-			for (i = 0; i < history.length; i++) {
-				if (i < limit) {
-					historyState[history[i].key] = history[i].value;
-				}
-				else {
-					break;
-				}
-			}
-
-			newState = $.extend({}, newState, historyState);
-
-			return newState;
-		},
-
-
-		getCampaingModel: function (campaingId, callback) {
-			var campaingCollection = new CampaingCollection();
-
-			campaingCollection.fetch({
-				success: _.bind(function () {
-					this.campaingModel = campaingCollection.get(campaingId);
-					if (callback) {
-						callback();
-					}
-				}, this)
 			});
 		},
 

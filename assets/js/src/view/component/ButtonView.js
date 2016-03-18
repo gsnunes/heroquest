@@ -48,6 +48,10 @@ define([
 			if (this.options.icon) {
 				this.$el.prepend('<span class="' + this.options.icon + '"></span>&nbsp;');
 			}
+
+			if (this.options.disabled) {
+				this.$el.prop('disabled', true);
+			}
 		},
 
 

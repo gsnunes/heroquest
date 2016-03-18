@@ -21,25 +21,6 @@ define([
 
 
 		events: {
-			'click .add-campaing': function () {
-				var urlCollection = new CampaingCollection(),
-					_this = this;
-
-				urlCollection.fetch({
-					data: {url: gapi.hangout.getHangoutUrl()},
-					success: function (result) {
-						if (!result.length) {
-							_this.addCampaing();
-						}
-						else {
-							var newModal = new AlertModalView({body: 'This game instance URL already taken in another Campaing.', callback: function () {
-								newModal.close();
-							}});
-							newModal.open();
-						}
-					}
-				});
-			},
 			'click .btn-change-master': 'changeMaster'
 		},
 
@@ -110,9 +91,9 @@ define([
 
 			this.campaingCollection.forEach(function (model) {
 				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
-					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Load', icon: 'glyphicon glyphicon-ok'}),
+					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Go to', icon: 'glyphicon glyphicon-share-alt', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
-					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
+					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
 					buttonToolbarView = new ButtonToolbarView(),
 					buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
 
@@ -125,7 +106,7 @@ define([
 				if (util.isMaster()) {
 					$(listGroupItem).find('.btn-success').on('click', function () {
 						var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will overwrite the current state.', callback: function () {
-							self.start(model);
+							window.location = model.attributes.url;
 							newModal.close();
 							self.close();
 						}});
