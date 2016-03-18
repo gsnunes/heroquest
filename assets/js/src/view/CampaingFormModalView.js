@@ -42,7 +42,8 @@ define([
 		getDataFromForm: function () {
 			var data = {
 				name: this.$el.find('input#name').val(),
-				description: this.$el.find('textarea#description').val()
+				description: this.$el.find('textarea#description').val(),
+				url: gapi.hangout.getHangoutUrl()
 			};
 
 			return data;

@@ -12,7 +12,8 @@ module.exports = {
 	description: 'string',
 	person: 'json',
 	personId: 'string',
-	state: 'json'
+	state: 'json',
+	url: 'string'
   }
   
 };

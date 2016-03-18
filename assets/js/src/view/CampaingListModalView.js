@@ -8,9 +8,10 @@ define([
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
 	'view/ChangeMasterModalView',
-	'view/component/ConfirmModalView'
+	'view/component/ConfirmModalView',
+	'view/component/AlertModalView'
 
-], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView) {
+], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView, AlertModalView) {
 
 	'use strict';
 
@@ -20,7 +21,25 @@ define([
 
 
 		events: {
-			'click .add-campaing': 'addCampaing',
+			'click .add-campaing': function () {
+				var urlCollection = new CampaingCollection(),
+					_this = this;
+
+				urlCollection.fetch({
+					data: {url: gapi.hangout.getHangoutUrl()},
+					success: function (result) {
+						if (!result.length) {
+							_this.addCampaing();
+						}
+						else {
+							var newModal = new AlertModalView({body: 'This game instance URL already taken in another Campaing.', callback: function () {
+								newModal.close();
+							}});
+							newModal.open();
+						}
+					}
+				});
+			},
 			'click .btn-change-master': 'changeMaster'
 		},
 
