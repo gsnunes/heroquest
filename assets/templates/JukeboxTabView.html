@@ -1,14 +1,18 @@
 <script type="text/template">
 	<div class="input-group add-track-group">
+		<div class="input-group-addon"><a href="http://soundcloud.com/" class="sc-logo" title="Go to SoundCloud.com" target="_blank"></a></div>
 		<input type="text" class="form-control track-url" placeholder="SoundCloud Track URL">
 		<div class="input-group-btn">
 			<button type="submit" class="btn btn-success add-track">Add Track</button>
 		</div>
 	</div>
 
-	<p>Playlist</p>
+	<p><b>My tracks:</b></p>
+	<span class="no-data hide">no data available</span>
 	<ul class="playlist list-group"></ul>
 
-	<p>Now Playing</p>
-	<ul class="playing"></ul>
+	<div class="playing hide">
+		<p><div class="volume pull-right"></div><b>Now Playing</b></p>
+		<ul class="list-group"></ul>
+	</div>
 </script>

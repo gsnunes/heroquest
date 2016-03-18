@@ -74,7 +74,6 @@ define([
 
 			tabComponent.add('Jukebox', jukeboxTabView, false, function () {
 				unselectPieces();
-				jukeboxTabView.createTab();
 			});
 
 			tabComponent.add('Settings', settingsTabView, false, function () {

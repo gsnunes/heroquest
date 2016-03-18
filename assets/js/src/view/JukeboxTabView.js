@@ -12,14 +12,18 @@ define([
 
 
 		events: {
-			'click .play-now': function (ev) {
-				var oEmbed = $(ev.target).parents('li').data('oEmbed');
-				this.playTrack(oEmbed);
-
-				gapi.hangout.data.setValue('jukebox-' + oEmbed.id, JSON.stringify(oEmbed));
-			},
 			'click .add-track': 'embedTrack',
-			'click .remove-track': 'removeTrack'
+			'click .glyphicon-remove': 'removeTrack',
+			'click .playlist .glyphicon-stop': function (ev) {
+				var oEmbed = $(ev.target).parents('li').data('oEmbed');
+				gapi.hangout.data.clearValue('jukebox-' + oEmbed.id);
+			},
+			'click .playlist .glyphicon-play': function (ev) {
+				var oEmbed = $(ev.target).parents('li').data('oEmbed');
+
+				this.playTrack(oEmbed);
+				gapi.hangout.data.setValue('jukebox-' + oEmbed.id, JSON.stringify(oEmbed));
+			}
 		},
 
 
@@ -36,6 +40,7 @@ define([
 
 
 		afterRender: function () {
+			this.createTab();
 			this.populatePlaying();
 		},
 
@@ -93,31 +98,57 @@ define([
 		},
 
 
+		toggleList: function () {
+			if (this.$('.playing ul li').length) {
+				this.$('.playing').removeClass('hide');
+			}
+			else {
+				this.$('.playing').addClass('hide');
+			}
+		},
+
+
 		stopTrack: function (id) {
-			this.players[id.substr(8)].pause();
-			this.$('.playing').find('#' + id).remove();
+			if (id && this.players[id.substr(8)]) {
+				if ($('.playlist #' + id).find('.glyphicon-stop').length) {
+					$('.playlist #' + id).find('.glyphicon-stop').removeClass('glyphicon-stop').addClass('glyphicon-play');
+				}
+
+				this.$('.playing ul').find('#' + id).remove();
+				this.players[id.substr(8)].pause();
+				this.players[id.substr(8)].seek(0);
+				this.toggleList();
+			}
 		},
 
 
 		playTrack: function (oEmbed) {
 			var _this = this,
-				item = $('<li id="jukebox-' + oEmbed.id + '">' + oEmbed.title + '<div><button type="button" class="btn btn-danger btn-xs stop">stop</button><div class="volume"></div></div></li>');
+				item = $('<li id="jukebox-' + oEmbed.id + '" class="list-group-item"><div class="pull-right"><span class="glyphicon glyphicon-stop"></span><a href="' + oEmbed.permalink_url + '" title="Go to SoundCloud track" target="_blank"><span class="glyphicon glyphicon-cloud"></span></a></div>' + oEmbed.title + '</li>');
 
-			this.$('.playing').append(item);
+			if ($('.playlist #jukebox-' + oEmbed.id).find('.glyphicon-play')) {
+				$('.playlist #jukebox-' + oEmbed.id).find('.glyphicon-play').removeClass('glyphicon-play').addClass('glyphicon-stop');
+			}
+
+			this.$('.playing ul').append(item);
 			item.data('oEmbed', oEmbed);
+			this.toggleList();
 
 			SC.stream('/tracks/' + oEmbed.id).then(function (player) {
-				item.find('.volume').slider({value: 50, slide: function (event, ui) {
-					player.setVolume(parseFloat((ui.value / 100).toFixed(1)));
-				}});
+				if (!_this.$('.volume').slider('instance')) {
+					_this.$('.volume').slider({value: 50, slide: function (event, ui) {
+						player.setVolume(parseFloat((ui.value / 100).toFixed(1)));
+					}});
 
-				item.find('.stop').on('click', function (ev) {
+					player.setVolume(0.5);
+				}
+
+				item.find('.glyphicon-stop').on('click', function (ev) {
 					var id = $(ev.target).parents('li').attr('id');
 					gapi.hangout.data.clearValue(id);
 				});
 
 				_this.players[oEmbed.id] = player;
-				player.setVolume(0.5);
 				player.play();
 			});
 		},
@@ -130,8 +161,13 @@ define([
 
 			this.$('.playlist').html('');
 
-			for (i = 0; i < len; i++) {
-				this.addTrack(data[i]);
+			if (len) {
+				for (i = 0; i < len; i++) {
+					this.addTrack(data[i]);
+				}
+			}
+			else {
+				this.$('.no-data').removeClass('hide');
 			}
 		},
 
@@ -152,6 +188,10 @@ define([
 		removeTrack: function (ev) {
 			$(ev.target).parents('li').remove();
 			this.updateLocalStorage();
+
+			if (this.$('.playlist').is(':empty')) {
+				this.$('.no-data').removeClass('hide');
+			}
 		},
 
 
@@ -162,17 +202,23 @@ define([
 			ev.preventDefault();
 
 			SC.resolve(trackUrl).then(function (oEmbed) {
+				if (oEmbed.kind !== 'track') {
+					throw {message: 'Only allow tracks'};
+				}
+
 				_this.addTrack(oEmbed);
 				_this.updateLocalStorage();
 				$(ev.target).parents('.input-group').find('.track-url').val('');
 			}).catch(function (error) {
 				alert('Error: ' + error.message);
+				$(ev.target).parents('.input-group').find('.track-url').val('');
 			});
 		},
 
 
 		addTrack: function (oEmbed) {
-			var item = $('<li class="list-group-item"><span class="pull-right btn-toolbar"><button type="button" class="btn btn-success btn-xs play-now">play now</button><button type="button" class="btn btn-danger btn-xs remove-track">remove</button></span>' + oEmbed.title + '</li>');
+			var item = $('<li id="jukebox-' + oEmbed.id + '" class="list-group-item"><span class="pull-right"><span class="glyphicon glyphicon-play" title="Play"></span><a href="' + oEmbed.permalink_url + '" title="Go to SoundCloud track" target="_blank"><span class="glyphicon glyphicon-cloud"></span></a><span class="glyphicon glyphicon-remove" title="Remove track"></span></span>' + oEmbed.title + '</li>');
+			this.$('.no-data').addClass('hide');
 			this.$('.playlist').append(item);
 			item.data('oEmbed', oEmbed);
 		}
