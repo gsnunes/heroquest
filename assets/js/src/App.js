@@ -18,7 +18,7 @@ define(function (require) {
 
 		initialize: function () {
 			this.bindEvents();
-			this.checkCampaing();
+			//this.checkCampaing();
 		},
 
 
@@ -74,14 +74,11 @@ define(function (require) {
 
 
 		afterRender: function () {
-			var participant = gapi.hangout.getLocalParticipant(),
-				master = util.getMaster();
-
-			if (master) {
+			if (util.getMaster()) {
 				this.buildDom();
 			}
 			else {
-				gapi.hangout.data.setValue('master', JSON.stringify(participant));
+				gapi.hangout.data.setValue('master', JSON.stringify(gapi.hangout.getLocalParticipant()));
 			}
 
 			this.shuffleTreasures();

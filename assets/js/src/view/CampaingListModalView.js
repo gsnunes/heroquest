@@ -21,6 +21,9 @@ define([
 
 
 		events: {
+			'click .add-campaing': function () {
+				this.addCampaing();
+			},
 			'click .btn-change-master': 'changeMaster'
 		},
 
@@ -35,9 +38,29 @@ define([
 
 
 		afterRender: function () {
+			this.checkUrlCampaing();
+
 			this.showChangeMasterButton();
 			this.createListGroup();
 			this.getData();
+		},
+
+
+		checkUrlCampaing: function () {
+			var campaingCollection = new CampaingCollection(),
+				url = gapi.hangout.getHangoutUrl(),
+				_this = this;
+
+			campaingCollection.fetch({
+				data: {url: url},
+				success: function (result) {
+					if (!result.length && util.isMaster()) {
+						_this.$('.alert-success').removeClass('hide');
+						_this.$('.btn-success').removeClass('hide');
+						//_this.createCampaing(url);
+					}
+				}
+			});
 		},
 
 
@@ -66,6 +89,9 @@ define([
 		createListGroup: function () {
 			this.listGroupView = new ListGroupView({el: this.$('.campaing-list-group')});
 			this.listGroupView.render();
+
+			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group')});
+			this.currentListGroupView.render();
 		},
 
 
@@ -88,14 +114,22 @@ define([
 			var self = this;
 
 			this.listGroupView.reset();
+			this.currentListGroupView.reset();
 
 			this.campaingCollection.forEach(function (model) {
-				var listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description),
+				var listGroupItem,
 					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Go to', icon: 'glyphicon glyphicon-share-alt', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
 					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
 					buttonToolbarView = new ButtonToolbarView(),
 					buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
+
+				if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
+					listGroupItem = self.currentListGroupView.addItem(model.attributes.name, model.attributes.description);
+				}
+				else {
+					listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description);
+				}
 
 				buttonToolbarView.addButtons(buttons);
 				buttonToolbarView.addClass('pull-right');
