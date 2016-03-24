@@ -5,10 +5,6 @@ window.GLOBAL = (function () {
 	document.oncontextmenu = function () {
 		return false;
 	};
-
-
-
-	$.widget.bridge('uitooltip', $.ui.tooltip);
 	
 
 
@@ -58,6 +54,9 @@ window.GLOBAL = (function () {
 
 
 	require(['App', 'jquery-ui'], function (App) {
+		if ($.widget) {
+			$.widget.bridge('uitooltip', $.ui.tooltip);
+		}
 
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
