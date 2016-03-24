@@ -8,7 +8,11 @@ define(function () {
 			name: '',
 			description: '',
 			state: {},
-			url: ''
+			url: {
+				type: 'string',
+				unique: true,
+				required: true
+			}
 		}
 
 	});

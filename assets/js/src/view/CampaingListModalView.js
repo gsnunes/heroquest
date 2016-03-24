@@ -8,10 +8,9 @@ define([
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
 	'view/ChangeMasterModalView',
-	'view/component/ConfirmModalView',
-	'view/component/AlertModalView'
+	'view/component/ConfirmModalView'
 
-], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView, AlertModalView) {
+], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView) {
 
 	'use strict';
 
@@ -22,7 +21,11 @@ define([
 
 		events: {
 			'click .add-campaing': function () {
-				this.addCampaing();
+				this.checkUrlCampaing(_.bind(function (result) {
+					if (!result.length && util.isMaster()) {
+						this.addCampaing();
+					}
+				}, this));
 			},
 			'click .btn-change-master': 'changeMaster'
 		},
@@ -38,7 +41,7 @@ define([
 
 
 		afterRender: function () {
-			this.checkUrlCampaing();
+			this.$('.new-instance').attr('href', 'https://' + util.getHost());
 
 			this.showChangeMasterButton();
 			this.createListGroup();
@@ -46,7 +49,7 @@ define([
 		},
 
 
-		checkUrlCampaing: function () {
+		checkUrlCampaing: function (callback) {
 			var campaingCollection = new CampaingCollection(),
 				url = gapi.hangout.getHangoutUrl(),
 				_this = this;
@@ -55,9 +58,27 @@ define([
 				data: {url: url},
 				success: function (result) {
 					if (!result.length && util.isMaster()) {
+						_this.$('.alert-info').addClass('hide');
 						_this.$('.alert-success').removeClass('hide');
-						_this.$('.btn-success').removeClass('hide');
-						//_this.createCampaing(url);
+						_this.$('.btn-success').prop('disabled', false);
+						_this.$('.current-campaing-list-group').addClass('hide');
+					}
+					else {
+						if (util.isMaster()) {
+							_this.$('.alert-info').removeClass('hide');
+							_this.$('.alert-success').addClass('hide');
+							_this.$('.current-campaing-list-group').removeClass('hide');
+						}
+						else {
+							_this.$('.alert-info').removeClass('hide');
+							_this.$('.alert-success').addClass('hide');
+						}
+
+						_this.$('.btn-success').prop('disabled', true);
+					}
+
+					if (typeof callback === 'function') {
+						callback(result);
 					}
 				}
 			});
@@ -90,7 +111,7 @@ define([
 			this.listGroupView = new ListGroupView({el: this.$('.campaing-list-group')});
 			this.listGroupView.render();
 
-			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group')});
+			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group div')});
 			this.currentListGroupView.render();
 		},
 
@@ -101,65 +122,87 @@ define([
 			this.campaingCollection.fetch({
 				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
+					self.checkUrlCampaing();
 					self.populateListGroup();
+					self.campaingCollection.on('add', self.checkUrlCampaing, self);
 					self.campaingCollection.on('add', self.populateListGroup, self);
-					self.campaingCollection.on("change", self.populateListGroup, self);
-					self.campaingCollection.on("remove", self.populateListGroup, self);
+					self.campaingCollection.on('change', self.populateListGroup, self);
+					self.campaingCollection.on('remove', self.populateListGroup, self);
 				}
 			});
 		},
 
 
 		populateListGroup: function () {
-			var self = this;
+			var self = this,
+				hasCurrentCampaing = false;
 
 			this.listGroupView.reset();
 			this.currentListGroupView.reset();
 
-			this.campaingCollection.forEach(function (model) {
-				var listGroupItem,
-					btnStart = new ButtonView({style: 'btn-success', size: 'btn-xs', caption: 'Go to', icon: 'glyphicon glyphicon-share-alt', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
-					btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
-					btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
-					buttonToolbarView = new ButtonToolbarView(),
-					buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
+			if (this.campaingCollection.length) {
+				this.campaingCollection.forEach(function (model) {
+					var listGroupItem,
+						btnStart = new ButtonView({style: 'btn-primary', size: 'btn-xs', caption: 'Go to', icon: 'glyphicon glyphicon-share-alt', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
+						btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
+						btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
+						buttonToolbarView = new ButtonToolbarView(),
+						buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
 
-				if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
-					listGroupItem = self.currentListGroupView.addItem(model.attributes.name, model.attributes.description);
-				}
-				else {
-					listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description);
-				}
+					if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
+						hasCurrentCampaing = true;
+						listGroupItem = self.currentListGroupView.addItem(model.attributes.name, model.attributes.description);
+					}
+					else {
+						listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description);
+					}
 
-				buttonToolbarView.addButtons(buttons);
-				buttonToolbarView.addClass('pull-right');
+					buttonToolbarView.addButtons(buttons);
+					buttonToolbarView.addClass('pull-right');
 
-				listGroupItem.append(buttonToolbarView.template());
-				listGroupItem.append('<div class="clearfix"></div>');
+					listGroupItem.append(buttonToolbarView.template());
+					listGroupItem.append('<div class="clearfix"></div>');
 
-				if (util.isMaster()) {
-					$(listGroupItem).find('.btn-success').on('click', function () {
-						var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will overwrite the current state.', callback: function () {
-							window.location = model.attributes.url;
+					if (util.isMaster() && (model.attributes.url !== gapi.hangout.getHangoutUrl())) {
+						$(listGroupItem).find('.btn-primary').on('click', function () {
+							var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will be redirect to the campaing URL.', callback: function () {
+								window.parent.location = model.attributes.url;
+							}});
+							newModal.open();
+						});
+					}
+
+					$(listGroupItem).find('.btn-warning').on('click', function (ev) {
+						self.addCampaing(ev, model);
+					});
+
+					$(listGroupItem).find('.btn-danger').on('click', function () {
+						var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove <b>' + model.attributes.name + '</b> ?', callback: function () {
+							if (gapi.hangout.data.getValue('campaing') === model.attributes.id.toString()) {
+								gapi.hangout.data.clearValue('campaing');
+							}
+
+							model.destroy({success: function () {
+								self.checkUrlCampaing();
+							}});
 							newModal.close();
-							self.close();
 						}});
 						newModal.open();
 					});
+				});
+
+				if (hasCurrentCampaing) {
+					self.$('.current-campaing-list-group').removeClass('hide');
+				}
+				else {
+					self.$('.current-campaing-list-group').addClass('hide');
 				}
 
-				$(listGroupItem).find('.btn-warning').on('click', function (ev) {
-					self.addCampaing(ev, model);
-				});
-
-				$(listGroupItem).find('.btn-danger').on('click', function () {
-					var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove <b>' + model.attributes.name + '</b> ?', callback: function () {
-						model.destroy();
-						newModal.close();
-					}});
-					newModal.open();
-				});
-			});
+				this.$('.no-data').addClass('hide');
+			}
+			else {
+				this.$('.no-data').removeClass('hide');
+			}
 		},
 
 
@@ -194,8 +237,6 @@ define([
 				i;
 			
 			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
-				console.log(model.attributes.state);
-				
 				if (_.keys(model.attributes.state).length) {
 					for (i in model.attributes.state) {
 						state[i] = model.attributes.state[i];
@@ -218,6 +259,15 @@ define([
 		addCampaing: function (ev, model) {
 			var campaingFormModalView = new CampaingFormModalView({campaingModel: model, campaingCollection: this.campaingCollection});
 			campaingFormModalView.show();
+
+			/*
+			var _this = this;
+			campaingFormModalView.onHidden = function () {
+				_this.open();
+			};
+
+			this.close();
+			*/
 		},
 
 

@@ -18,6 +18,7 @@ define([
 
 
 		initialize: function () {
+			this.attached = false;
 			this.bindEvents();
 		},
 
@@ -33,7 +34,11 @@ define([
 
 
 		open: function () {
-			this.attachTo(Giraffe.app);
+			if (!this.attached) {
+				this.attached = true;
+				this.attachTo(Giraffe.app);
+			}
+			
 			this.$el.modal('show');
 		},
 

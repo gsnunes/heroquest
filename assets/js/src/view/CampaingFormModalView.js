@@ -33,8 +33,12 @@ define([
 
 		populate: function () {
 			if (this.campaingModel) {
+				this.$el.find('input#url').val(this.campaingModel.attributes.url);
 				this.$el.find('input#name').val(this.campaingModel.attributes.name);
 				this.$el.find('textarea#description').val(this.campaingModel.attributes.description);
+			}
+			else {
+				this.$el.find('input#url').val(gapi.hangout.getHangoutUrl());
 			}
 		},
 
@@ -56,7 +60,13 @@ define([
 			}
 			else {
 				var campaingModel = new CampaingModel(this.getDataFromForm());
-				this.campaingCollection.create(campaingModel);
+				this.campaingCollection.create(campaingModel, {
+					success: function () {
+						//if (!gapi.hangout.data.getValue('campaing')) {
+						gapi.hangout.data.setValue('campaing', campaingModel.id.toString());
+						//}
+					}
+				});
 			}
 
 			this.hide();

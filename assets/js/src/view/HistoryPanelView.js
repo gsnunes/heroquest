@@ -87,6 +87,10 @@ define([
 								this.$el.find('#' + ev.removedKeys[i]).remove();
 							}
 						}
+
+						if (ev.removedKeys[i].match(/campaing/gi)) {
+							this.setTitleCampaing();
+						}
 					}
 				}
 			}, this));
@@ -98,14 +102,19 @@ define([
 
 			if (campaingId) {
 				this.getCampaingModel(campaingId, _.bind(function (campaingModel) {
-					this.setTitle('History (' + campaingModel.attributes.name + ')');
+					if (campaingModel) {
+						this.setTitle('History (' + campaingModel.attributes.name + ')');
+					}
+					else {
+						this.setTitle('History');
+					}
 				}, this));
 			}
 			else {
 				if (util.isMaster()) {
-					this.setTitle('History <button type="button" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Select a campaing to save the game changes">select a campaing</button>');
-					this.$('button.btn-warning').tooltip();
-					this.$('button.btn-warning').on('click', function () {
+					this.setTitle('History <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="This hangout instance has a unique URL never saved. Like master you can create a campaing attached on this URL, for write notes, save the board state and share with other players.">Create a campaing</button>');
+					this.$('button.btn-default').tooltip();
+					this.$('button.btn-default').on('click', function () {
 						var campaingListModalView = new CampaingListModalView();
 						campaingListModalView.open();
 					});

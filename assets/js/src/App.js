@@ -18,20 +18,26 @@ define(function (require) {
 
 		initialize: function () {
 			this.bindEvents();
-			//this.checkCampaing();
+
+			//if (!gapi.hangout.data.getValue('campaing')) {
+				this.setCampaing();
+			//}
 		},
 
 
-		checkCampaing: function () {
+		setCampaing: function () {
 			var campaingCollection = new CampaingCollection(),
-				url = gapi.hangout.getHangoutUrl(),
-				_this = this;
+				url = gapi.hangout.getHangoutUrl();
 
 			campaingCollection.fetch({
 				data: {url: url},
 				success: function (result) {
-					if (!result.length) {
-						_this.createCampaing(url);
+					if (result.length) {
+						campaingCollection.forEach(function (model) {
+							//if (util.isMaster()) {
+								gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
+							//}
+						});
 					}
 				}
 			});
