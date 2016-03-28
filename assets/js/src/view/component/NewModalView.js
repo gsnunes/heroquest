@@ -57,6 +57,13 @@ define([
 				$(this).data('modal', null);
 				$(this).remove();
 
+				//https://github.com/nakupanda/bootstrap3-dialog/issues/70
+				$('.modal').each(function () {
+					if ($(this).is(':visible')) {
+						$('body').addClass('modal-open');
+					}
+				});
+
 				if (self.onHidden) {
 					self.onHidden(ev);
 				}

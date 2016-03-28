@@ -47,7 +47,7 @@ define([
 			var data = {
 				name: this.$el.find('input#name').val(),
 				description: this.$el.find('textarea#description').val(),
-				url: this.campaingModel ? this.campaingModel.attributes.url : gapi.hangout.getHangoutUrl()
+				url: this.campaingModel && typeof this.campaingModel.attributes.url === 'string' ? this.campaingModel.attributes.url : gapi.hangout.getHangoutUrl()
 			};
 
 			return data;

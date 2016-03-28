@@ -122,10 +122,11 @@ define([
 			this.campaingCollection.fetch({
 				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
-					self.checkUrlCampaing();
-					self.populateListGroup();
-					self.campaingCollection.on('add', self.checkUrlCampaing, self);
-					self.campaingCollection.on('add', self.populateListGroup, self);
+					self.campaingCollection.on('sync', function () {
+						self.checkUrlCampaing();
+						self.populateListGroup();
+					});
+
 					self.campaingCollection.on('change', self.populateListGroup, self);
 					self.campaingCollection.on('remove', self.populateListGroup, self);
 				}

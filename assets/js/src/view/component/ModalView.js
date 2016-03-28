@@ -49,6 +49,12 @@ define([
 				$(this).data('modal', null);
 				$(this).remove();
 
+				$('.modal').each(function () {
+					if ($(this).is(':visible')) {
+						$('body').addClass('modal-open');
+					}
+				});
+
 				self.onHidden(ev);
 			});
 		},
