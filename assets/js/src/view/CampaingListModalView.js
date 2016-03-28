@@ -8,9 +8,10 @@ define([
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
 	'view/ChangeMasterModalView',
-	'view/component/ConfirmModalView'
+	'view/component/ConfirmModalView',
+	'clipboard'
 
-], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView) {
+], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView, Clipboard) {
 
 	'use strict';
 
@@ -42,6 +43,8 @@ define([
 
 		afterRender: function () {
 			this.$('.new-instance').attr('href', 'https://' + util.getHost());
+
+			var clipboard = new Clipboard('.copy-url');
 
 			this.showChangeMasterButton();
 			this.createListGroup();
