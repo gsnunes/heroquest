@@ -53,11 +53,7 @@ window.GLOBAL = (function () {
 
 
 
-	require(['App', 'jquery-ui'], function (App) {
-		if ($.widget) {
-			$.widget.bridge('uitooltip', $.ui.tooltip);
-		}
-
+	require(['App', 'jquery-ui/core', 'jquery-ui/draggable', 'jquery-ui/slider'], function (App) {
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
 				var clientId = '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com';

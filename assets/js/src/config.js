@@ -3,7 +3,7 @@ require.config({
 	deps: ['main'],
 	paths: {
 		'jquery': '../../bower_components/jquery/dist/jquery.min',
-		'jquery-ui': '../../bower_components/jquery-ui/jquery-ui.min',
+		'jquery-ui': '../../bower_components/jquery-ui/ui',
 		'bootstrap': '../../bower_components/bootstrap/dist/js/bootstrap.min',
 		'requireLib': '../../bower_components/requirejs/require',
 		'giraffe': '../../bower_components/backbone.giraffe/dist/backbone.giraffe.min',
@@ -18,11 +18,8 @@ require.config({
 		'util': 'util'
 	},
 	shim: {
-		'jquery-ui': {
-			deps: ['jquery']
-		},
 		'bootstrap': {
-			deps: ['jquery-ui']
+			deps: ['jquery']
 		},
 		'lodash': {
 			deps: ['bootstrap']
