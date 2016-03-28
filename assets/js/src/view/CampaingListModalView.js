@@ -111,7 +111,7 @@ define([
 			this.listGroupView = new ListGroupView({el: this.$('.campaing-list-group')});
 			this.listGroupView.render();
 
-			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group div')});
+			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group .current-list')});
 			this.currentListGroupView.render();
 		},
 
@@ -152,6 +152,7 @@ define([
 
 					if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
 						hasCurrentCampaing = true;
+						self.$('#url').val(model.attributes.url);
 						listGroupItem = self.currentListGroupView.addItem(model.attributes.name, model.attributes.description);
 					}
 					else {

@@ -12,6 +12,7 @@ require.config({
 		'text': '../../bower_components/requirejs-text/text',
 
 		'moment': '../../bower_components/moment/min/moment.min',
+		'clipboard': '../../bower_components/clipboard/dist/clipboard.min',
 
 		'template': '../../templates',
 
@@ -33,8 +34,11 @@ require.config({
 		'util': {
 			deps: ['giraffe']
 		},
-		'main': {
+		'clipboard': {
 			deps: ['util']
+		},
+		'main': {
+			deps: ['clipboard']
 		}
 	},
 	config: {
