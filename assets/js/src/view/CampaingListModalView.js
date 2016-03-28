@@ -167,7 +167,7 @@ define([
 					if (util.isMaster() && (model.attributes.url !== gapi.hangout.getHangoutUrl())) {
 						$(listGroupItem).find('.btn-primary').on('click', function () {
 							var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will be redirect to the campaing URL.', callback: function () {
-								window.parent.location = model.attributes.url;
+								window.parent.location = model.attributes.url + '?old=true';
 							}});
 							newModal.open();
 						});
