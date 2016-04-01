@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
   	name: 'string',
 	description: 'string',
-	moviment: 'integer',
+	movement: 'integer',
 	attack: 'integer',
 	defense: 'integer',
 	body: 'integer',

@@ -84,16 +84,12 @@ define([
 			this.setPosition();
 			this.setRotateCss(this.rotation);
 			this.setZIndex();
+			this.setAvatar(this.avatar);
 		},
 
 
 		setIcon: function () {
-			if (this.model && this.model.character) {
-				this.$('i').attr('class', 'sprite-characters icon-' + this.model.character);
-			}
-			else {
-				this.$('i').attr('class', this.model.className);
-			}
+			this.$('i').attr('class', this.model.className);
 		},
 
 

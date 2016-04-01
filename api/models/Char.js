@@ -13,7 +13,7 @@ module.exports = {
 	character: 'string',
 	quests: 'integer',
 	person: 'json',
-	moviment: 'integer',
+	movement: 'integer',
 	attack: 'integer',
 	defense: 'integer',
 	body: 'integer',

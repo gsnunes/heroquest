@@ -7,11 +7,10 @@ define([
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
-	'view/ChangeMasterModalView',
 	'view/component/ConfirmModalView',
 	'clipboard'
 
-], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ChangeMasterModalView, ConfirmModalView, Clipboard) {
+], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ConfirmModalView, Clipboard) {
 
 	'use strict';
 
@@ -27,8 +26,7 @@ define([
 						this.addCampaing();
 					}
 				}, this));
-			},
-			'click .btn-change-master': 'changeMaster'
+			}
 		},
 
 
@@ -46,7 +44,6 @@ define([
 
 			var clipboard = new Clipboard('.copy-url');
 
-			this.showChangeMasterButton();
 			this.createListGroup();
 			this.getData();
 		},
@@ -93,20 +90,9 @@ define([
 
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
 				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/master/gi)) {
-					this.showChangeMasterButton();
 					this.populateListGroup();
 				}
 			}, this));
-		},
-
-
-		showChangeMasterButton: function () {
-			if (util.isMaster()) {
-				this.$('.btn-change-master').show();
-			}
-			else {
-				this.$('.btn-change-master').hide();
-			}
 		},
 
 
@@ -273,16 +259,6 @@ define([
 
 			this.close();
 			*/
-		},
-
-
-		changeMaster: function () {
-			if (util.isMaster()) {
-				var changeMasterModalView = new ChangeMasterModalView();
-				changeMasterModalView.open();
-
-				this.close();
-			}
 		}
 
 	});

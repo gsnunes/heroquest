@@ -60,7 +60,10 @@ define([
 
 			var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to change the master to <b>' + this.$('#change-master-participants').text() + '</b> ?', callback: _.bind(function () {
 				var participant = gapi.hangout.getParticipantById(this.$('#change-master-participants').val());
-
+				gapi.hangout.data.setValue('master', JSON.stringify(participant));
+				newModal.close();
+				this.close();
+				/*
 				util.clearValue('campaing', 300, _.bind(function () {
 					util.clearState();
 					util.removeAllMasterPiecesFromBoard('treasure');
@@ -69,6 +72,7 @@ define([
 					this.close();
 					newModal.close();
 				}, this));
+				*/
 			}, this)});
 
 			if (this.$('#change-master-participants').val()) {

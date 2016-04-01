@@ -134,13 +134,13 @@ define([
 			item.data('oEmbed', oEmbed);
 			this.toggleList();
 
-			SC.stream('/tracks/' + oEmbed.id).then(function (player) {
+			SC.stream('/tracks/' + oEmbed.id, {onplay: function () {console.log('test')}}).then(function (player) {
 				if (!_this.$('.volume').slider('instance')) {
-					_this.$('.volume').slider({value: 50, slide: function (event, ui) {
+					_this.$('.volume').slider({value: 20, slide: function (event, ui) {
 						player.setVolume(parseFloat((ui.value / 100).toFixed(1)));
 					}});
 
-					player.setVolume(0.5);
+					player.setVolume(0.2);
 				}
 
 				item.find('.glyphicon-stop').on('click', function (ev) {

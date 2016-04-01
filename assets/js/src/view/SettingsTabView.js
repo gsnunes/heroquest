@@ -3,9 +3,10 @@ define([
 	'text!template/SettingsTabView.html',
 	'view/CampaingListModalView',
 	'view/CharListModalView',
-	'view/component/ConfirmModalView'
+	'view/component/ConfirmModalView',
+	'view/ChangeMasterModalView'
 
-], function (html, CampaingListModalView, CharListModalView, ConfirmModalView) {
+], function (html, CampaingListModalView, CharListModalView, ConfirmModalView, ChangeMasterModalView) {
 
 	'use strict';
 
@@ -15,6 +16,7 @@ define([
 
 
 		events: {
+			'click .btn-change-master': 'changeMaster',
 			'click .manage-heroes': 'showCharListModal',
 			'click .manage-campaings': 'showCampaingListModal',
 			'click .remove-all-pieces': function () {
@@ -43,6 +45,14 @@ define([
 					}, this)});
 					newModal.open();
 				}
+			}
+		},
+
+
+		changeMaster: function () {
+			if (util.isMaster()) {
+				var changeMasterModalView = new ChangeMasterModalView();
+				changeMasterModalView.open();
 			}
 		},
 
