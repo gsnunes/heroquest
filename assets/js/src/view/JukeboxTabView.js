@@ -124,6 +124,7 @@ define([
 
 		playTrack: function (oEmbed) {
 			var _this = this,
+				soundPlayer,
 				item = $('<li id="jukebox-' + oEmbed.id + '" class="list-group-item"><div class="pull-right"><span class="glyphicon glyphicon-stop"></span><a href="' + oEmbed.permalink_url + '" title="Go to SoundCloud track" target="_blank"><span class="glyphicon glyphicon-cloud"></span></a></div>' + oEmbed.title + '</li>');
 
 			if ($('.playlist #jukebox-' + oEmbed.id).find('.glyphicon-play')) {
@@ -134,7 +135,7 @@ define([
 			item.data('oEmbed', oEmbed);
 			this.toggleList();
 
-			SC.stream('/tracks/' + oEmbed.id, {onplay: function () {console.log('test')}}).then(function (player) {
+			SC.stream('/tracks/' + oEmbed.id).then(function (player) {
 				if (!_this.$('.volume').slider('instance')) {
 					_this.$('.volume').slider({value: 20, slide: function (event, ui) {
 						player.setVolume(parseFloat((ui.value / 100).toFixed(1)));
@@ -146,6 +147,10 @@ define([
 				item.find('.glyphicon-stop').on('click', function (ev) {
 					var id = $(ev.target).parents('li').attr('id');
 					gapi.hangout.data.clearValue(id);
+				});
+
+				player.on('finish', function () {
+					_this.stopTrack('jukebox-' + oEmbed.id);
 				});
 
 				_this.players[oEmbed.id] = player;

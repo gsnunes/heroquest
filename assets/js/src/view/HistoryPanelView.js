@@ -73,7 +73,7 @@ define([
 							metadata[ev.addedKeys[i].key] = ev.metadata[ev.addedKeys[i].key];
 						}
 
-						if (ev.addedKeys[i].key.match(/campaing/gi)) {
+						if (ev.addedKeys[i].key.match(/campaing/gi) || ev.addedKeys[i].key.match(/updateTitle/gi)) {
 							this.setTitleCampaing();
 						}
 					}
@@ -103,7 +103,8 @@ define([
 			if (campaingId) {
 				this.getCampaingModel(campaingId, _.bind(function (campaingModel) {
 					if (campaingModel) {
-						this.setTitle('History (' + campaingModel.attributes.name + ')');
+						this.setTitle('History (<span data-toggle="tooltip" data-placement="top" title="' + campaingModel.attributes.description + '">' + campaingModel.attributes.name + ' <span class="glyphicon glyphicon-info-sign"></span></span>)');
+						this.$('[data-toggle="tooltip"]').tooltip({html: true});
 					}
 					else {
 						this.setTitle('History');
@@ -140,6 +141,8 @@ define([
 
 
 		addItem: function (state) {
+			console.log(state);
+			
 			var date = '<span class="gray-light">' + moment(Number(state.timestamp)).format('MM-DD-YYYY, h:mm a') + ' </span>',
 				participant = gapi.hangout.getLocalParticipant(),
 				value = JSON.parse(state.value),

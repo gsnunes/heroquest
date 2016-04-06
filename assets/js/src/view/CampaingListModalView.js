@@ -68,6 +68,7 @@ define([
 							_this.$('.alert-info').removeClass('hide');
 							_this.$('.alert-success').addClass('hide');
 							_this.$('.current-campaing-list-group').removeClass('hide');
+							gapi.hangout.data.setValue('updateTitle', result.models[0].attributes.description);
 						}
 						else {
 							_this.$('.alert-info').removeClass('hide');
@@ -111,7 +112,7 @@ define([
 			this.campaingCollection.fetch({
 				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
-					self.campaingCollection.on('sync', function () {
+					self.campaingCollection.on('sync', function (model) {
 						self.checkUrlCampaing();
 						self.populateListGroup();
 					});
@@ -137,15 +138,20 @@ define([
 						btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
 						btnRemove = new ButtonView({style: 'btn-danger', size: 'btn-xs', caption: 'Remove', icon: 'glyphicon glyphicon-remove'}),
 						buttonToolbarView = new ButtonToolbarView(),
-						buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove];
+						buttons = util.isMaster() ? [btnRemove, btnEdit, btnStart] : [btnEdit, btnRemove],
+						description = model.attributes.description;
+
+					if (description && description.length > 100) {
+						description = description.substr(0, 100) + '...';
+					}
 
 					if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
 						hasCurrentCampaing = true;
 						self.$('#url').val(model.attributes.url);
-						listGroupItem = self.currentListGroupView.addItem(model.attributes.name, model.attributes.description);
+						listGroupItem = self.currentListGroupView.addItem(model.attributes.name, description);
 					}
 					else {
-						listGroupItem = self.listGroupView.addItem(model.attributes.name, model.attributes.description);
+						listGroupItem = self.listGroupView.addItem(model.attributes.name, description);
 					}
 
 					buttonToolbarView.addButtons(buttons);

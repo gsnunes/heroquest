@@ -2,10 +2,9 @@ define([
 
 	'text!template/CampaingFormModalView.html',
 	'view/component/ModalView',
-	'model/CampaingModel',
-	'collection/HistoryCollection'
+	'model/CampaingModel'
 
-], function (Template, ModalView, CampaingModel, HistoryCollection) {
+], function (Template, ModalView, CampaingModel) {
 
 	'use strict';
 
