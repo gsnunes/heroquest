@@ -56,7 +56,7 @@ define([
 					if (!load) {
 						var myPopover = $(this).data('bs.popover');
 						myPopover.options.content = _this.render().el;
-						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ') ' + ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id) ? '<div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled>' + _this.getTransparencyOptions() + '</select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>' : '');
+						myPopover.options.title = _this.model.attributes.name + ' (' + _this.model.attributes.character + ' <span data-toggle="tooltip" data-placement="top" title="<div> ACTIONS <p>You may perform any one of these actions either before or after you move.</p> ATTACK <p>an adjacent monster.</p> CAST A SPELL <p>on yourself, another Hero or monster that you can \'see\'. (Only the Wizard and Elf can cast spells).</p> SEARCH FOR TREASURE <p>in the room you\'re in.</p> SEARCH FOR SECRET DOORS <p>in the room or corridor you\'re in.</p> SEARCH FOR TRAPS <p>in the room or corridor you\'re in.</p> DISARM A TRAP <p>on the square you\'re on.</p> </div>" class="glyphicon glyphicon-info-sign"></span>) ' + ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id) ? '<div class="btn-group pull-right"> <button type="button" class="close dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span> </button> <ul class="dropdown-menu dropdown-menu-right"> <li><a href="#"><div class="checkbox"><label for="show-profile-picture"><input type="checkbox" name="show-profile-picture" id="show-profile-picture"> show profile picture</label></div></a></li> <li><a href="#"><label>transparency <select disabled>' + _this.getTransparencyOptions() + '</select></label></a></li> <li role="separator" class="divider"></li> <li></li> <li><a href="#" class="remove-piece">remove character</a></li> </ul> </div>' : '');
 						myPopover.setContent();
 						load = true;
 					}
@@ -64,7 +64,7 @@ define([
 					$(this).popover('show');
 
 					if ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id)) {
-						_this.bindPopoverDropdown($(this).data('bs.popover').$tip);
+						_this.bindPopover($(this).data('bs.popover').$tip);
 					}
 				}
 			});
@@ -94,8 +94,11 @@ define([
 		},
 
 
-		bindPopoverDropdown: function ($popover) {
+		bindPopover: function ($popover) {
 			var _this = this;
+
+			$popover.find('[data-toggle="tooltip"]').tooltip({html: true, placement: 'auto left'});
+
 
 			$popover.find('h3 .dropdown-menu input, h3 .dropdown-menu label').on('click', function (ev) {
 				ev.stopPropagation();
