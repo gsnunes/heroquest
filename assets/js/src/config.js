@@ -14,6 +14,9 @@ require.config({
 		'moment': '../../bower_components/moment/min/moment.min',
 		'clipboard': '../../bower_components/clipboard/dist/clipboard.min',
 
+		'i18next': '../../bower_components/i18next/i18next.min',
+		'i18nextXHRBackend': '../../bower_components/i18next-xhr-backend/i18nextXHRBackend.min',
+
 		'template': '../../templates',
 
 		'util': 'util'
@@ -37,8 +40,14 @@ require.config({
 		'clipboard': {
 			deps: ['util']
 		},
-		'main': {
+		'i18next': {
 			deps: ['clipboard']
+		},
+		'i18nextXHRBackend': {
+			deps: ['i18next']
+		},
+		'main': {
+			deps: ['i18nextXHRBackend']
 		}
 	},
 	config: {

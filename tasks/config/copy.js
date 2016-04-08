@@ -29,6 +29,12 @@ module.exports = function(grunt) {
 					cwd: './assets/bower_components/jquery-ui/themes/smoothness',
 					src: ['images/*'],
 					dest: '.tmp/public/styles'
+				},
+				{
+					expand: true,
+					cwd: './config/locales',
+					src: ['*.json'],
+					dest: '.tmp/public/locales'
 				}
 			]
 		},
@@ -41,12 +47,20 @@ module.exports = function(grunt) {
 			}]
 		},
 		prod: {
-			files: [{
-				expand: true,
-				cwd: './assets/bower_components/jquery-ui/themes/smoothness',
-				src: ['images/*'],
-				dest: '.tmp/public/styles'
-			}]
+			files: [
+				{
+					expand: true,
+					cwd: './assets/bower_components/jquery-ui/themes/smoothness',
+					src: ['images/*'],
+					dest: '.tmp/public/styles'
+				},
+				{
+					expand: true,
+					cwd: './config/locales',
+					src: ['*.json'],
+					dest: '.tmp/public/locales'
+				}
+			]
 		}
 	});
 

@@ -17,7 +17,8 @@
     "requirejs": "latest",
     "requirejs-text": "latest",
     "jquery-ui": "latest",
-    "jquery-i18n": "~1.1.1",
-    "clipboard": "^1.5.9"
+    "clipboard": "^1.5.9",
+    "i18next": "^2.4.1",
+    "i18next-xhr-backend": "^0.5.3"
   }
 }

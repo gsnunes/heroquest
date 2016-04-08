@@ -53,7 +53,22 @@ window.GLOBAL = (function () {
 
 
 
-	require(['App', 'jquery-ui/core', 'jquery-ui/draggable', 'jquery-ui/slider'], function (App) {
+	require(['App', 'i18next', 'i18nextXHRBackend', 'jquery-ui/core', 'jquery-ui/draggable', 'jquery-ui/slider'], function (App, i18n, i18nextXHRBackend) {
+		window.i18n = i18n;
+
+		i18n.use(i18nextXHRBackend).init({
+			lng: 'en',
+			fallbackLng: 'en',
+			backend: {
+				loadPath: 'https://' + util.getHost() + '/locales/{{lng}}.json',
+				crossDomain: true
+			}
+		}, function (err, t) {
+			console.log(t);
+			console.log(err);
+			console.log(i18n.t('Welcome'));
+		});
+
 		gapi.hangout.onApiReady.add(function (event) {
 			if (event.isApiReady) {
 				var clientId = '463313181619-am93i896938m50fci3sg6teo26m5skiu.apps.googleusercontent.com';
