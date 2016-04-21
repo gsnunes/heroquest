@@ -65,7 +65,7 @@ define(function (require) {
 				}
 			}, this));
 
-
+			/*
 			gapi.hangout.onParticipantsRemoved.add(function (ev) {
 				if (ev.removedParticipants && ev.removedParticipants.length) {
 					var master = util.getMaster(),
@@ -76,6 +76,7 @@ define(function (require) {
 					}
 				}
 			});
+			*/
 		},
 
 

@@ -35,6 +35,29 @@ define([
 
 
 		/**
+		 * populateHistory2
+		 */
+		populateHistory2: function (state) {
+			var history = '',
+				value,
+				name,
+				i;
+
+			for (i in state) {
+				if (i.match(/history/gi)) {
+					value = JSON.parse(state[i].value);
+					name = value.person.displayName;
+
+					history += '<li id="' + i + '"><b>' + name + '</b>: ' + value.message + '</li>';
+				}
+			}
+
+			this.$('ul').html(history);
+			this.updateScroll();
+		},
+
+
+		/**
 		 * populateHistory
 		 */
 		populateHistory: function (state) {
@@ -141,8 +164,6 @@ define([
 
 
 		addItem: function (state) {
-			console.log(state);
-			
 			var date = '<span class="gray-light">' + moment(Number(state.timestamp)).format('MM-DD-YYYY, h:mm a') + ' </span>',
 				participant = gapi.hangout.getLocalParticipant(),
 				value = JSON.parse(state.value),
