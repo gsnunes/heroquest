@@ -1,22 +1,22 @@
 {
-  "name": "require",
+  "name": "HeroQuest Hangout",
   "version": "0.0.0",
   "authors": [
     "Guilherme Nunes <guinunesilva@gmail.com>"
   ],
-  "description": "AMD app framework",
+  "description": "HeroQuest Hangout tabletop game",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "bootstrap": "3.3.5",
-    "moment": "latest",
+    "moment": "2.13.0",
     "jquery": "2.2.4",
     "backbone.giraffe": "0.2.6",
     "backbone": "1.1.0",
     "lodash": "3.10.1",
-    "requirejs": "latest",
-    "requirejs-text": "latest",
-    "jquery-ui": "latest",
+    "requirejs": "2.2.0",
+    "requirejs-text": "2.0.15",
+    "jquery-ui": "1.11.4",
     "clipboard": "^1.5.9",
     "i18next": "^2.4.1",
     "i18next-xhr-backend": "^0.5.3"
