@@ -48,7 +48,7 @@ define([
 			var _this = this,
 				load = false;
 
-			this.selector.popover({trigger: 'manual', html: true, placement: 'auto left'}).click(function () {
+			this.selector.popover({trigger: 'manual', html: true, placement: 'auto'}).click(function () {
 				if ($(this).attr('aria-describedby')) {
 					$(this).popover('hide');
 				}
@@ -63,9 +63,7 @@ define([
 
 					$(this).popover('show');
 
-					if ((_this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id)) {
-						_this.bindPopover($(this).data('bs.popover').$tip);
-					}
+					_this.bindPopover($(this).data('bs.popover').$tip);
 				}
 			});
 		},
@@ -97,29 +95,30 @@ define([
 		bindPopover: function ($popover) {
 			var _this = this;
 
-			$popover.find('[data-toggle="tooltip"]').tooltip({html: true, placement: 'auto left'});
+			$popover.find('[data-toggle="tooltip"]').tooltip({html: true, placement: 'auto'});
+
+			if ((this.model.attributes.personId === gapi.hangout.getLocalParticipant().person.id)) {
+				$popover.find('h3 .dropdown-menu input, h3 .dropdown-menu label').on('click', function (ev) {
+					ev.stopPropagation();
+				});
+
+				$popover.find('h3 .dropdown-menu input[type="checkbox"]').on('click', function (ev) {
+					_this.enableTransparencySelect(ev, $popover.find('h3 .dropdown-menu select'));
+					_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
+				});
+
+				$popover.find('h3 .dropdown-menu select').on('change', function () {
+					_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
+				});
+
+				$popover.find('h3 .remove-piece').on('click', function () {
+					_this.removePiece();
+				});
 
 
-			$popover.find('h3 .dropdown-menu input, h3 .dropdown-menu label').on('click', function (ev) {
-				ev.stopPropagation();
-			});
-
-			$popover.find('h3 .dropdown-menu input[type="checkbox"]').on('click', function (ev) {
-				_this.enableTransparencySelect(ev, $popover.find('h3 .dropdown-menu select'));
-				_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
-			});
-
-			$popover.find('h3 .dropdown-menu select').on('change', function (ev) {
-				_this.selector.trigger('shareUpdateAvatar', [{avatar: _this.getAvatarOptions($popover)}]);
-			});
-
-			$popover.find('h3 .remove-piece').on('click', function () {
-				_this.removePiece();
-			});
-
-
-			$popover.find('h3 .dropdown-menu input[type="checkbox"]').prop('checked', this.selector.hasClass('img-circle'));
-			$popover.find('h3 .dropdown-menu select').prop('disabled', !this.selector.hasClass('img-circle')).val(this.selector.find('i').css('opacity'));
+				$popover.find('h3 .dropdown-menu input[type="checkbox"]').prop('checked', this.selector.hasClass('img-circle'));
+				$popover.find('h3 .dropdown-menu select').prop('disabled', !this.selector.hasClass('img-circle')).val(this.selector.find('i').css('opacity'));
+			}
 		},
 
 

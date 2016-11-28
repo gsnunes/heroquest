@@ -4,6 +4,11 @@ define(function () {
 
 	return Giraffe.View.extend({
 
+		events: {
+			'click .buyTreasure': 'buyTreasure'
+		},
+
+
 		initialize: function () {
 			this.treasure = _.shuffle(GLOBAL.data.treasure);
 			this.bindEvents();
@@ -40,7 +45,7 @@ define(function () {
 
 		unlockDeck: function (key, value) {
 			var historyKey = 'history-' + (new Date()).getTime(),
-				message = '"I am searching for treasure." <a href="javascript:;" id="' + key + '" data-history-key="' + historyKey + '">click here</a>';
+				message = '"I am searching for treasure." <a href="javascript:;" class="buyTreasure" id="' + key + '" data-history-key="' + historyKey + '">click here</a>';
 
 			$(document).on('click', '#' + key, _.bind(this.buyTreasure, this));
 			util.setValue(historyKey, JSON.stringify({message: message, person: value.person, pvt: true}), 300, function () {

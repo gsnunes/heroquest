@@ -53,7 +53,7 @@ define([
 			var _this = this,
 				load = false;
 
-			this.selector.popover({trigger: 'manual', html: true, placement: 'auto left'}).click(function () {
+			this.selector.popover({trigger: 'manual', html: true, placement: 'auto'}).click(function () {
 				if ($(this).attr('aria-describedby')) {
 					$(this).popover('hide');
 				}
