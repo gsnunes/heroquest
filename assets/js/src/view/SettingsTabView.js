@@ -1,12 +1,12 @@
 define([
 
 	'text!template/SettingsTabView.html',
-	'view/CampaingListModalView',
+	'view/CampaignListModalView',
 	'view/CharListModalView',
 	'view/component/ConfirmModalView',
 	'view/ChangeMasterModalView'
 
-], function (html, CampaingListModalView, CharListModalView, ConfirmModalView, ChangeMasterModalView) {
+], function (html, CampaignListModalView, CharListModalView, ConfirmModalView, ChangeMasterModalView) {
 
 	'use strict';
 
@@ -18,7 +18,7 @@ define([
 		events: {
 			'click .btn-change-master': 'changeMaster',
 			'click .manage-heroes': 'showCharListModal',
-			'click .manage-campaings': 'showCampaingListModal',
+			'click .manage-campaigns': 'showCampaignListModal',
 			'click .remove-all-pieces': function () {
 				if (util.isMaster()) {
 					var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove all pieces from the board but heroes ?', callback: _.bind(function () {
@@ -109,9 +109,9 @@ define([
 		},
 
 
-		showCampaingListModal: function () {
-			var campaingListModalView = new CampaingListModalView();
-			campaingListModalView.open();
+		showCampaignListModal: function () {
+			var campaignListModalView = new CampaignListModalView();
+			campaignListModalView.open();
 		},
 
 

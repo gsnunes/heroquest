@@ -2,10 +2,10 @@ define([
 
 	'text!template/WelcomeModalView.html',
 	'view/component/ModalView',
-	'view/CampaingListModalView',
+	'view/CampaignListModalView',
 	'view/CharListModalView'
 
-], function (Template, ModalView, CampaingListModalView, CharListModalView) {
+], function (Template, ModalView, CampaignListModalView, CharListModalView) {
 
 	'use strict';
 
@@ -31,9 +31,9 @@ define([
 		},
 
 
-		showCampaingListModal: function () {
-			var campaingListModalView = new CampaingListModalView();
-			campaingListModalView.open();
+		showCampaignListModal: function () {
+			var campaignListModalView = new CampaignListModalView();
+			campaignListModalView.open();
 		},
 		
 
@@ -45,7 +45,7 @@ define([
 
 		onHidden: function () {
 			if (util.isMaster()) {
-				this.showCampaingListModal();
+				this.showCampaignListModal();
 			}
 			else {
 				this.showCharListModal();

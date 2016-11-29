@@ -8,8 +8,8 @@ define(function (require) {
 		PiecesPanelView = require('view/ToolbarPanelView'),
 		WelcomeModalView = require('view/WelcomeModalView'),
 		HistoryPanelView = require('view/HistoryPanelView'),
-		CampaingCollection = require('collection/CampaingCollection'),
-		CampaingModel = require('model/CampaingModel');
+		CampaignCollection = require('collection/CampaignCollection'),
+		CampaignModel = require('model/CampaignModel');
 
 	return Giraffe.App.extend({
 
@@ -19,23 +19,23 @@ define(function (require) {
 		initialize: function () {
 			this.bindEvents();
 
-			//if (!gapi.hangout.data.getValue('campaing')) {
-				this.setCampaing();
+			//if (!gapi.hangout.data.getValue('campaign')) {
+				this.setCampaign();
 			//}
 		},
 
 
-		setCampaing: function () {
-			var campaingCollection = new CampaingCollection(),
+		setCampaign: function () {
+			var campaignCollection = new CampaignCollection(),
 				url = gapi.hangout.getHangoutUrl();
 
-			campaingCollection.fetch({
+			campaignCollection.fetch({
 				data: {url: url},
 				success: function (result) {
 					if (result.length) {
-						campaingCollection.forEach(function (model) {
+						campaignCollection.forEach(function (model) {
 							//if (util.isMaster()) {
-								gapi.hangout.data.setValue('campaing', model.attributes.id.toString());
+								gapi.hangout.data.setValue('campaign', model.attributes.id.toString());
 							//}
 						});
 					}
@@ -44,15 +44,15 @@ define(function (require) {
 		},
 
 
-		createCampaing: function (url) {
-			var campaingCollection = new CampaingCollection(),
-				campaingModel;
+		createCampaign: function (url) {
+			var campaignCollection = new CampaignCollection(),
+				campaignModel;
 
-			campaingCollection.fetch({
+			campaignCollection.fetch({
 				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function (result) {
-					campaingModel = new CampaingModel({name: 'New game ' + (result.length + 1), url: url});
-					campaingCollection.create(campaingModel);
+					campaignModel = new CampaignModel({name: 'New game ' + (result.length + 1), url: url});
+					campaignCollection.create(campaignModel);
 				}
 			});
 		},

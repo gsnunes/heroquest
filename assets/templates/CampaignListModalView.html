@@ -1,0 +1,36 @@
+<script type="text/template">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Manage your campaigns!</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success hide" role="alert">This hangout instance has a unique URL never saved. Like master you can create a campaign attached on this URL, for write notes, save the board state and share with other players. <a href="javascript:;" class="alert-link add-campaign">Create a campaign now!</a></div>
+
+				<div class="alert alert-info hide" role="alert">This URL is already attached a campaign. You can choose another one and click in "Go to" to load the campaign. If you want to create a new campaign <a href="javascript:;" class="new-instance">click here</a> to go a new hangout instance.</div>
+				
+				<div class="current-campaign-list-group hide">
+					<p><strong>Current campaign:</strong></p>
+
+					<div class="input-group">
+						<input type="text" id="url" class="form-control">
+						<div class="input-group-btn">
+							<button class="btn btn-default copy-url" data-clipboard-target="#url" title="Copy to clipboard">copy</button>
+						</div>
+					</div>
+
+					<div class="current-list"></div>
+				</div>
+
+				<p><strong>My campaigns:</strong></p>
+				<span class="no-data hide">no data available</span>
+				<div class="campaign-list-group"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-success add-campaign" disabled>Create campaign</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</script>

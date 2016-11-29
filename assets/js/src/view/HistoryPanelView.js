@@ -3,10 +3,10 @@ define([
 	'text!template/HistoryPanelView.html',
 	'view/component/NewPanelView',
 	'moment',
-	'collection/CampaingCollection',
-	'view/CampaingListModalView'
+	'collection/CampaignCollection',
+	'view/CampaignListModalView'
 
-], function (html, NewPanelView, moment, CampaingCollection, CampaingListModalView) {
+], function (html, NewPanelView, moment, CampaignCollection, CampaignListModalView) {
 
 	'use strict';
 
@@ -23,7 +23,7 @@ define([
 
 		afterRender: function () {
 			NewPanelView.prototype.afterRender.apply(this, arguments);
-			this.setTitleCampaing();
+			this.setTitleCampaign();
 			this.setBody(html);
 			this.populate();
 		},
@@ -86,8 +86,8 @@ define([
 					var i = 0, len = ev.addedKeys.length;
 
 					for (i = 0; i < len; i++) {
-						if (ev.addedKeys[i].key.match(/campaing/gi) || ev.addedKeys[i].key.match(/updateTitle/gi)) {
-							this.setTitleCampaing();
+						if (ev.addedKeys[i].key.match(/campaign/gi) || ev.addedKeys[i].key.match(/updateTitle/gi)) {
+							this.setTitleCampaign();
 						}
 					}
 				}
@@ -99,8 +99,8 @@ define([
 							}
 						}
 
-						if (ev.removedKeys[i].match(/campaing/gi)) {
-							this.setTitleCampaing();
+						if (ev.removedKeys[i].match(/campaign/gi)) {
+							this.setTitleCampaign();
 						}
 					}
 				}
@@ -108,13 +108,13 @@ define([
 		},
 
 
-		setTitleCampaing: function () {
-			var campaingId = gapi.hangout.data.getValue('campaing');
+		setTitleCampaign: function () {
+			var campaignId = gapi.hangout.data.getValue('campaign');
 
-			if (campaingId) {
-				this.getCampaingModel(campaingId, _.bind(function (campaingModel) {
-					if (campaingModel) {
-						this.setTitle('History (<span data-toggle="tooltip" data-placement="top" title="' + campaingModel.attributes.description + '">' + campaingModel.attributes.name + ' <span class="glyphicon glyphicon-info-sign"></span></span>)');
+			if (campaignId) {
+				this.getCampaignModel(campaignId, _.bind(function (campaignModel) {
+					if (campaignModel) {
+						this.setTitle('History (<span data-toggle="tooltip" data-placement="top" title="' + campaignModel.attributes.description + '">' + campaignModel.attributes.name + ' <span class="glyphicon glyphicon-info-sign"></span></span>)');
 						this.$('[data-toggle="tooltip"]').tooltip({html: true});
 					}
 					else {
@@ -124,11 +124,11 @@ define([
 			}
 			else {
 				if (util.isMaster()) {
-					this.setTitle('History <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="This hangout instance has a unique URL never saved. Like master you can create a campaing attached on this URL, for write notes, save the board state and share with other players.">Create a campaing</button>');
+					this.setTitle('History <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="This hangout instance has a unique URL never saved. Like master you can create a campaign attached on this URL, for write notes, save the board state and share with other players.">Create a campaign</button>');
 					this.$('button.btn-default').tooltip();
 					this.$('button.btn-default').on('click', function () {
-						var campaingListModalView = new CampaingListModalView();
-						campaingListModalView.open();
+						var campaignListModalView = new CampaignListModalView();
+						campaignListModalView.open();
 					});
 				}
 				else {
@@ -138,13 +138,13 @@ define([
 		},
 
 
-		getCampaingModel: function (campaingId, callback) {
-			var campaingCollection = new CampaingCollection();
+		getCampaignModel: function (campaignId, callback) {
+			var campaignCollection = new CampaignCollection();
 
-			campaingCollection.fetch({
+			campaignCollection.fetch({
 				success: _.bind(function () {
 					if (callback) {
-						callback(campaingCollection.get(campaingId));
+						callback(campaignCollection.get(campaignId));
 					}
 				}, this)
 			});

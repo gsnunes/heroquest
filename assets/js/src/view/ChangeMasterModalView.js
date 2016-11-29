@@ -64,7 +64,7 @@ define([
 				newModal.close();
 				this.close();
 				/*
-				util.clearValue('campaing', 300, _.bind(function () {
+				util.clearValue('campaign', 300, _.bind(function () {
 					util.clearState();
 					util.removeAllMasterPiecesFromBoard('treasure');
 					gapi.hangout.data.setValue('master', JSON.stringify(participant));
@@ -81,7 +81,7 @@ define([
 		},
 
 
-		clearOldCampaing: function (model) {
+		clearOldCampaign: function (model) {
 			util.clearState();
 
 			var interval = setInterval(_.bind(function () {
@@ -89,7 +89,7 @@ define([
 				
 				if (keys.length === 1) {
 					clearInterval(interval);
-					this.loadNewCampaing(model);
+					this.loadNewCampaign(model);
 				}
 			}, this), 300);
 		}

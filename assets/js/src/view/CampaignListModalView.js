@@ -1,16 +1,16 @@
 define([
 
-	'text!template/CampaingListModalView.html',
+	'text!template/CampaignListModalView.html',
 	'view/component/NewModalView',
-	'view/CampaingFormModalView',
-	'collection/CampaingCollection',
+	'view/CampaignFormModalView',
+	'collection/CampaignCollection',
 	'view/component/ListGroupView',
 	'view/component/ButtonView',
 	'view/component/ButtonToolbarView',
 	'view/component/ConfirmModalView',
 	'clipboard'
 
-], function (html, NewModalView, CampaingFormModalView, CampaingCollection, ListGroupView, ButtonView, ButtonToolbarView, ConfirmModalView, Clipboard) {
+], function (html, NewModalView, CampaignFormModalView, CampaignCollection, ListGroupView, ButtonView, ButtonToolbarView, ConfirmModalView, Clipboard) {
 
 	'use strict';
 
@@ -20,17 +20,17 @@ define([
 
 
 		events: {
-			'click .add-campaing': function () {
-				this.checkUrlCampaing(_.bind(function (result) {
+			'click .add-campaign': function () {
+				this.checkUrlCampaign(_.bind(function (result) {
 					if (!result.length && util.isMaster()) {
-						this.addCampaing();
+						this.addCampaign();
 					}
 				}, this));
 			}
 		},
 
 
-		campaingCollection: new CampaingCollection(),
+		campaignCollection: new CampaignCollection(),
 
 
 		initialize: function () {
@@ -49,25 +49,25 @@ define([
 		},
 
 
-		checkUrlCampaing: function (callback) {
-			var campaingCollection = new CampaingCollection(),
+		checkUrlCampaign: function (callback) {
+			var campaignCollection = new CampaignCollection(),
 				url = gapi.hangout.getHangoutUrl(),
 				_this = this;
 
-			campaingCollection.fetch({
+			campaignCollection.fetch({
 				data: {url: url},
 				success: function (result) {
 					if (!result.length && util.isMaster()) {
 						_this.$('.alert-info').addClass('hide');
 						_this.$('.alert-success').removeClass('hide');
 						_this.$('.btn-success').prop('disabled', false);
-						_this.$('.current-campaing-list-group').addClass('hide');
+						_this.$('.current-campaign-list-group').addClass('hide');
 					}
 					else {
 						if (util.isMaster()) {
 							_this.$('.alert-info').removeClass('hide');
 							_this.$('.alert-success').addClass('hide');
-							_this.$('.current-campaing-list-group').removeClass('hide');
+							_this.$('.current-campaign-list-group').removeClass('hide');
 							gapi.hangout.data.setValue('updateTitle', result.models[0].attributes.description);
 						}
 						else {
@@ -98,10 +98,10 @@ define([
 
 
 		createListGroup: function () {
-			this.listGroupView = new ListGroupView({el: this.$('.campaing-list-group')});
+			this.listGroupView = new ListGroupView({el: this.$('.campaign-list-group')});
 			this.listGroupView.render();
 
-			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaing-list-group .current-list')});
+			this.currentListGroupView = new ListGroupView({el: this.$('.current-campaign-list-group .current-list')});
 			this.currentListGroupView.render();
 		},
 
@@ -109,16 +109,16 @@ define([
 		getData: function () {
 			var self = this;
 
-			this.campaingCollection.fetch({
+			this.campaignCollection.fetch({
 				data: {personId: gapi.hangout.getLocalParticipant().person.id},
 				success: function () {
-					self.campaingCollection.on('sync', function (model) {
-						self.checkUrlCampaing();
+					self.campaignCollection.on('sync', function (model) {
+						self.checkUrlCampaign();
 						self.populateListGroup();
 					});
 
-					self.campaingCollection.on('change', self.populateListGroup, self);
-					self.campaingCollection.on('remove', self.populateListGroup, self);
+					self.campaignCollection.on('change', self.populateListGroup, self);
+					self.campaignCollection.on('remove', self.populateListGroup, self);
 				}
 			});
 		},
@@ -126,13 +126,13 @@ define([
 
 		populateListGroup: function () {
 			var self = this,
-				hasCurrentCampaing = false;
+				hasCurrentCampaign = false;
 
 			this.listGroupView.reset();
 			this.currentListGroupView.reset();
 
-			if (this.campaingCollection.length) {
-				this.campaingCollection.forEach(function (model) {
+			if (this.campaignCollection.length) {
+				this.campaignCollection.forEach(function (model) {
 					var listGroupItem,
 						btnStart = new ButtonView({style: 'btn-primary', size: 'btn-xs', caption: 'Go to', icon: 'glyphicon glyphicon-share-alt', disabled: (model.attributes.url === gapi.hangout.getHangoutUrl())}),
 						btnEdit = new ButtonView({style: 'btn-warning', size: 'btn-xs', caption: 'Edit', icon: 'glyphicon glyphicon-edit'}),
@@ -146,7 +146,7 @@ define([
 					}
 
 					if (model.attributes.url === gapi.hangout.getHangoutUrl()) {
-						hasCurrentCampaing = true;
+						hasCurrentCampaign = true;
 						self.$('#url').val(model.attributes.url);
 						listGroupItem = self.currentListGroupView.addItem(model.attributes.name, description);
 					}
@@ -162,7 +162,7 @@ define([
 
 					if (util.isMaster() && (model.attributes.url !== gapi.hangout.getHangoutUrl())) {
 						$(listGroupItem).find('.btn-primary').on('click', function () {
-							var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will be redirect to the campaing URL.', callback: function () {
+							var newModal = new ConfirmModalView({type: 'warning', body: 'Do you really want to load <b>' + model.attributes.name + '</b> ? You will be redirect to the campaign URL.', callback: function () {
 								window.parent.location = model.attributes.url + '?old=true';
 							}});
 							newModal.open();
@@ -170,17 +170,17 @@ define([
 					}
 
 					$(listGroupItem).find('.btn-warning').on('click', function (ev) {
-						self.addCampaing(ev, model);
+						self.addCampaign(ev, model);
 					});
 
 					$(listGroupItem).find('.btn-danger').on('click', function () {
 						var newModal = new ConfirmModalView({type: 'danger', body: 'Do you really want to remove <b>' + model.attributes.name + '</b> ?', callback: function () {
-							if (gapi.hangout.data.getValue('campaing') === model.attributes.id.toString()) {
-								gapi.hangout.data.clearValue('campaing');
+							if (gapi.hangout.data.getValue('campaign') === model.attributes.id.toString()) {
+								gapi.hangout.data.clearValue('campaign');
 							}
 
 							model.destroy({success: function () {
-								self.checkUrlCampaing();
+								self.checkUrlCampaign();
 							}});
 							newModal.close();
 						}});
@@ -188,11 +188,11 @@ define([
 					});
 				});
 
-				if (hasCurrentCampaing) {
-					self.$('.current-campaing-list-group').removeClass('hide');
+				if (hasCurrentCampaign) {
+					self.$('.current-campaign-list-group').removeClass('hide');
 				}
 				else {
-					self.$('.current-campaing-list-group').addClass('hide');
+					self.$('.current-campaign-list-group').addClass('hide');
 				}
 
 				this.$('.no-data').addClass('hide');
@@ -204,13 +204,13 @@ define([
 
 
 		start: function (model) {
-			util.clearValue('campaing', 300, _.bind(function () {
-				this.clearOldCampaing(model);
+			util.clearValue('campaign', 300, _.bind(function () {
+				this.clearOldCampaign(model);
 			}, this));
 		},
 
 
-		clearOldCampaing: function (model) {
+		clearOldCampaign: function (model) {
 			util.clearState();
 
 			var interval = setInterval(_.bind(function () {
@@ -218,13 +218,13 @@ define([
 				
 				if (keys.length === 1) {
 					clearInterval(interval);
-					this.loadNewCampaing(model);
+					this.loadNewCampaign(model);
 				}
 			}, this), 300);
 		},
 
 
-		loadNewCampaing: function (model) {
+		loadNewCampaign: function (model) {
 			var total = _.keys(model.attributes.state).length,
 				rounds = Math.floor(total / 10),
 				currentRound = 0,
@@ -233,7 +233,7 @@ define([
 				count = 0,
 				i;
 			
-			util.setValue('campaing', model.attributes.id.toString(), 300, function () {
+			util.setValue('campaign', model.attributes.id.toString(), 300, function () {
 				if (_.keys(model.attributes.state).length) {
 					for (i in model.attributes.state) {
 						state[i] = model.attributes.state[i];
@@ -253,13 +253,13 @@ define([
 		},
 
 
-		addCampaing: function (ev, model) {
-			var campaingFormModalView = new CampaingFormModalView({campaingModel: model, campaingCollection: this.campaingCollection});
-			campaingFormModalView.show();
+		addCampaign: function (ev, model) {
+			var campaignFormModalView = new CampaignFormModalView({campaignModel: model, campaignCollection: this.campaignCollection});
+			campaignFormModalView.show();
 
 			/*
 			var _this = this;
-			campaingFormModalView.onHidden = function () {
+			campaignFormModalView.onHidden = function () {
 				_this.open();
 			};
 
