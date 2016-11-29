@@ -20,12 +20,14 @@ define([
 		afterRender: function () {
 			this.populateParticipants();
 			this.createListGroup();
+			this.populateList();
 		},
 
 
 		bindEvents: function () {
 			gapi.hangout.onParticipantsChanged.add(_.bind(function () {
 				this.populateParticipants();
+				this.populateList();
 			}, this));
 		},
 
@@ -43,31 +45,35 @@ define([
 			}
 
 			this.$('#participants').html(options.join());
+		},
 
-			if (!options.length) {
-				this.$('.btn-primary').prop('disabled', true);
-			}
-			else {
-				this.$('.btn-primary').prop('disabled', false);
-			}
+
+		populateList: function () {
+			this.listGroupComponentView.clear();
+
+			_.each(this.data, _.bind(function (value) {
+				var $item = $('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">' + value.name + '</h4><p class="list-group-item-text">' + value.description + '</p><div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found</button></div><div class="clearfix"></div></a>');
+				this.listGroupComponentView.addItem($item);
+
+				if (this.$('#participants option').length) {
+					$item.find('.btn-primary').show();
+					$item.find('.btn-primary').on('click', value, _.bind(function (ev) {
+						var message = 'found the artifact <b>' + ev.data.name + '</b> (' + ev.data.description + ')',
+							person = gapi.hangout.getParticipantById(this.$('#participants').val()).person;
+
+						gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: message, person: person}));
+					}, this));
+				}
+				else {
+					$item.find('.btn-primary').hide();
+				}
+			}, this));
 		},
 
 
 		createListGroup: function () {
-			var listGroupComponentView = new ListGroupComponentView();
-			listGroupComponentView.attachTo(this);
-
-			_.each(this.data, _.bind(function (value) {
-				var $item = $('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">' + value.name + '</h4><p class="list-group-item-text">' + value.description + '</p><div class="btn-toolbar pull-right" role="toolbar"><button type="button" class="btn btn-primary btn-xs found-artifact">Found</button></div><div class="clearfix"></div></a>');
-				listGroupComponentView.addItem($item);
-
-				$item.find('.btn-primary').on('click', value, _.bind(function (ev) {
-					var message = 'found the artifact <b>' + ev.data.name + '</b> (' + ev.data.description + ')',
-						person = gapi.hangout.getParticipantById(this.$('#participants').val()).person;
-
-					gapi.hangout.data.setValue('history-' +  (new Date()).getTime(), JSON.stringify({message: message, person: person}));
-				}, this));
-			}, this));
+			this.listGroupComponentView = new ListGroupComponentView();
+			this.listGroupComponentView.attachTo(this);
 		}
 
 	});
