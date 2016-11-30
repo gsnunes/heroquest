@@ -61,6 +61,8 @@ define([
 		populateListGroup: function () {
 			var self = this;
 
+			util.loadShow(this);
+
 			this.listGroupView.reset();
 
 			if (this.charCollection.length) {
@@ -99,6 +101,8 @@ define([
 			else {
 				this.$('.no-data').removeClass('hide');
 			}
+
+			util.loadHide(this);
 		},
 
 

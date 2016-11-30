@@ -4,6 +4,18 @@ util = (function () {
 
 	return {
 
+		loadHide: function (instance) {
+			instance.$('.modal-body-loaded').show();
+			instance.$('.loading').hide();
+		},
+
+
+		loadShow: function (instance) {
+			instance.$('.modal-body-loaded').hide();
+			instance.$('.loading').show();
+		},
+
+
 		getHost: function () {
 			var host = '';
 

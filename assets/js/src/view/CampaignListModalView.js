@@ -54,6 +54,8 @@ define([
 				url = gapi.hangout.getHangoutUrl(),
 				_this = this;
 
+			util.loadShow(this);
+
 			campaignCollection.fetch({
 				data: {url: url},
 				success: function (result) {
@@ -81,6 +83,8 @@ define([
 					if (typeof callback === 'function') {
 						callback(result);
 					}
+
+					util.loadHide(_this);
 				}
 			});
 		},
