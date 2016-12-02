@@ -45,9 +45,8 @@ define(function () {
 
 		unlockDeck: function (key, value) {
 			var historyKey = 'history-' + (new Date()).getTime(),
-				message = '"I am searching for treasure." <a href="javascript:;" class="buyTreasure" id="' + key + '" data-history-key="' + historyKey + '">click here</a>';
+				message = value.person.displayName + ' is searching for treasures. <a href="#" onclick="util.buyTreasure(this)" class="buyTreasure" id="' + key + '" data-history-key="' + historyKey + '">click here</a>';
 
-			$(document).on('click', '#' + key, _.bind(this.buyTreasure, this));
 			util.setValue(historyKey, JSON.stringify({message: message, person: value.person, pvt: true}), 300, function () {
 				value.disabled = true;
 				gapi.hangout.data.setValue(key, JSON.stringify(value));
@@ -68,23 +67,6 @@ define(function () {
 			if (!value.treasure.remains) {
 				boughtTreasures.push(value.treasure.id);
 				gapi.hangout.data.setValue('boughtTreasures', JSON.stringify(boughtTreasures));
-			}
-		},
-
-
-		buyTreasure: function (ev) {
-			var key = $(ev.target).attr('id'),
-				boughtTreasure = util.getTreasure(),
-				value = JSON.parse(gapi.hangout.data.getValue(key));
-
-			if (!value.treasure) {
-				$(ev.target).off();
-				$(ev.target).remove();
-				gapi.hangout.data.clearValue($(ev.target).data('historyKey'));
-
-				value.disabled = false;
-				value.treasure = boughtTreasure;
-				gapi.hangout.data.setValue(key, JSON.stringify(value));
 			}
 		}
 

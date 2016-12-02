@@ -4,6 +4,23 @@ util = (function () {
 
 	return {
 
+		buyTreasure: function (target) {
+			var key = $(target).attr('id'),
+				boughtTreasure = util.getTreasure(),
+				value = JSON.parse(gapi.hangout.data.getValue(key));
+
+			if (!value.treasure) {
+				$(target).off();
+				$(target).parent().remove();
+				gapi.hangout.data.clearValue($(target).data('historyKey'));
+
+				value.disabled = false;
+				value.treasure = boughtTreasure;
+				gapi.hangout.data.setValue(key, JSON.stringify(value));
+			}
+		},
+
+
 		loadHide: function (instance) {
 			instance.$('.modal-body-loaded').show();
 			instance.$('.loading').hide();

@@ -47,23 +47,18 @@ define([
 			i, len = state.length,
 			history = [],
 			value,
-			row;
+			$row;
 
 			for (i = 0; i < len; i++) {
 				value = JSON.parse(state[i].value);
-				row = null;
+				$row = $(this.getHinstoryRow(state[i], value));
 
-				if (value.pvt) {
-					if (participant.person.id === value.person.id) {
-						row = this.getHinstoryRow(state[i], value);
-					}
-				}
-				else {
-					row = this.getHinstoryRow(state[i], value);
+				if (value.pvt && participant.person.id !== value.person.id) {
+					$row.find('a').remove();
 				}
 
-				if (row) {
-					history.push(this.getHinstoryRow(state[i], value));
+				if ($row.length) {
+					history.push($row.html());
 				}
 			}
 
@@ -151,28 +146,11 @@ define([
 		},
 
 
-		addItem: function (state) {
-			var participant = gapi.hangout.getLocalParticipant(),
-				value = JSON.parse(state.value);
-
-			if (value.pvt) {
-				if (participant.person.id === value.person.id) {
-					this.$('ul').append(this.getHinstoryRow(state, value));
-				}
-			}
-			else {
-				this.$('ul').append(this.getHinstoryRow(state, value));
-			}
-
-			this.updateScroll();
-		},
-
-
 		getHinstoryRow: function (state, value) {
 			var date = '<span class="gray-light">' + moment(Number(state.timestamp)).format('MM-DD-YYYY, h:mm a') + ' </span>',
 				name = value.person.displayName;
 
-			return '<li id="' + state.key + '">' + date + '<b>' + name + '</b>: ' + value.message + '</li>';
+			return '<div><li id="' + state.key + '">' + date + '<b>' + name + '</b>: ' + value.message + '</li></div>';
 		},
 
 
