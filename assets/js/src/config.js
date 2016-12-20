@@ -13,6 +13,7 @@ require.config({
 
 		'moment': '../../bower_components/moment/min/moment.min',
 		'clipboard': '../../bower_components/clipboard/dist/clipboard.min',
+		'colorpicker': '../../bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min',
 
 		'i18next': '../../bower_components/i18next/i18next.min',
 		'i18nextXHRBackend': '../../bower_components/i18next-xhr-backend/i18nextXHRBackend.min',
@@ -46,8 +47,11 @@ require.config({
 		'i18nextXHRBackend': {
 			deps: ['i18next']
 		},
-		'main': {
+		'colorpicker': {
 			deps: ['i18nextXHRBackend']
+		},
+		'main': {
+			deps: ['colorpicker']
 		}
 	},
 	config: {

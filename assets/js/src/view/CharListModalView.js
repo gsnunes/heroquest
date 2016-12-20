@@ -107,7 +107,7 @@ define([
 
 
 		start: function (model) {
-			var charLen = $('.board').find('.piece .sprite-characters').length,
+			var charLen = $('.board').find('.piece .piece-characters').length,
 				state = gapi.hangout.data.getState(),
 				key = 'piece-' + model.id,
 				hasPiece = false;

@@ -45,7 +45,16 @@ define([
 					}, this)});
 					newModal.open();
 				}
-			}
+			},
+			'click .set-color': 'setColor'
+		},
+
+
+		setColor: function () {
+			var key = 'color-' +  gapi.hangout.getLocalParticipant().person.id,
+				color = this.$('#cp2').colorpicker('getValue');
+			
+			gapi.hangout.data.setValue(key, JSON.stringify({color: color, person: gapi.hangout.getLocalParticipant().person}));
 		},
 
 
@@ -74,6 +83,8 @@ define([
 			}
 
 			this.populate();
+
+			this.$('#cp2').colorpicker({format: 'hex'});
 		},
 
 

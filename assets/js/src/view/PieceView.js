@@ -31,19 +31,40 @@ define([
 
 		bindEvents: function () {
 			gapi.hangout.data.onStateChanged.add(_.bind(function (ev) {
-				if (ev.addedKeys.length && ev.addedKeys[0].key.match(/piece/gi)) {
-					if (this.id === ev.addedKeys[0].key) {
-						var state = JSON.parse(ev.state[ev.addedKeys[0].key]);
+				if (ev.addedKeys.length) {
+					var state = JSON.parse(ev.state[ev.addedKeys[0].key]);
 
-						this.model = state.model;
+					if (ev.addedKeys[0].key.match(/piece/gi)) {
+						if (this.id === ev.addedKeys[0].key) {
+							this.model = state.model;
 
-						this.setPosition(state.position, state.localParticipant);
-						this.setRotateCss(state.rotation);
-						this.setAvatar(state.avatar);
-						this.setIcon();
+							this.setPosition(state.position, state.localParticipant);
+							this.setRotateCss(state.rotation);
+							this.setAvatar(state.avatar);
+							this.setIcon();
+						}
+					}
+
+					if (ev.addedKeys[0].key.match(/color/gi)) {
+						if (this.model.character && this.model.person.id === state.person.id) {
+							this.setColor();
+						}
 					}
 				}
 			}, this));
+		},
+
+
+		setColor: function () {
+			var value = gapi.hangout.data.getValue('color-' + gapi.hangout.getLocalParticipant().person.id);
+
+			if (value) {
+				value = JSON.parse(value);
+
+				if (this.model.character && this.model.person.id === value.person.id) {
+					this.$('.piece-characters').css('background-color', value.color);
+				}
+			}
 		},
 
 
@@ -79,6 +100,7 @@ define([
 
 		afterRender: function () {
 			this.setIcon();
+			this.setColor();
 			this.createPopover();
 			this.setDraggable();
 			this.setPosition();
@@ -90,7 +112,9 @@ define([
 
 		setIcon: function () {
 			if (this.model && this.model.character) {
-				this.$('i').attr('class', 'sprite-characters icon-' + this.model.character);
+				var character = _.where(GLOBAL.data.character, {name: this.model.character})[0];
+				//this.$('i').attr('class', 'piece-characters sprite-characters icon-' + this.model.character);
+				this.$('i').html('<svg aria-hidden="true" class="piece-characters" viewBox="0 0 64 64"><path d="' + character.path + '"></path></svg>');
 			}
 			else {
 				this.$('i').attr('class', this.model.className);
